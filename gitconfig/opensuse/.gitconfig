@@ -3,4 +3,5 @@
 [push]
 	autoSetupRemote = true
 [credential]
+	helper = cache --timeout 21600	# six hours
 	helper = oauth
