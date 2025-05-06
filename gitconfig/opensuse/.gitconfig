@@ -1,0 +1,6 @@
+[init]
+	defautlBranch = main
+[push]
+	autoSetupRemote = true
+[credential]
+	helper = oauth
