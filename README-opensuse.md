@@ -14,7 +14,7 @@ zypper install snapper
 
 INFO: There is also timeshift, but snapper is created by the OpenSUSE team I think
 
-## Sound 
+## Sound
 
 zypper install pipewire wireplumber
 
@@ -101,6 +101,26 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
 1. Go to Nerd Fonts website
 2. Download the zip file and extract it
 3. For global installation, copy all .ttf files to /usr/share/fonts/xxx/ folder
+
+## Starship [S]
+
+To add a prompt style to the terminal
+
+zypper install starship
+
+https://github.com/starship/starship
+
+There is also oh-my-posh for example
+
+## Fzf
+
+Command line fuzzy finder
+
+zypper install fzf
+
+## Complex scripting
+
+We just need Lua or Python
 
 ## Nvim [S]
 
