@@ -21,4 +21,6 @@ dotfiles_symlink('wofi', '.config/wofi')
 dotfiles_symlink('kitty', '.config/kitty')
 
 dotfiles_symlink('starship/starship.toml', '.config/starship/starship.toml')
+dotfiles_symlink('shell/opensuse/.bashrc', '.bashrc')
+dotfiles_symlink('shell/opensuse/.profile', '.profile')
 dotfiles_symlink('gitconfig/opensuse/.gitconfig', '.gitconfig')
