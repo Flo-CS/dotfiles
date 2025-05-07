@@ -111,6 +111,18 @@ https://github.com/starship/starship
 
 There is also oh-my-posh for example
 
+## Btop
+
+Resource monitor
+
+zypper install btop
+
+## Fastfetch
+
+Replace of neofetch
+
+zypper install fastfetch
+
 ## Fzf
 
 Command line fuzzy finder
