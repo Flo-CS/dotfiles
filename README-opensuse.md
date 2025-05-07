@@ -73,7 +73,7 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
 => See the docs for installation
 
 + There are other things to install (for the most part it's redudant with the Hyprland docs, but easier to find all here):
-- a terminal emulator: kitty (default of Hyprland)
+- a terminal emulator: kitty (default of Hyprland) [S]
 - a notification daemon: swaync
 - a file manager: thunar
 - privilege escalation window: hyprpolkitagent
@@ -83,6 +83,8 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
     - qt6-wayland 
     - hyprland-qtutils ?
 - and:
+
+### App launcher: Wofi [S]
 
 ### Wallpaper: Hyprpaper [>S]
 
