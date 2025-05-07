@@ -18,8 +18,7 @@ INFO: There is also timeshift, but snapper is created by the OpenSUSE team I thi
 
 zypper install pipewire wireplumber
 
-INFO: Pipewire is a replacement for the old two pulseaudio + jack tools which were complicated to handle with ALSA
-
+INFO: Pipewire is a replacement for the old two pulseaudio + jack audio servers
 
 Without it my output audio system was not detected:
 
