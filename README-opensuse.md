@@ -1,4 +1,4 @@
-# README 
+# README
 
 ## Dotfiles
 
@@ -83,6 +83,8 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
     - hyprland-qtutils ?
 - and:
 
+### Power/logout menu: wlogout [S]
+
 ### App launcher: Wofi [S]
 
 ### Wallpaper: Hyprpaper [>S]
@@ -94,6 +96,14 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
 ### Cursor: Hyprcursor [>S]
 
 ### Status bar: Waybar [S]
+
+## Hyprland plugins
+
+To install plugins, just follow: https://wiki.hyprland.org/Plugins/Using-Plugins/
+
+I had problem with version 0.48.1 of Hyprland, I wansn't able to compile plugins, there is two reasons:
+- First when running hyprpm add https://github.com/hyprwm/hyprland-plugins, it's mandatory to add the git rev v0.48.0 at the end of the command, otherwise it will not work
+- Second, it's needed to install the hundred of necessary *-devel packages using OpenSUSE zypper
 
 ## Nerd Fonts
 
@@ -145,3 +155,11 @@ zypper install neovide
 ## TODO
 
 https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#themes
+
+## Config templates
+
+https://github.com/end-4/dots-hyprland/tree/main
+
+## Useful links
+
+https://arewewaylandyet.com/
