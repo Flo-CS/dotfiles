@@ -1,0 +1,74 @@
+add_newline = false
+
+format = '$all$directory$character'
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character]                            # The name of the module we are configuring is "character"
+success_symbol = "[• ](bold green) "
+error_symbol = "[• 󰅙](bold red) "
+
+[git_branch]
+symbol = "󰘬"
+truncation_length = 4
+truncation_symbol = ""
+format = "• [$symbol $branch(:$remote_branch)](green) "
+
+[git_commit]
+commit_hash_length = 4
+tag_symbol = " "
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+cherry_pick = "[🍒 PICKING](bold red)"
+
+[git_status]
+conflicted = " 🏳 "
+ahead = " 🏎💨 "
+behind = " 😰 "
+diverged = " 😵 "
+untracked = " 🤷 ‍"
+stashed = " 📦 "
+modified = " 📝 "
+staged = '[++\($count\)](green)'
+renamed = " ✍️ "
+deleted = " 🗑 "
+
+[hostname]
+ssh_only = true
+format =  "[•$hostname](cyan bold)"
+trim_at = ".companyname.com"
+disabled = false
+
+[memory_usage]
+disabled =  true
+
+[time]
+disabled = true 
+
+[username]
+style_user = "bold cyan"
+style_root = "red bold"
+format = "[$user]($style) "
+disabled = false
+show_always = true
+
+[directory]
+home_symbol = "  "
+read_only = "  "
+style = "green"
+truncation_length = 6
+truncation_symbol = "••/"
+format = '[$path ]($style)'
+
+
+[directory.substitutions]
+"Desktop" = "  "
+"Documents" = "  "
+"Downloads" = "  "
+"Music" = " 󰎈 "
+"Pictures" = "  "
+"Videos" = "  "
+
+[cmd_duration]
+min_time = 0
+format = '[ $duration](bold yellow) • '
