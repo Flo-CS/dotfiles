@@ -85,17 +85,37 @@ Hyprland is an implementation of the Wayland protocol, which is the successor of
 
 ### Power/logout menu: wlogout [S]
 
+zypper install wlogout
+
 ### App launcher: Wofi [S]
+
++ wofi-emoji in .local/bin/wofi-emoji
 
 ### Wallpaper: Hyprpaper [>S]
 
+zypper install hyprpaper
+
 ### Idle handling: Hypridle [>S]
+
+zypper install hypridle
 
 ### Lock screen: Hyprlock [>S]
 
+zypper install hyprlock
+
 ### Cursor: Hyprcursor [>S]
 
+zypper install hyprcursor
+
 ### Status bar: Waybar [S]
+
+zypper install waybar
+
+### QT Theming: Kvantum [S]
+
+Alternative tool to qt5ct or qt6ct to customize QT applications theme, env vars are set in hyprland to use Kvantum
+
+zypper install kvantum-manager kvantum-qt5 kvantum-qt6
 
 ## Hyprland plugins
 
@@ -105,8 +125,12 @@ I had problem with version 0.48.1 of Hyprland, I wansn't able to compile plugins
 - First when running hyprpm add https://github.com/hyprwm/hyprland-plugins, it's mandatory to add the git rev v0.48.0 at the end of the command, otherwise it will not work
 - Second, it's needed to install the hundred of necessary *-devel packages using OpenSUSE zypper
 
-## Nerd Fonts
+## Fonts
 
+- JetBrains Mono Nerd Font
+- Rubik
+
+NerdFont
 1. Go to Nerd Fonts website
 2. Download the zip file and extract it
 3. For global installation, copy all .ttf files to /usr/share/fonts/xxx/ folder
@@ -154,7 +178,13 @@ zypper install neovide
 
 ## TODO
 
-https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#themes
+- https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#themes
+- playerctl to control media
+- https://github.com/wwmm/easyeffects
+- wallpaper
+- cursor
+- replace wofi, by fuzzel ?
+- audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should be changed
 
 ## Config templates
 
