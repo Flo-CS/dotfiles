@@ -7,4 +7,3 @@
 
 export EDITOR=/usr/bin/nvim
 
-alias lsa='ls --color=auto -la'
