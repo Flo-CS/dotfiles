@@ -117,6 +117,10 @@ Alternative tool to qt5ct or qt6ct to customize QT applications theme, env vars 
 
 zypper install kvantum-manager kvantum-qt5 kvantum-qt6
 
+### GTK Theming: nwg-look [S]
+
+zypper install nwg-look
+
 ## Hyprland plugins
 
 To install plugins, just follow: https://wiki.hyprland.org/Plugins/Using-Plugins/
@@ -185,6 +189,7 @@ zypper install neovide
 - cursor
 - replace wofi, by fuzzel ?
 - audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should be changed
+- proper Hyprland exit when using wlogout
 
 ## Config templates
 
