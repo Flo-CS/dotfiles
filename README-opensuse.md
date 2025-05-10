@@ -14,6 +14,15 @@ zypper install snapper
 
 INFO: There is also timeshift, but snapper is created by the OpenSUSE team I think
 
+## Sudoers file edit
+
+cd /etc/sudoers.d
+sudo visudo -f florian
+
+```unix
+Defaults timestamp_timeout=30
+```
+
 ## Sound
 
 zypper install pipewire wireplumber
@@ -132,6 +141,7 @@ I had problem with version 0.48.1 of Hyprland, I wansn't able to compile plugins
 ## Fonts
 
 - JetBrains Mono Nerd Font
+- Symbols Nerd Font
 - Rubik
 
 NerdFont
@@ -187,14 +197,22 @@ zypper install neovide
 - https://github.com/wwmm/easyeffects
 - wallpaper
 - cursor
-- replace wofi, by fuzzel ?
+- replace wofi, by fuzzel ? because it is not very maintained anymore
 - audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should be changed
 - proper Hyprland exit when using wlogout
+- linux global system theme 
+- linux dark/light mode
+- split .bashrc and .profile to avoid conflicts with programs auto generating things (like rust and nvm)
 
 ## Config templates
 
-https://github.com/end-4/dots-hyprland/tree/main
+- https://github.com/end-4/dots-hyprland/tree/main
 
 ## Useful links
 
-https://arewewaylandyet.com/
+- https://arewewaylandyet.com/
+- https://github.com/Aylur/ags
+- https://github.com/elkowar/eww
+- https://store.kde.org/browse
+- https://www.gnome-look.org/browse/
+

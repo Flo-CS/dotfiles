@@ -1,96 +1,80 @@
-@import "themes/catppuccin-mocha.css";
+@import "themes/rose-pine.css";
 
 * {
-  font-family: JetBrainsMono Nerd Font;
-  font-size: 14px;
-  min-height: 0;
-}
-
-#waybar {
-  background: transparent;
+  font-family: "Symbols Nerd Font", "Rubik", monospace;
+  font-size: 13px;
   color: @text;
-  margin: 0px;
 }
 
-#workspaces {
-  border-radius: 1rem;
+window#waybar {
+  background: transparent;
+  border: none;
+}
+
+.modules-left,
+.modules-right {
+  padding: 0 1rem;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+  background-color: alpha(@highlightLow, 0.8);
+  border-radius: 12px;
   margin: 5px;
-  background-color: @surface0;
-  margin-left: 1rem;
-  padding: 0 0.5rem;
+  border: 1px solid @muted;
 }
 
 #workspaces button {
-  color: @lavender;
-  border-radius: 1rem;
-  padding: 0.4rem;
+  color: @subtle;
+  border: none;
+  transition: all 0.3s ease;
 }
 
 #workspaces button.active {
-  color: @sky;
-  border-radius: 1rem;
+  color: @text;
+  background: alpha(@highlightLow, 0.9);
+  border-radius: 12px;
 }
 
 #workspaces button:hover {
-  color: @sapphire;
-  border-radius: 1rem;
+  color: @text;
+  background: @highlightLow;
+  border-radius: 12px;
 }
 
-#pulseaudio,
-#network,
+#window {
+  color: @foam;
+  font-weight: 500;
+  margin: 0 1rem;
+}
+
+window#waybar.empty #window {
+  margin: 0;
+}
+
+#custom-notification {
+  color: @gold;
+}
+
 #cpu,
-#memory,
 #temperature,
+#memory,
 #backlight,
 #battery,
-#clock,
-#custom-notifications,
-#custom-power {
-  background-color: @surface0;
-  padding: 0.5rem 1rem;
-  margin: 5px 0;
-}
-
-#clock {
-  color: @blue;
-  border-radius: 0px 1rem 1rem 0px;
+#power-profiles-daemon {
   margin-right: 1rem;
 }
 
-#battery {
-  color: @green;
-}
-
-#battery.charging {
-  color: @green;
-}
-
-#battery.warning:not(.charging) {
-  color: @red;
-}
-
-#backlight {
-  color: @yellow;
-}
-
-#backlight, #battery {
-  border-radius: 0;
-}
-
-#pulseaudio {
-  color: @maroon;
-  border-radius: 1rem 0px 0px 1rem;
+#submap {
   margin-left: 1rem;
+  margin-right: 1rem;
 }
 
-#custom-notifications {
-  color: @lavender;
-  border-radius: 1rem 1rem 1rem 1rem;
+#privacy,
+#pulseaudio,
+#bluetooth,
+#network,
+#clock {
+  margin-right: 1rem;
 }
-
-#custom-power {
-  border-radius: 1rem 1rem 1rem 1rem;
-  color: @red;
-  padding-right: 0.5rem;
-}
-

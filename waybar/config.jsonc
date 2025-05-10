@@ -1,104 +1,148 @@
 // -*- mode: jsonc -*-
 {
-   "height": 30, 
-    "spacing": 8, 
-    "modules-left": [
-        "hyprland/workspaces",
-    ],
-    "modules-center": [
-        "hyprland/window"
-    ],
-    "modules-right": [
-        "pulseaudio",
-        "network",
-        "cpu",
-        "memory",
-        "temperature",
-        "backlight",
-        "battery",
-        "clock",
-        "custom/notifications",
-        "custom/power"
-    ],
-    // Modules configuration
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "warp-on-scroll": false,
-        "format": "{name}: {icon}",
-        "format-icons": {
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        }
+  "layer": "top",
+  "position": "top",
+  "height": 35,
+  "spacing": 0,
+  "modules-left": ["cpu", "temperature", "memory", "backlight", "battery", "power-profiles-daemon", "systemd-failed-units"],
+  "modules-center": ["hyprland/submap", "hyprland/workspaces", "hyprland/window"],
+  "modules-right": ["privacy", "pulseaudio", "bluetooth", "network", "clock#time", "custom/notification"],
+  "cpu": {
+    "format": " {usage}%",
+    "tooltip": false
+  },
+  "temperature": {
+    "format": " {temperatureC}°C",
+    "critical-threshold": 80,
+    "tooltip": false
+  },
+  "memory": {
+    "format": " {used:0.1f}G/{total:0.1f}G ({percentage}%)",
+    "tooltip": false
+  },
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "tooltip": false,
+    "format-icons": ["", "", "", "", "", "", "", "", "", ""],
+  },
+  "battery": {
+    "states": {
+        "warning": 30,
+        "critical": 15
     },
-    "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-    "cpu": {
-        "format": "{usage}% ",
-        "tooltip": false
-    },
-    "memory": {
-        "format": "{}% "
-    },
-    "temperature": {
-        "critical-threshold": 80,
-        "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""]
-    },
-    "backlight": {
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
-    },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-
-    "network": {
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    "custom/notifications": {
-        "format": "🔔",
-        "tooltip": false,
-        "on-click": "swaync-client --toggle-panel",
-    },
-    "custom/power": {
-        "format" : "⏻ ",
-        "tooltip": false,
-        "on-click": "wlogout"
+    "format": "{icon} {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip": false,
+  },
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
     }
+  },
+  "systemd-failed-units": {
+    "hide-on-ok": false,
+    "format": "✗ {nr_failed}",
+    "format-ok": "✓",
+    "system": true,
+    "user": true
+  },
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 18,
+    "transition-duration": 250,
+    "modules": [
+      {
+              "type": "screenshare",
+              "tooltip": true,
+              "tooltip-icon-size": 24
+      },
+      {
+              "type": "audio-out",
+              "tooltip": true,
+              "tooltip-icon-size": 24
+      },
+      {
+              "type": "audio-in",
+              "tooltip": true,
+              "tooltip-icon-size": 24
+      }
+    ]
+  },
+  "clock#time": {
+    "format": " {:%H:%M}",
+    "tooltip": false
+  },
+  "hyprland/workspaces": {
+    "show-special": true,
+    "special-visible-only": true,
+    "format": "{icon} {name}",
+    "on-click": "activate",
+    "on-scroll-up": "hyprctl dispatch workspace e+1",
+    "on-scroll-down": "hyprctl dispatch workspace e-1",
+    "tooltip": false,
+    "format-icons": {
+      "urgent": "",
+      "special": "󰦤",
+      "active": "",
+      "default": "",
+    }
+  },
+  "hyprland/submap": {
+      "format": "󰌌 {}",
+      "max-length": 8,
+      "tooltip": false
+  },
+  "hyprland/window": {
+    "format": "{title}",
+    "icon": true,
+    "icon-size": 16,
+    "max-length": 60,
+  },
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-muted": "󰝟",
+    "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "phone-muted": "",
+        "portable": "",
+        "default": ["", "", ""]
+    },
+    "scroll-step": 1,
+    "on-click": "pavucontrol",
+    "on-click": "pavucontrol"
+  },
+  "bluetooth": {
+    "format": " {status}",
+    "format-no-controller": " No controller",
+    "format-on": " On",
+    "format-offline": " Offline",
+    "format-disabled": " Disabled",
+    "format-disconnected": " Disconnected",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+    "tooltip": false,
+    "on-click": "blueman-manager",
+  },
+  "network": {
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": "🖧 {ifname}",
+    "format-disconnected": "⚠ Disconnected",
+    "tooltip": false
+  },
+  "custom/notification": {
+    "format": "",
+    "tooltip": false,
+    "on-click": "swaync-client -t -sw",
+  },
 }
+
