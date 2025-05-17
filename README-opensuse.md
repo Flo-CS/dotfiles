@@ -1,5 +1,19 @@
 # README
 
+## Pre-dotfiles
+
+1) Install OpenSUSE Tumbleweed with the generic desktop preset, but in softwares customization, remove the default desktop environment
+2) Use nmcli or nmtui to connect to internet
+3) Make zypper update or zypper dup
+4) Install hyprland, alacritty
+5) Install xwayland because some apps still need X to work (in the future I want to remove it completly), see XWayland part of this docs for more information
+6) Run hyprland one time and close it
+7) Update the generated hyprland.conf file to change the keyboard layout, the terminal, the generated message, and screen zoom
+8) Install git, git-credential-oauth, MozillaFirefox
+9) Download KeepassXC AppImage (because trustworthy), warning it only runs on X for now
+10) Download KeepassXC database
+11) Authenticate to Github and clone dotfiles
+
 ## Dotfiles
 
 Clone my dotfiles repo and create the necessary symlinks for each configs
