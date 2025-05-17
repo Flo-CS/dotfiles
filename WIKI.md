@@ -34,28 +34,13 @@ Each time creating symlink is necessary for config I added [S]
 
 Before starting, it's good to install a tool to snapshot/backup in case of mistake, so we can rollback
 
-zypper install snapper
-
 INFO: There is also timeshift, but snapper is created by the OpenSUSE team I think
-
-## Sudoers file edit
-
-cd /etc/sudoers.d
-sudo visudo -f florian
-
-```unix
-Defaults timestamp_timeout=30
-```
 
 ## Sound
 
-zypper install pipewire wireplumber
-
 INFO: Pipewire is a replacement for the old two pulseaudio + jack audio servers
 
-Without it my output audio system was not detected:
-
-zypper install sof-firmware
+Without it my output audio system was not detected: sof-firmware
 
 INFO: sof-firmware is a collection of open source linux firmwares for commercial hardwares like Intel sound chips
 
@@ -80,8 +65,6 @@ NOTE: Is it useful to install prime-select tools ? (Prime is some kind of techno
 
 ## Git [S]
 
-zypper install git
-
 Storing Git credentials is way more complicated than I thought, there is some options:
 - Github CLI (not working like I want)
 - Git Credential Manager (designed for Windows so complicated on Linux)
@@ -90,13 +73,9 @@ Storing Git credentials is way more complicated than I thought, there is some op
 
 The only simple and secure solution I found is using git-credential-oauth
 
-zypper install git-credential-oauth
-
 INFO: To learn more https://git-scm.com/doc/credential-helpers and https://git-scm.com/docs/gitcredentials
 
 ## KeepassXC
-
-zypper install keepassxc
 
 ## Hyprland [S]
 
@@ -123,26 +102,6 @@ zypper install wlogout
 ### App launcher: Wofi [S]
 
 + wofi-emoji in .local/bin/wofi-emoji
-
-### Wallpaper: Hyprpaper [>S]
-
-zypper install hyprpaper
-
-### Idle handling: Hypridle [>S]
-
-zypper install hypridle
-
-### Lock screen: Hyprlock [>S]
-
-zypper install hyprlock
-
-### Cursor: Hyprcursor [>S]
-
-zypper install hyprcursor
-
-### Status bar: Waybar [S]
-
-zypper install waybar
 
 ### QT Theming: Kvantum [S]
 
@@ -177,42 +136,11 @@ NerdFont
 
 To add a prompt style to the terminal
 
-zypper install starship
-
-https://github.com/starship/starship
-
 There is also oh-my-posh for example
-
-## Btop
-
-Resource monitor
-
-zypper install btop
-
-## Fastfetch
-
-Replace of neofetch
-
-zypper install fastfetch
-
-## Fzf
-
-Command line fuzzy finder
-
-zypper install fzf
 
 ## Complex scripting
 
 We just need Lua or Python
-
-## Nvim [S]
-
-zypper install neovim
-zypper install ripgrep
-
-## Neovide
-
-zypper install neovide
 
 ## TODO
 

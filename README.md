@@ -1,5 +1,5 @@
 # README
 
-## OpenSUSE
+## See Wiki
 
-See README-opensuse.md
+

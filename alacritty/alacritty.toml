@@ -1,0 +1,5 @@
+[general]
+import = ["themes/rose-pine.toml"]
+
+[font]
+normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
