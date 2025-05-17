@@ -20,6 +20,10 @@
 11) Download KeepassXC database
 12) Authenticate to Github and clone dotfiles
 
+## Perhaps later
+
+- Each time recommended packages are selected automatically by zypper, I keep them, even in the install process. We can not select recommended packages, perhaps I should later
+
 ## Dotfiles
 
 Clone my dotfiles repo and create the necessary symlinks for each configs
