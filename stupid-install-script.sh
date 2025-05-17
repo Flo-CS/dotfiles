@@ -37,6 +37,12 @@ sudo zypper in qt6-wayland libqt5-qtwayland
 
 
 
+
+# System controls
+sudo zypper in playerctl brightnessctl
+
+
+
 # Waybar
 sudo zypper install --no-recommends waybar
 ## Recommended
