@@ -20,15 +20,14 @@
 11) Download KeepassXC database
 12) Authenticate to Github and clone dotfiles
 
+## Dotfiles
+
+1) Install the dotfiles
+2) Run the temporary stupid-install-script.sh
+
 ## Perhaps later
 
 - Each time recommended packages are selected automatically by zypper, I keep them, even in the install process. We can not select recommended packages, perhaps I should later
-
-## Dotfiles
-
-Clone my dotfiles repo and create the necessary symlinks for each configs
-
-Each time creating symlink is necessary for config I added [S]
 
 ## Backup tool
 
@@ -44,17 +43,6 @@ Without it my output audio system was not detected: sof-firmware
 
 INFO: sof-firmware is a collection of open source linux firmwares for commercial hardwares like Intel sound chips
 
-## Codecs
-
-I had problems to run Youtube videos on Firefox, apparently, it's a missing codecs issue:
-
-https://en.opensuse.org/SDB:Installing_codecs_from_Packman_repositories
-
-zypper install opi
-opi codecs
-
-WARNING: Should be careful because it uses packman repo (community maintained and well known), but some conflicts can happen with the others repos if I understood correctly
-
 ## NVidia drivers
 
 Installing NVidia drivers is important
@@ -63,7 +51,7 @@ https://en.opensuse.org/SDB:NVIDIA_drivers
 
 NOTE: Is it useful to install prime-select tools ? (Prime is some kind of technology to switch between integrated graphics and GPU card if I understand correctly)
 
-## Git [S]
+## Git
 
 Storing Git credentials is way more complicated than I thought, there is some options:
 - Github CLI (not working like I want)
@@ -75,43 +63,17 @@ The only simple and secure solution I found is using git-credential-oauth
 
 INFO: To learn more https://git-scm.com/doc/credential-helpers and https://git-scm.com/docs/gitcredentials
 
-## KeepassXC
-
-## Hyprland [S]
+## Hyprland
 
 Hyprland is an implementation of the Wayland protocol, which is the successor of the old X11
 
-=> See the docs for installation
-
-+ There are other things to install (for the most part it's redudant with the Hyprland docs, but easier to find all here):
-- a terminal emulator: kitty (default of Hyprland) [S]
-- a notification daemon: swaync
-- a file manager: thunar
-- privilege escalation window: hyprpolkitagent
-- XDG Desktop Portal: https://wiki.hyprland.org/Hypr-Ecosystem/xdg-desktop-portal-hyprland/
-- some qt supports
-    - qt5-wayland ?
-    - qt6-wayland 
-    - hyprland-qtutils ?
-- and:
-
-### Power/logout menu: wlogout [S]
-
-zypper install wlogout
-
-### App launcher: Wofi [S]
-
-+ wofi-emoji in .local/bin/wofi-emoji
-
-### QT Theming: Kvantum [S]
+## QT Theming: Kvantum
 
 Alternative tool to qt5ct or qt6ct to customize QT applications theme, env vars are set in hyprland to use Kvantum
 
 zypper install kvantum-manager kvantum-qt5 kvantum-qt6
 
-### GTK Theming: nwg-look [S]
-
-zypper install nwg-look
+## GTK Theming: nwg-look
 
 ## Hyprland plugins
 
@@ -132,15 +94,11 @@ NerdFont
 2. Download the zip file and extract it
 3. For global installation, copy all .ttf files to /usr/share/fonts/xxx/ folder
 
-## Starship [S]
+## Starship
 
 To add a prompt style to the terminal
 
 There is also oh-my-posh for example
-
-## Complex scripting
-
-We just need Lua or Python
 
 ## TODO
 

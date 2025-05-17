@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-# dotfiles_symlink('wofi', '.config/wofi')
-# dotfiles_symlink('kvantum', '.config/Kvantum')
-# dotfiles_symlink('swaync', '.config/swaync')
-#
-# dotfiles_symlink('bin/wofi-emoji', '.local/bin/wofi-emoji')
-
-
 # System
 sudo cp ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
 
@@ -40,6 +33,7 @@ read -p "Enter the version of hyprland-plugins (e.g. v0.48.0): " plugins_version
 hyprpm add https://github.com/hyprwm/hyprland-plugins $plugins_version
 ln -sT ~/dotfiles/hypr ~/.config/hypr
 sudo zypper install xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+sudo zypper in qt6-wayland libqt5-qtwayland
 
 
 
@@ -51,6 +45,19 @@ ln -sT ~/dotfiles/waybar ~/.config/waybar
 
 
 
+# Kvantum
+sudo zypper install kvantum-manager kvantum-qt5 kvantum-qt6
+ln -sT ~/dotfiles/kvantum ~/.config/Kvantum
+
+
+
+
+# Gtk look
+sudo zypper install nwg-look
+
+
+
+
 # Wlogout
 sudo zypper install wlogout
 ln -sT ~/dotfiles/wlogout ~/.config/wlogout
@@ -58,8 +65,15 @@ ln -sT ~/dotfiles/wlogout ~/.config/wlogout
 
 
 # Swaync
+sudo zypper install SwayNotificationCenter
+ln -sT ~/dotfiles/swaync ~/.config/swaync
 
 
+
+# Wofi
+sudo zypper install wofi
+ln -sT ~/dotfiles/wofi ~/.config/wofi
+ln -sT ~/dotfiles/wofi-emoji ~/.local/bin/wofi-emoji
 
 
 # Alacritty
@@ -145,3 +159,11 @@ if ! grep -q "~/.gitconfig-default" ~/.gitconfig; then
   echo "[include]" >> ~/.gitconfig
   echo "	path = ~/.gitconfig-default" >> ~/.gitconfig
 fi
+
+
+
+# Nvidia
+sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
+sudo zypper install-new-recommends --repo repo-non-free
+sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-gl-G06 nvidia-compute-G06 nvidia-compute-utils-G06
+
