@@ -40,6 +40,7 @@ sudo zypper in qt6-wayland libqt5-qtwayland
 
 # System controls
 sudo zypper in playerctl brightnessctl
+sudo zypper in power-profiles-daemon
 
 
 
