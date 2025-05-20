@@ -166,6 +166,7 @@ if ! grep -q "~/.gitconfig-default" ~/.gitconfig; then
   echo "[include]" >> ~/.gitconfig
   echo "	path = ~/.gitconfig-default" >> ~/.gitconfig
 fi
+sudo zypper install git-filter-repo
 
 
 

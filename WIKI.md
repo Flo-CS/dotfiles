@@ -114,6 +114,10 @@ There is also oh-my-posh for example
 - linux dark/light mode
 - split .bashrc and .profile to avoid conflicts with programs auto generating things (like rust and nvm)
 
+## To learn
+
+- Zypper package manager: what is a service ?
+
 ## Config templates
 
 - https://github.com/end-4/dots-hyprland/tree/main
