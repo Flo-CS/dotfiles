@@ -175,3 +175,23 @@ sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
 sudo zypper install-new-recommends --repo repo-non-free
 sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-gl-G06 nvidia-compute-G06 nvidia-compute-utils-G06
 
+
+
+# Remove SDDM
+read -p "Do you want to remove SDDM? (y/n): " remove_sddm
+if [[ $remove_sddm == "y" ]]; then
+  sudo zypper remove sddm
+  sudo systemctl set-default multi-user.target
+fi
+
+# Hyprland autostart
+read -p "Do you want to set Hyprland as default? (y/n): " set_hyprland
+if [[ $set_hyprland == "y" ]]; then
+  # Check that marker is not already set in .profile
+  if ! grep -q "# Hyprland autostart" ~/.profile; then
+    echo "# Hyprland autostart" >> ~/.profile
+    echo "if [ -z \"\$DISPLAY\" ] && [ \"\$(tty)\" = \"/dev/tty1\" ]; then" >> ~/.profile
+    echo "  exec Hyprland" >> ~/.profile
+    echo "fi" >> ~/.profile
+  fi
+fi
