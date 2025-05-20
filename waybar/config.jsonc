@@ -139,10 +139,10 @@
     "format-disconnected": "⚠ Disconnected",
     "tooltip": false
   },
-  "custom/notification": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "swaync-client -t -sw",
-  },
+  // "custom/notification": {
+  //   "format": "",
+  //   "tooltip": false,
+  //   "on-click": "swaync-client -t -sw",
+  // },
 }
 
