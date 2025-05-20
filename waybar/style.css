@@ -7,22 +7,22 @@
 }
 
 window#waybar {
-  background: transparent;
-  border: none;
+  background-color: alpha(@base, 1);
+  border-bottom: 1px solid @muted;
 }
 
 .modules-left,
 .modules-right {
-  padding: 0 1rem;
+  padding: 12px 16px;
 }
 
 .modules-left,
 .modules-center,
 .modules-right {
-  background-color: alpha(@highlightLow, 1);
-  border-radius: 6px;
-  margin: 5px;
-  border: 1px solid @surface;
+}
+
+#workspaces {
+  margin-right: 10px;
 }
 
 #workspaces button {
@@ -32,17 +32,14 @@ window#waybar {
 }
 
 #workspaces button.active {
-  background: alpha(@highlightMed, 1);
 }
 
 #workspaces button:hover {
-  background: @highlightMed;
 }
 
 #window {
   color: @foam;
   font-weight: 500;
-  margin: 0 1rem;
 }
 
 window#waybar.empty #window {
@@ -59,17 +56,17 @@ window#waybar.empty #window {
 #backlight,
 #battery,
 #power-profiles-daemon {
-  margin-right: 1rem;
+  margin-right: 16px;
 }
 
 #submap {
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 16px;
+  margin-right: 16px;
 }
 
 #privacy,
 #pulseaudio,
 #bluetooth,
 #network {
-  margin-right: 1rem;
+  margin-right: 16px;
 }
