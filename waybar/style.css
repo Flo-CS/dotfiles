@@ -19,7 +19,7 @@ window#waybar {
 .modules-left,
 .modules-center,
 .modules-right {
-  background-color: alpha(@highlightLow, 0.8);
+  background-color: alpha(@highlightLow, 1);
   border-radius: 12px;
   margin: 5px;
   border: 1px solid @muted;
@@ -33,7 +33,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @text;
-  background: alpha(@highlightLow, 0.9);
+  background: alpha(@highlightMed, 1);
   border-radius: 12px;
 }
 
@@ -74,7 +74,6 @@ window#waybar.empty #window {
 #privacy,
 #pulseaudio,
 #bluetooth,
-#network,
-#clock {
+#network {
   margin-right: 1rem;
 }
