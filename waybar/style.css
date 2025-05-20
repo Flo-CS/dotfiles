@@ -20,9 +20,9 @@ window#waybar {
 .modules-center,
 .modules-right {
   background-color: alpha(@highlightLow, 1);
-  border-radius: 12px;
+  border-radius: 6px;
   margin: 5px;
-  border: 1px solid @muted;
+  border: 1px solid @surface;
 }
 
 #workspaces button {
@@ -32,15 +32,11 @@ window#waybar {
 }
 
 #workspaces button.active {
-  color: @text;
   background: alpha(@highlightMed, 1);
-  border-radius: 12px;
 }
 
 #workspaces button:hover {
-  color: @text;
-  background: @highlightLow;
-  border-radius: 12px;
+  background: @highlightMed;
 }
 
 #window {
