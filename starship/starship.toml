@@ -53,8 +53,8 @@ symbol = " "
 [c]
 symbol = " "
 
-[cpp]
-symbol = " "
+# [cpp]
+# symbol = " "
 
 [cmake]
 symbol = " "
@@ -205,8 +205,8 @@ symbol = " "
 [pijul_channel]
 symbol = " "
 
-[pixi]
-symbol = "󰏗 "
+# [pixi]
+# symbol = "󰏗 "
 
 [python]
 symbol = " "
