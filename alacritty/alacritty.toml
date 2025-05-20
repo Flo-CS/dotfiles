@@ -3,3 +3,6 @@ import = ["themes/rose-pine.toml"]
 
 [font]
 normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
+
+[window]
+padding = { x = 10, y = 10 }
