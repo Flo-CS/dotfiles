@@ -2,7 +2,7 @@
 import = ["themes/rose-pine.toml"]
 
 [font]
-normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 
 [window]
 padding = { x = 10, y = 10 }

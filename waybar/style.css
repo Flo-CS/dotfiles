@@ -1,7 +1,7 @@
 @import "themes/rose-pine.css";
 
 * {
-  font-family: "Symbols Nerd Font", "Rubik", monospace;
+  font-family: "Symbols Nerd Font", "Rubik";
   font-size: 13px;
   color: @text;
 }
