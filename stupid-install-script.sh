@@ -80,7 +80,7 @@ ln -sT ~/dotfiles/swaync ~/.config/swaync
 # Wofi
 sudo zypper install wofi
 ln -sT ~/dotfiles/wofi ~/.config/wofi
-ln -sT ~/dotfiles/wofi-emoji ~/.local/bin/wofi-emoji
+ln -sT ~/dotfiles/bin/wofi-emoji ~/.local/bin/wofi-emoji
 
 
 # Alacritty
@@ -184,6 +184,8 @@ if [[ $remove_sddm == "y" ]]; then
   sudo systemctl set-default multi-user.target
 fi
 
+
+
 # Hyprland autostart
 read -p "Do you want to set Hyprland as default? (y/n): " set_hyprland
 if [[ $set_hyprland == "y" ]]; then
@@ -194,4 +196,11 @@ if [[ $set_hyprland == "y" ]]; then
     echo "  exec Hyprland" >> ~/.profile
     echo "fi" >> ~/.profile
   fi
+fi
+
+
+# Uninstall unecessary packages
+read -p "Do you want to uninstall xterm and related packages? (y/n): " uninstall_packages
+if [[ $uninstall_packages == "y" ]]; then
+  sudo zypper remove xterm xterm-bin xtermset xterm-resize
 fi

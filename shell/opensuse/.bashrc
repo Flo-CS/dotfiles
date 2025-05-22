@@ -11,6 +11,8 @@
 # ridden in every subshell.
 
 export EDITOR=/usr/bin/nvim
+export SYSTEMD_EDITOR=/usr/bin/nvim
+export TERMINAL=alacritty
 
 alias lsa='ls --color=auto -la'
 
