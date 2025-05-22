@@ -102,17 +102,12 @@ There is also oh-my-posh for example
 
 ## TODO
 
-- https://wiki.hyprland.org/Getting-Started/Master-Tutorial/#themes
-- playerctl to control media
 - https://github.com/wwmm/easyeffects
-- wallpaper
-- cursor
 - replace wofi, by fuzzel ? because it is not very maintained anymore
 - audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should be changed
 - proper Hyprland exit when using wlogout
 - linux global system theme 
 - linux dark/light mode
-- split .bashrc and .profile to avoid conflicts with programs auto generating things (like rust and nvm)
 
 ## To learn
 
