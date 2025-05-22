@@ -129,4 +129,5 @@ There is also oh-my-posh for example
 - https://github.com/elkowar/eww
 - https://store.kde.org/browse
 - https://www.gnome-look.org/browse/
+- https://github.com/hyprland-community/awesome-hyprland
 
