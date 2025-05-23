@@ -35,6 +35,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
+  background: alpha(@muted, 0.1);
 }
 
 #window {
