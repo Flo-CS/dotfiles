@@ -15,3 +15,10 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'BufReadPost' }, {
     end, 100)
   end,
 })
+
+-- Add diagnostic display into the buffer
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    vim.diagnostic.config { virtual_text = { current_line = false } }
+  end,
+})
