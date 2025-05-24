@@ -44,6 +44,7 @@ alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
 alias gpl="git pull"
+alias gd="git diff"
 
 if command -v starship &>/dev/null; then
   eval "$(starship init bash)"
