@@ -6,7 +6,7 @@
 - proper Hyprland exit when using wlogout
 - linux global system theme 
 - linux dark/light mode
-- install ncdu, duf, zoxide, ranger
+- install ncdu, duf, zoxide, ranger, systemd-analyse, asciinema
 
 ## To learn
 
