@@ -100,19 +100,6 @@ To add a prompt style to the terminal
 
 There is also oh-my-posh for example
 
-## TODO
-
-- https://github.com/wwmm/easyeffects
-- replace wofi, by fuzzel ? because it is not very maintained anymore
-- audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should be changed
-- proper Hyprland exit when using wlogout
-- linux global system theme 
-- linux dark/light mode
-
-## To learn
-
-- Zypper package manager: what is a service ?
-
 ## Config templates
 
 - https://github.com/end-4/dots-hyprland/tree/main
