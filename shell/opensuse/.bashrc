@@ -15,12 +15,18 @@ export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
 
 # GENERAL
-alias cdf='cd "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
+# Fuzzy find file and directory, if it's a file, use bat to preview it and if it's a directory, use tree to preview it
+alias f='find | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat --color=always {}; fi" --preview-window=right:60%'
+alias fd='find -type d | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
+alias ff='find -type f | fzf --style full --height 60% --reverse --preview "bat --color=always {}" --preview-window=right:60%'
+
+alias cdf='cd "./$(fd)"'
+
 alias lsa='ls --color=auto -la --group-directories-first'
-alias lsf='lsa "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
 # alias ls='eza -a --icons=always'
 # alias ll='eza -al --icons=always'
 # alias lt='eza -a --tree --level=1 --icons=always'
+
 alias shutdown='systemctl poweroff'
 
 # VIM
@@ -28,8 +34,7 @@ alias vi='nvim'
 alias vim='nvim'
 
 alias nv='nvim'
-alias nvdf='nvim "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
-alias nvf='nvim "./$(find -type f | fzf --height 40% --reverse --preview "bat --color=always {}" --preview-window=up:40%)"'
+alias nvf='nvim "./$(f)"'
 
 alias truevim='vim'
 
