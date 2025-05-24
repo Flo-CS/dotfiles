@@ -22,6 +22,13 @@ fi
 
 
 
+# General
+# sudo zypper install eza
+# mkdir -p ~/.config/eza
+# ln -sT ~/dotfiles/eza/rose-pine.yml  ~/.config/eza/theme.yml
+
+
+
 # Hyprland
 sudo zypper install cpio cmake git meson gcc gcc-c++
 sudo zypper install hyprland-devel hyprland-protocols-devel

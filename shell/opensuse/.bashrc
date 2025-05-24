@@ -14,10 +14,25 @@ export EDITOR=/usr/bin/nvim
 export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
 
+# GENERAL
 alias lsa='ls --color=auto -la'
+# alias ls='eza -a --icons=always'
+# alias ll='eza -al --icons=always'
+# alias lt='eza -a --tree --level=1 --icons=always'
+alias shutdown='systemctl poweroff'
 
+# VIM
 alias truevim='vim'
 alias vim='nvim'
+alias vi='nvim'
+alias v='nvim'
+
+# GIT
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gpl="git pull"
 
 if command -v starship &>/dev/null; then
   eval "$(starship init bash)"
