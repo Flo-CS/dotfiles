@@ -15,17 +15,23 @@ export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
 
 # GENERAL
-alias lsa='ls --color=auto -la'
+alias cdf='cd "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
+alias lsa='ls --color=auto -la --group-directories-first'
+alias lsf='lsa "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
 # alias ls='eza -a --icons=always'
 # alias ll='eza -al --icons=always'
 # alias lt='eza -a --tree --level=1 --icons=always'
 alias shutdown='systemctl poweroff'
 
 # VIM
-alias truevim='vim'
-alias vim='nvim'
 alias vi='nvim'
-alias v='nvim'
+alias vim='nvim'
+
+alias nv='nvim'
+alias nvdf='nvim "./$(find -type d | fzf --height 40% --reverse --preview "tree -C {}" --preview-window=up:40%)"'
+alias nvf='nvim "./$(find -type f | fzf --height 40% --reverse --preview "bat --color=always {}" --preview-window=up:40%)"'
+
+alias truevim='vim'
 
 # GIT
 alias gs="git status"
