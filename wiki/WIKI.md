@@ -112,4 +112,5 @@ There is also oh-my-posh for example
 - https://store.kde.org/browse
 - https://www.gnome-look.org/browse/
 - https://github.com/hyprland-community/awesome-hyprland
+- https://github.com/MarkusVolk/hyprgui/tree/main
 
