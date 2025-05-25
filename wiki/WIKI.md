@@ -104,6 +104,10 @@ There is also oh-my-posh for example
 
 - https://github.com/end-4/dots-hyprland/tree/main
 
+## Interesting commands
+
+- fc: List and rexecute commands from history
+
 ## Useful links
 
 - https://arewewaylandyet.com/

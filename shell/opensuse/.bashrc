@@ -16,11 +16,11 @@ export TERMINAL=alacritty
 
 # GENERAL
 # Fuzzy find file and directory, if it's a file, use bat to preview it and if it's a directory, use tree to preview it
-alias f='find | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat --color=always {}; fi" --preview-window=right:60%'
-alias fzd='find -type d | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
-alias fzf='find -type f | fzf --style full --height 60% --reverse --preview "bat --color=always {}" --preview-window=right:60%'
+alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat --color=always {}; fi" --preview-window=right:60%'
+alias fzfd='fd -type d -H | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
+alias fzff='fd -type f -H | fzf --style full --height 60% --reverse --preview "bat --color=always {}" --preview-window=right:60%'
 
-alias cdf='cd "./$(fzd)"'
+alias cdf='cd "./$(fzfd)"'
 
 alias lsa='ls --color=auto -la --group-directories-first'
 # alias ls='eza -a --icons=always'
