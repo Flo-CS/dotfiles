@@ -27,6 +27,10 @@ fi
 # mkdir -p ~/.config/eza
 # ln -sT ~/dotfiles/eza/rose-pine.yml  ~/.config/eza/theme.yml
 sudo zypper install bat
+mkdir -p "$(bat --config-dir)"
+ln -sT ~/dotfiles/bat/themes "$(bat --config-dir)/themes"
+bat cache --build
+
 sudo zypper install fd
 
 
