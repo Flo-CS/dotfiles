@@ -16,11 +16,10 @@ export TERMINAL=alacritty
 
 # GENERAL
 # Fuzzy find file and directory, if it's a file, use bat to preview it and if it's a directory, use tree to preview it
-export BAT_THEME="rose-pine"
 # TODO: perhaps I should replace alias by functions to avoid issues with arguments
-alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat --color=always {}; fi" --preview-window=right:60%'
+alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat {}; fi" --preview-window=right:60%'
 alias fzfd='fd --type d -H | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
-alias fzff='fd --type f -H | fzf --style full --height 60% --reverse --preview "bat --color=always {}" --preview-window=right:60%'
+alias fzff='fd --type f -H | fzf --style full --height 60% --reverse --preview "bat {}" --preview-window=right:60%'
 
 alias cdf='cd "./$(fzfd)"'
 

@@ -29,6 +29,7 @@ fi
 sudo zypper install bat
 mkdir -p "$(bat --config-dir)"
 ln -sT ~/dotfiles/bat/themes "$(bat --config-dir)/themes"
+ln -sT ~/dotfiles/bat/config "$(bat --config-dir)/config"
 bat cache --build
 
 sudo zypper install fd
