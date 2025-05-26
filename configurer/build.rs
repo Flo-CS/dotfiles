@@ -15,12 +15,7 @@ fn main() -> Result<(), Error> {
     println!("Output directory: {:?}", outdir);
 
     let mut cmd = Cli::command();
-    let path = generate_to(
-        Bash,
-        &mut cmd,     // We need to specify what generator to use
-        "configurer", // We need to specify the bin name manually
-        outdir,       // We need to specify where to write to
-    )?;
+    let path = generate_to(Bash, &mut cmd, "configurer", outdir)?;
 
     println!("cargo:warning=completion file is generated: {path:?}");
 
