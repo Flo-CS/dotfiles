@@ -3,12 +3,14 @@
 ## Pre-dotfiles
 
 1) Install OpenSUSE Tumbleweed
-  - Do not modify existing Windows partitions if any
-  - With the server preset but
-      - remove yast server utilities
-      - add fonts
-      - add x11 patterns, but remove icewm, and only select SDDM display manager
-  - Disable autologin
+- Do not modify existing Windows partitions if any
+- With the server preset but
+  - remove yast server utilities
+  - add fonts
+  - add x11 window system, and only select SDDM display manager
+  - block SSH
+  - select text mode systemd target
+- Disable autologin
 3) Use nmcli or nmtui to connect to internet
 4) Make zypper update or zypper dup
 5) Install hyprland, alacritty
