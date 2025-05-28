@@ -37,10 +37,10 @@ sudo zypper install fd
 
 
 # Hyprland
-sudo zypper install cpio cmake git meson gcc gcc-c++
-sudo zypper install hyprland-devel hyprland-protocols-devel
 sudo zypper install hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support
 ## TODO: perhaps use the e.g. pkgconfig(pixman-1) syntax
+sudo zypper install cpio cmake git meson gcc gcc-c++
+sudo zypper install hyprland-devel hyprland-protocols-devel
 sudo zypper install libpixman-1-0-devel libdrm-devel pango-devel libinput-devel wayland-devel wayland-protocols-devel libxkbcommon-devel systemd-devel Mesa-libGLESv2-devel Mesa-libGLESv3-devel hyprlang-devel hyprutils-devel hyprgraphics-devel aquamarine-devel xcb-util-wm-devel
 ## Ask plugins version 
 read -p "Enter the version of hyprland-plugins (e.g. v0.48.0): " plugins_version
@@ -185,10 +185,12 @@ sudo zypper install git-filter-repo
 
 
 # Nvidia
-sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
-sudo zypper install-new-recommends --repo repo-non-free
-sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-gl-G06 nvidia-compute-G06 nvidia-compute-utils-G06
-
+read -p "Do you want to install the NVIDIA drivers? (y/n): " install_nvidia
+if [[ $install_nvidia == "y" ]]; then
+  sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
+  sudo zypper install-new-recommends --repo repo-non-free
+  sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-gl-G06 nvidia-compute-G06 nvidia-compute-utils-G06
+fi
 
 
 # Remove SDDM
