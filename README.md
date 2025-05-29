@@ -1,6 +1,6 @@
 # README
 
-## Pre-dotfiles
+## Pre-dotfiles OpenSUSE Tumbleweed
 
 1) Install OpenSUSE Tumbleweed
 - Do not modify existing Windows partitions if any
@@ -21,6 +21,8 @@
 10) Download KeepassXC AppImage (because trustworthy), warning it only runs on X for now
 11) Download KeepassXC database
 12) Authenticate to Github and clone dotfiles
+
+## Pre-dotfiles EndeavourOS
 
 ## Dotfiles
 

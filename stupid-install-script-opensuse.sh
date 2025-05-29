@@ -28,11 +28,11 @@ sudo cp ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
 sudo zypper install sof-firmware
 
 # Bashrc and Profile
-create_symlink ~/dotfiles/shell/opensuse/.bashrc ~/.bashrc-default
+create_symlink ~/dotfiles/shell/.bashrc ~/.bashrc-default
 if ! grep -q "source ~/.bashrc-default" ~/.bashrc; then
   echo "source ~/.bashrc-default" >> ~/.bashrc
 fi
-create_symlink ~/dotfiles/shell/opensuse/.profile ~/.profile-default
+create_symlink ~/dotfiles/shell/.profile ~/.profile-default
 if ! grep -q "source ~/.profile-default" ~/.profile; then
   echo "source ~/.profile-default" >> ~/.profile
 fi
@@ -150,7 +150,7 @@ create_symlink ~/dotfiles/btop/themes ~/.config/btop/themes
 sudo zypper install fastfetch
 
 # Git
-create_symlink ~/dotfiles/gitconfig/opensuse/.gitconfig ~/.gitconfig-default
+create_symlink ~/dotfiles/gitconfig/linux/.gitconfig ~/.gitconfig-default
 if ! grep -q "~/.gitconfig-default" ~/.gitconfig; then
   echo "[include]" >> ~/.gitconfig
   echo "	path = ~/.gitconfig-default" >> ~/.gitconfig
