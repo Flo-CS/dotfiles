@@ -9,7 +9,7 @@
   - add fonts
   - add x11 window system, and only select SDDM display manager
   - block SSH
-  - select text mode systemd target
+  - select graphic mode systemd target
 - Disable autologin
 3) Use nmcli or nmtui to connect to internet
 4) Make zypper update or zypper dup
