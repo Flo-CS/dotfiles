@@ -69,6 +69,7 @@ create_symlink ~/dotfiles/hypr ~/.config/hypr
 # System controls
 sudo zypper in playerctl brightnessctl
 sudo zypper in power-profiles-daemon
+sudo zypper in bluetoothctl bluetuith
 
 # Waybar
 sudo zypper install --no-recommends waybar
