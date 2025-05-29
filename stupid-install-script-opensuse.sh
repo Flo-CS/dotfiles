@@ -118,6 +118,10 @@ sudo zypper install --no-recommends zig
 
 # Fonts
 ##
+## - JetBrains Mono Nerd Font
+## - Symbols Nerd Font
+## - Rubik
+##
 ## Manually download from NerdFonts: https://www.nerdfonts.com/font-downloads
 ## unzip XXX.zip -d XXX
 ## cp -r XXX /usr/share/fonts/
