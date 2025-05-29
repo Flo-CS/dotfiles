@@ -26,6 +26,9 @@ See the ISSUE.md file for more information about the NVIDIA drivers installation
 
 prime-select is not installed by default, but it can be useful to switch between integrated graphics and NVIDIA GPU.
 
+- [https://en.opensuse.org/SDB:NVIDIA_drivers]
+- [https://en.opensuse.org/SDB:NVIDIA_the_hard_way]
+
 ## Hyprland
 
 Hyprland is an implementation of the Wayland protocol, which is the successor of the old X11 protocol.
