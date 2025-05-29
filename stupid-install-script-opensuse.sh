@@ -63,6 +63,7 @@ if [[ $install_hyprland_devel == "y" ]]; then
 fi
 sudo zypper install xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 sudo zypper in qt6-wayland libqt5-qtwayland
+touch ~/.config/hypr/hyprland/custom.conf
 create_symlink ~/dotfiles/hypr ~/.config/hypr
 
 # System controls
