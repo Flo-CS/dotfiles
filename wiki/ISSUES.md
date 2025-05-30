@@ -20,6 +20,8 @@ Second, all the *-devel packages for the hyprland dependencies must be installed
 Solution 1: use DisplayPort instead of HDMI.
 Solution 2: disable FreeSync in the monitor settings and activate the HDMI compatibility mode (if available).
 
+=> Seems to be related to: [https://wiki.archlinux.org/title/Variable_refresh_rate]
+
 ## Unable to launch KeepassXC AppImage
 
 The app image of KeepassXC is only "compiled" (do we say that?) for QT platform plugin xcb.
