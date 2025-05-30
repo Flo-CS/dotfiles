@@ -14,7 +14,20 @@ There is:
 ### Pipewire
 
 Pipewire is a multimedia server that aims to be a drop-in replacement for PulseAudio and JACK.
-It seems to be installed by default in OpenSUSE Tumbleweed.
+
+It seems to be installed by default in OpenSUSE Tumbleweed. But verify it's running using:
+
+```bash
+systemctl --user status pipewire
+systemctl --user status wireplumber
+```
+
+Otherwise, start it with:
+
+```bash
+systemctl --user enable --now pipewire
+systemctl --user enable --now wireplumber
+```
 
 ## NVIDIA
 
