@@ -4,13 +4,12 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
+    event = { 'BufReadPre', 'BufNewFile' },
     keys = {
       {
         '<leader>cf',
         function()
-          require('conform').format { async = true, lsp_format = 'fallback' }
+          require('conform').format {}
         end,
         desc = '[c]ode [f]ormat buffer',
       },
@@ -32,6 +31,12 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        json = { 'prettier' },
+        jsonc = { 'prettier' },
+        rust = { 'rustfmt' },
+        css = { 'prettier' },
+        scss = { 'prettier' },
+        html = { 'prettier' },
       },
     },
   },
