@@ -66,6 +66,7 @@ window#waybar.empty #window {
 }
 
 #privacy,
+#idle_inhibitor,
 #pulseaudio,
 #bluetooth,
 #network {
