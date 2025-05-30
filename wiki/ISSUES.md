@@ -19,3 +19,10 @@ Second, all the *-devel packages for the hyprland dependencies must be installed
 
 Solution 1: use DisplayPort instead of HDMI.
 Solution 2: disable FreeSync in the monitor settings and activate the HDMI compatibility mode (if available).
+
+## Unable to launch KeepassXC AppImage
+
+The app image of KeepassXC is only "compiled" (do we say that?) for QT platform plugin xcb.
+So even QT supports wayland, it will not launch if the QT_QPA_PLATFORM env variable has been set to `wayland`. One way to fix this is to set it to `wayland;xcb`
+
+Also, if a warning appears on lauching about a invalid style override, the QT_STYLE_OVERRIDE variable can be responsible if it's set to `Kvantum`, but I think the error can be safely ignored.
