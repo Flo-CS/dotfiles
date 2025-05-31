@@ -47,6 +47,7 @@ sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-driver-G0
       - Select correct partitioning settings
       - Select no desktop environment
       - Select grub bootloader
+      - Choose btfrs partition type
 2) Install nvidia drivers with the EndeavourOS nvidia-installer: `nvidia-inst --closed`
 3) Install hyprland, alacritty
 4) Run hyprland one time and close it

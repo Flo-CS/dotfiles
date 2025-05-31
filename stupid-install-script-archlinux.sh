@@ -6,22 +6,43 @@ create_symlink() {
 	local link_name="$2"
 
 	if [ -e "$link_name" ]; then
-		read -p "File $link_name already exists. Do you want to backup it? (y/n): " backup_choice
-		if [[ $backup_choice == "y" ]]; then
-			mv "$link_name" "${link_name}.bak"
-			echo "Backup created: ${link_name}.bak"
-		else
-			echo "Skipping creation of symlink for $link_name."
-			return
-		fi
+		echo "File $link_name already exists. Backup will be created."
+		mv --interactive "$link_name" "${link_name}.bak"
+		echo "Backup created: ${link_name}.bak"
 	fi
 
 	ln -sT "$target" "$link_name"
 	echo "Created symlink: $link_name -> $target"
 }
 
+# Snapper
+sudo pacman -S snapper
+read -p "Do you want to setup Snapper ? (y/n)" setup_snapper
+if [[ $setup_snapper == "y" ]]; then
+	sudo snapper -c root create-config /
+	sudo btrfs subvolume list /
+	lsblk
+	sudo cp --interactive /etc/snapper/configs/root /etc/snapper/configs/root.bak
+
+	sudo snapper -c root set-config ALLOW_GROUPS="wheel"
+	sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="5"
+	sudo snapper -c root set-config TIMELINE_LIMIT_DAILY="7"
+	sudo snapper -c root set-config TIMELINE_LIMIT_WEEKLY="0"
+	sudo snapper -c root set-config TIMELINE_LIMIT_MONTHLY="0"
+	sudo snapper -c root set-config TIMELINE_LIMIT_YEARLY="0"
+
+	sudo pacman -S grub-btrfs
+	sudo systemctl enable --now grub-btrfsd.path
+	sudo cp --interactive /etc/default/grub /etc/default/grub.bak
+	sudo grub-mkconfig -o /boot/grub/grub.cfg
+	sudo systemctl enable --now snapper-timeline.timer
+	sudo systemctl enable --now snapper-cleanup.timer
+
+	sudo snapper -c root create --description "Initial snapshot after first boot and installation of necessary packages"
+fi
+
 # System
-sudo cp ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
+sudo cp --interactive ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
 
 # Audio
 sudo pacman -S sof-firmware pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
@@ -148,3 +169,5 @@ if [[ $set_hyprland == "y" ]]; then
     echo "fi" >> ~/.profile
   fi
 fi
+
+sudo snapper -c root create --description "After installation of all packages and configuration files"
