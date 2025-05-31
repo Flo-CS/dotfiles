@@ -1,5 +1,9 @@
 # README
 
+## ISO, USB, and Installation
+
+Use Ventoy to create a bootable USB drive allowing to boot multiple ISO files from the same USB drive.
+
 ## OpenSUSE Tumbleweed
 
 1) Install OpenSUSE Tumbleweed
