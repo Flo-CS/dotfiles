@@ -49,6 +49,8 @@ bat cache --build
 
 sudo zypper install fd
 
+sudo zypper install man-pages
+
 # Hyprland
 sudo zypper install hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support
 read -p "Do you want to install the Hyprland plugins ? (y/n): " install_hyprland_devel
