@@ -30,6 +30,8 @@ alias lsa='ls --color=auto -la --group-directories-first'
 # alias ll='eza -al --icons=always'
 # alias lt='eza -a --tree --level=1 --icons=always'
 
+eval "$(zoxide init bash)"
+
 alias shutdown='systemctl poweroff'
 
 # VIM

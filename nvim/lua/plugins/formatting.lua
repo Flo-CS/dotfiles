@@ -37,6 +37,8 @@ return {
         css = { 'prettier' },
         scss = { 'prettier' },
         html = { 'prettier' },
+        bash = { 'shfmt' },
+        sh = { 'shfmt' },
       },
     },
   },

@@ -14,11 +14,11 @@
 - How does the system work, try to understand the global "architecture" (for example, what happen when I install nvidia drivers ?)
 - How does dkms work ? (example with nvidia drivers)
 
+## General
+
 ### Reliability
 
-- Setup snapper before installing anything, at EndevourOS install time for example
-
-## General
+- Understand btrfs, subvolumes, etc.
 
 ### Customization
 

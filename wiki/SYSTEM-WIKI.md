@@ -71,3 +71,15 @@ NOTE: Only works with GTK 3 ?
 ## Install fonts
 
 For global installation, copy all .ttf files to /usr/share/fonts/xxx/ folder
+
+## BTRFS
+
+[https://www.youtube.com/watch?v=rl-VasRoUe4]
+
+## BTRFS and Snapper
+
+### Rollback the 'Arch Way'
+
+WARNING: using snapper rollback directly on Arch Linux is not recommended.
+
+See [https://www.dwarmstrong.org/btrfs-snapshots-rollbacks/]
