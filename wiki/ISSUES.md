@@ -17,8 +17,8 @@ Second, all the *-devel packages for the hyprland dependencies must be installed
 
 ### Option 1: Monitor issue (FreeSync/HDMI)
 
-Solution 1: use DisplayPort instead of HDMI.
-Solution 2: disable FreeSync in the monitor settings and activate the HDMI compatibility mode (if available).
+Solution 1: disable FreeSync in the monitor settings and activate the HDMI compatibility mode (if available).
+Solution 2: use DisplayPort instead of HDMI. But be careful, because FreeSync can still be enabled for DisplayPort, and it can cause different issues, like extreme flickering or screen tearing, so disable it also.
 
 => Seems to be related to: [https://wiki.archlinux.org/title/Variable_refresh_rate]
 
