@@ -7,6 +7,13 @@
 - Zypper package manager: what is a service ?
 - audiodriver is set to pulseaudio in env vars, but pipewire is installed, so should it be changed
 
+## Arch Linux
+
+### To learn
+
+- How does the system work, try to understand the global "architecture" (for example, what happen when I install nvidia drivers ?)
+- How does dkms work ? (example with nvidia drivers)
+
 ## General
 
 ### Customization
