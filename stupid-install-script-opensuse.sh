@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 
 # Function to create a symbolic link but ask for backup if it already exists
@@ -171,9 +170,6 @@ sudo zypper install git-filter-repo
 # Nvidia
 read -p "Do you want to install the NVIDIA drivers? (y/n): " install_nvidia
 if [[ $install_nvidia == "y" ]]; then
-  sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
-  sudo zypper install-new-recommends --repo repo-non-free
-  sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-gl-G06 nvidia-compute-G06 nvidia-compute-utils-G06
 fi
 
 # Remove SDDM

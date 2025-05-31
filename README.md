@@ -31,6 +31,14 @@ They should be placed in a directory with a file named .ventoyignore.
 12) Install the dotfiles
 13) Run the temporary stupid-install-script-opensuse.sh
 
+### Install NVIDIA Drivers in parallel
+
+```bash
+sudo zypper install openSUSE-repos-Tumbleweed-NVIDIA
+sudo zypper install-new-recommends --repo repo-non-free
+sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-driver-G06-kmp-default
+```
+
 ## EndeavourOS
 
 1) Install EndeavourOS
