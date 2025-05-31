@@ -115,6 +115,9 @@ create_symlink ~/dotfiles/icons ~/.local/share/icons
 read -p "Press enter when nvm is installed"
 nvm install --lts
 
+# TLDR
+npm install -g tldr
+
 # Zig
 sudo zypper install --no-recommends zig
 
