@@ -24,7 +24,7 @@ create_symlink() {
 sudo cp ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
 
 # Audio
-sudo pacman -S sof-firmware pipewire wireplumbler pipewire-audio pipewire-pulse pipewire-jack
+sudo pacman -S sof-firmware pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
 
 # Bashrc and Profile
 create_symlink ~/dotfiles/shell/.bashrc ~/.bashrc-default
