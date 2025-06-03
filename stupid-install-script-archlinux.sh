@@ -46,6 +46,7 @@ fi
 
 # System
 sudo cp --interactive ~/dotfiles/system/sudoers/florian /etc/sudoers.d/florian
+create_symlink ~/dotfiles/system/user-dirs.dirs ~/.config/user-dirs.dirs
 
 # Audio
 sudo pacman -S sof-firmware pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
