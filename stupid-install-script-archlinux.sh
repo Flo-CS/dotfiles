@@ -15,9 +15,9 @@ create_symlink() {
 	echo "Created symlink: $link_name -> $target"
 }
 
-# Snapper
-read -p "Do you want to setup Snapper ? (y/n)" setup_snapper
-if [[ $setup_snapper == "y" ]]; then
+# Snapshot tool setup
+read -p "Do you want to setup snapshot tool (Timeshift) ? (y/n)" setup_snapshot_tool
+if [[ $setup_snapshot_tool == "y" ]]; then
 	# WARNING: The boot on snapshot part (managed by grub-btrfs) will only work with EndeavourOS because it uses dracut.
 	# For raw Arch Linux system, see grub-btrfs docs for more information and the alternative way to boot on snapshot.
 	sudo pacman -S snapper snap-pac inotify-tools grub-btrfs
@@ -28,7 +28,7 @@ if [[ $setup_snapper == "y" ]]; then
 	sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="10"
 	sudo snapper -c root set-config TIMELINE_LIMIT_DAILY="5"
 	sudo snapper -c root set-config TIMELINE_LIMIT_WEEKLY="3"
-	sudo snapper -c root set-config TIMELINE_LIMIT_MONTHLY="3"
+	sudo snapper -c root set-config TIMELINE_LIMIT_MONTHLY="0"
 	sudo snapper -c root set-config TIMELINE_LIMIT_YEARLY="0"
 
 	sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
@@ -76,7 +76,7 @@ sudo pacman -S zoxide
 sudo pacman -S man-pages
 
 # Hyprland
-sudo pacman -S hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support
+sudo pacman -S hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support hyprpolkitagent
 sudo pacman -S xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
 sudo pacman -S qt6-wayland qt5-wayland
 
