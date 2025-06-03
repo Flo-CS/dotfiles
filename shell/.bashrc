@@ -30,8 +30,6 @@ alias lsa='ls --color=auto -la --group-directories-first'
 # alias ll='eza -al --icons=always'
 # alias lt='eza -a --tree --level=1 --icons=always'
 
-eval "$(zoxide init bash)"
-
 alias shutdown='systemctl poweroff'
 
 # VIM
@@ -58,3 +56,5 @@ fi
 if command -v fzf &>/dev/null; then
   source ~/.local/bin/fzf/rose-pine.sh
 fi
+
+eval "$(zoxide init bash)"
