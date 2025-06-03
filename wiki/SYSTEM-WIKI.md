@@ -83,3 +83,54 @@ For global installation, copy all .ttf files to /usr/share/fonts/xxx/ folder
 WARNING: using snapper rollback directly on Arch Linux is not recommended.
 
 See [https://www.dwarmstrong.org/btrfs-snapshots-rollbacks/]
+
+Or (from ChatGPT, not tested):
+
+#### Case 1: Rolling back while the system is running and still bootable
+
+```bash
+# Identify the snapshot you want to rollback to
+sudo snapper list
+# Mount the btrfs root subvolume (use lsblk to find the correct device)
+sudo mount /dev/nvme0n1p4 /mnt
+# Backup the current root subvolume
+sudo mv /mnt/@ /mnt/@.broken
+# Restore the snapshot
+sudo btrfs subvolume snapshot /mnt/@snapshots/12345/snapshot /mnt/@
+# Unmount and reboot
+sudo umount /mnt
+sudo reboot
+```
+
+#### Case 2: Rolling Back Using a Live USB
+
+```bash
+# Identify the root partition (e.g., /dev/sda1)
+lsblk
+# Mount the btrfs root subvolume
+sudo mount /dev/nvme0n1p4 /mnt
+# Backup the current root subvolume
+sudo mv /mnt/@ /mnt/@.broken
+# Restore the snapshot
+sudo btrfs subvolume snapshot /mnt/@snapshots/12345/snapshot /mnt/@
+# Unmount and reboot
+sudo umount /mnt
+sudo reboot
+```
+
+#### Case 3: Rolling Back from a GRUB Snapshot Boot
+
+WARNING: Avoid booting in the snapshot you intend to restore.
+
+```bash
+# Mount the btrfs root subvolume
+sudo mount /dev/nvme0n1p4 /mnt
+# Backup the current root subvolume
+sudo mv /mnt/@ /mnt/@.broken
+# Restore the snapshot
+sudo btrfs subvolume snapshot /mnt/@snapshots/12345/snapshot /mnt/@
+# Unmount and reboot
+sudo umount /mnt
+sudo reboot
+```
+
