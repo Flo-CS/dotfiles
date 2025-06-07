@@ -16,7 +16,7 @@ create_symlink() {
 }
 
 # Snapshot tool setup
-read -p "Do you want to setup snapshot tool (Timeshift) ? (y/n)" setup_snapshot_tool
+read -p "Do you want to setup snapshot tool (Snapper) ? (y/n)" setup_snapshot_tool
 if [[ $setup_snapshot_tool == "y" ]]; then
 	# WARNING: The boot on snapshot part (managed by grub-btrfs) will only work with EndeavourOS because it uses dracut.
 	# For raw Arch Linux system, see grub-btrfs docs for more information and the alternative way to boot on snapshot.
@@ -135,6 +135,7 @@ create_symlink ~/dotfiles/icons ~/.local/share/icons
 
 # NodeJS
 sudo pacman -S nvm
+echo "source /usr/share/nvm/init-nvm.sh" >> ~/.bashrc
 source ~/.bashrc
 nvm install --lts
 
