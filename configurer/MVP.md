@@ -12,11 +12,13 @@
 
 - Some configs are machine specific and the app only have a main config file, so config file should have a machine specific section
 - Some configs are machine specific and the app have multiple config files, so machine specific config file should be used inside the main one
-insideh
 
 ## Architecture
 
 - Either have custom config format (+ allow export) or integrate with existing tools like bash
+
+- Git Dotfiles -> Build directory -> Symlink to the correct place
+- Why ?
 
 ### Custom Config Format hypothesis
 
