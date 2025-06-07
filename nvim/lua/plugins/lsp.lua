@@ -90,7 +90,6 @@ return {
           map('gr', require('telescope.builtin').lsp_references, '[g]oto [r]eferences')
           map('gI', require('telescope.builtin').lsp_implementations, '[g]oto [I]mplementation')
           map('gD', vim.lsp.buf.declaration, '[g]oto [D]eclaration')
-          map('<leader>cr', vim.lsp.buf.rename, '[c]ode [r]ename')
           map('<leader>ca', vim.lsp.buf.code_action, '[c]ode [a]ction')
           map('<M-CR>', vim.lsp.buf.code_action, '[c]ode [a]ction')
         end,
@@ -143,6 +142,16 @@ return {
         { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
+  },
+  {
+    'smjonas/inc-rename.nvim',
+    opts = {},
+    config = function(_, opts)
+      require('inc_rename').setup(opts)
+      vim.keymap.set('n', '<leader>cr', function()
+        return ':IncRename ' .. vim.fn.expand '<cword>'
+      end, { expr = true })
+    end,
   },
   { 'mfussenegger/nvim-jdtls' },
 }
