@@ -115,6 +115,7 @@ return {
         ts_ls = {},
         astro = {},
         stylua = {},
+        markdownlint = {},
       }
       local ensure_installed = vim.tbl_keys(servers or {})
 
