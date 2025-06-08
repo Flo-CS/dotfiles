@@ -144,7 +144,7 @@ sudo pacman -S starship
 create_symlink ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 
 # feature: Icons
-create_symlink ~/dotfiles/icons ~/.local/share/icons
+cp ~/dotfiles/icons/. ~/.local/share/icons
 
 # feature: NodeJS
 sudo pacman -S nvm
