@@ -15,7 +15,6 @@ export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
 
 # GENERAL
-# Fuzzy find file and directory, if it's a file, use bat to preview it and if it's a directory, use tree to preview it
 # TODO: perhaps I should replace alias by functions to avoid issues with arguments
 alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat {}; fi" --preview-window=right:60%'
 alias fzfd='fd --type d -H | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
@@ -57,4 +56,6 @@ if command -v fzf &>/dev/null; then
   source ~/.local/bin/fzf/rose-pine.sh
 fi
 
-eval "$(zoxide init bash)"
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init bash)"
+fi

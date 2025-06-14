@@ -13,12 +13,12 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', ']<CR>', 'o<Esc>', { desc = 'Insert newline below' })
-vim.keymap.set('n', '[<CR>', 'O<Esc>', { desc = 'Insert newline above' })
-
 vim.keymap.set('i', '<C-j>', '<down>', { noremap = false, desc = 'Move down in insert mode' })
 vim.keymap.set('i', '<C-k>', '<up>', { noremap = false, desc = 'Move up in insert mode' })
 vim.keymap.set('i', '<C-h>', '<left>', { noremap = false, desc = 'Move left in insert mode' })
 vim.keymap.set('i', '<C-l>', '<right>', { noremap = false, desc = 'Move right in insert mode' })
+
+vim.keymap.set('n', ']<CR>', 'o<Esc>', { desc = 'Insert newline below' })
+vim.keymap.set('n', '[<CR>', 'O<Esc>', { desc = 'Insert newline above' })
 
 vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select whole buffer' })
