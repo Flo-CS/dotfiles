@@ -49,12 +49,7 @@ sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-driver-G0
       - Select grub bootloader
       - Choose btfrs partition type
 2) Install nvidia drivers with the EndeavourOS nvidia-installer: `nvidia-inst --closed`
-3) Install hyprland, alacritty
-4) Run hyprland one time and close it
-5) Update the generated hyprland.conf file to change the keyboard layout, the terminal, the generated message, and screen zoom
-6) Install git, git-credential-oauth
-7) Download KeepassXC AppImage (because trustworthy), warning it only runs on X for now
-8) Download KeepassXC database
-9) Authenticate to Github and clone dotfiles
-10) Install the dotfiles
-11) Run the temporary stupid-install-script-archlinux.sh
+3) Install git, git-credential-oauth, hyprland, alacritty
+4) Run dotfiles
+5) Download KeepassXC AppImage (because trustworthy), warning it only runs on X for now
+6) Download KeepassXC database
