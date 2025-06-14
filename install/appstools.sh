@@ -27,3 +27,6 @@ install_packages gvfs udisks2
 # man-pages
 install_packages man-pages
 install_packages tldr
+
+# file-manager
+install_packages thunar
