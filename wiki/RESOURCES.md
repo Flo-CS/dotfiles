@@ -14,6 +14,7 @@
 
 - [https://github.com/Aylur/ags]
 - [https://github.com/elkowar/eww]
+- [https://quickshell.outfoxxed.me/]
 
 ### Themes
 
