@@ -8,5 +8,5 @@ create_dotfiles_symlink nvim ~/.config/nvim
 # git
 create_dotfiles_symlink gitconfig/.gitconfig ~/.gitconfig-default
 
-insert_content_with_marker ~/.gitconfig "custom" "[include]
+insert_content_with_marker ~/.gitconfig "gitconfig-default" "[include]
 	path = ~/.gitconfig-default"
