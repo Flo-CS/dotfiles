@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source _utils.sh
+source $DOTFILES_UTILS
 
 # neovim
 install_packages neovim

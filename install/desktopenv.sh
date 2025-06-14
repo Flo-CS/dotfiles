@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source _utils.sh
+source $DOTFILES_UTILS
 
 # hyprland
 install_packages hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support hyprpolkitagent

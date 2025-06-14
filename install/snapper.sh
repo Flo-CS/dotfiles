@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source _utils.sh
+source $DOTFILES_UTILS
 
 # snapper
 install_packages snapper snap-pac inotify-tools grub-btrfs

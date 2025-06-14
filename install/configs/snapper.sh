@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../_utils.sh
+source $DOTFILES_UTILS
 
 # WARNING: The boot on snapshot part (managed by grub-btrfs) will only work with EndeavourOS because it uses dracut.
 # For raw ArchLinux systems, see grub-btrfs docs for more information and the alternative way to boot on snapshot.

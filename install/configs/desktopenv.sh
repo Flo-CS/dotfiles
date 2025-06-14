@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../_utils.sh
+source $DOTFILES_UTILS
 
 # hyprland
 touch ~/.config/hypr/hyprland/custom.conf

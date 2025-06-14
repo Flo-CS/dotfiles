@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+source $DOTFILES_UTILS
+
 # neovim
 create_dotfiles_symlink nvim ~/.config/nvim
 

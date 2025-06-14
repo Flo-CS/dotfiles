@@ -1,0 +1,7 @@
+export DOTFILES_USERNAME="${USER:-$(whoami)}"
+export DOTFILES_DEVICE_NAME="${DEVICE_NAME:-$(hostname)}"
+
+export DOTFILES_DIR=$HOME/dotfiles
+export DOTFILES_INSTALL_DIR="$DOTFILES_DIR/install"
+export DOTFILES_CONFIGS_DIR="$DOTFILES_INSTALL_DIR/configs"
+export DOTFILES_UTILS="$DOTFILES_INSTALL_DIR/_utils.sh"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../_utils.sh
+source $DOTFILES_UTILS
 
 create_dotfiles_symlink shell/.bashrc ~/.bashrc-default
 insert_content_with_marker ~/.bashrc "custom" "source ~/.bashrc-default"

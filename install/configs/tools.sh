@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+source $DOTFILES_UTILS
+
 # files-handling
 mkdir -p "$(bat --config-dir)"
 create_dotfiles_symlink bat "$(bat --config-dir)"

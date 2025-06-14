@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source _utils.sh
+source $DOTFILES_UTILS
 
 # terminal
 install_packages alacritty

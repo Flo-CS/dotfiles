@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source _utils.sh
+source $DOTFILES_UTILS
 
 # fonts
 install_packages ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols

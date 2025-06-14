@@ -1,45 +1,27 @@
 #!/usr/bin/env bash
 
-# read global envvar user and create it if it does not exist
-DOTFILES_USERNAME="${USER:-$(whoami)}"
-DOTFILES_DEVICE_NAME="${DEVICE_NAME:-$(hostname)}"
-
-DOTFILES_DIR="$HOME/dotfiles"
-
 create_backup() {
 	local file="$1"
 
-	if [ -e "$file" ]; then
-		echo "File $file already exists. Backup will be created."
-		mv --interactive "$file" "${file}.bak"
-		echo "Backup created: ${file}.bak"
-	else
-		echo "No existing file to backup: $file"
-	fi
+	mv "$file" "${file}.bak" && echo "Backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup "$link_name"
-
-	ln -sT "$target" "$link_name"
-	echo "Created symlink: $link_name -> $target"
+	create_backup "$link_name" && ln -sT "$target" "$link_name" && echo "Created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
-	create_symlink "$1" "$DOTFILES_DIR/files/$2"
+	create_symlink "$DOTFILES_DIR/files/$1" "$2"
 }
 
 create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup "$destination"
-
-	cp "$source" "$destination"
-	echo "Copied $source to $destination"
+	create_backup "$destination" && cp "$source" "$destination" && echo "Copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -66,5 +48,5 @@ install_packages() {
 	fi
 
 	echo "Installing packages: ${packages[*]}"
-	sudo pacman -S --noconfirm "${packages[@]}"
+	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }

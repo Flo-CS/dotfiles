@@ -1,7 +1,11 @@
-./snapper.sh
-./system.sh
-./user.sh
-./desktopenv.sh
-./bash.sh
-./tools.sh
-./dev.sh
+#!/usr/bin/env bash
+
+source $DOTFILES_UTILS
+
+$DOTFILES_CONFIGS_DIR/snapper.sh
+$DOTFILES_CONFIGS_DIR/system.sh
+$DOTFILES_CONFIGS_DIR/user.sh
+$DOTFILES_CONFIGS_DIR/desktopenv.sh
+$DOTFILES_CONFIGS_DIR/bash.sh
+$DOTFILES_CONFIGS_DIR/tools.sh
+$DOTFILES_CONFIGS_DIR/dev.sh

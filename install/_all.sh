@@ -1,7 +1,11 @@
-./snapper.sh
-./system.sh
-./desktopenv.sh
-./desktopapps.sh
-./tools.sh
-./dev.sh
-./fonts.sh
+#!/usr/bin/env bash
+
+source $DOTFILES_UTILS
+
+$DOTFILES_INSTALL_DIR/snapper.sh
+$DOTFILES_INSTALL_DIR/system.sh
+$DOTFILES_INSTALL_DIR/desktopenv.sh
+$DOTFILES_INSTALL_DIR/desktopapps.sh
+$DOTFILES_INSTALL_DIR/tools.sh
+$DOTFILES_INSTALL_DIR/dev.sh
+$DOTFILES_INSTALL_DIR/fonts.sh
