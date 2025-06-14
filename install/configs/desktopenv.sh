@@ -25,7 +25,7 @@ create_dotfiles_symlink swaync ~/.config/swaync
 create_dotfiles_symlink wofi ~/.config/wofi
 
 # icons
-create_dotfiles_copy icons/. ~/.local/share/icons
+create_dotfiles_copy icons/. ~/.local/share/icons -r
 
 # hyprland-autostart
 insert_content_with_marker ~/.bash_profile "hyprland-autostart" "if uwsm check may-start; then 

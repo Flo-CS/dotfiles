@@ -3,6 +3,10 @@
 create_backup() {
 	local file="$1"
 
+	if [ ! -e "$file" ]; then
+		echo "File $file does not exist, no backup created."
+		return 0
+	fi
 	mv "$file" "${file}.bak" && echo "Backup created: ${file}.bak"
 }
 
@@ -21,7 +25,10 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup "$destination" && cp "$source" "$destination" && echo "Copied $source to $destination"
+	# TODO: Improve this
+	local extra_args=("${@:3}")
+
+	create_backup "$destination" && cp "${extra_args[@]}" "$source" "$destination" && echo "Copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -49,4 +56,16 @@ install_packages() {
 
 	echo "Installing packages: ${packages[*]}"
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
+}
+
+install_yay_packages() {
+	local packages=("$@")
+
+	if [ ${#packages[@]} -eq 0 ]; then
+		echo "No yay packages specified for installation."
+		return 1
+	fi
+
+	echo "Installing yay packages: ${packages[*]}"
+	yay -S --needed "${packages[@]}"
 }
