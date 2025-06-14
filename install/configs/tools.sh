@@ -13,7 +13,6 @@ create_dotfiles_symlink fzf/rose-pine.sh ~/.local/bin/fzf/rose-pine.sh
 # terminal
 create_dotfiles_symlink alacritty ~/.config/alacritty
 create_dotfiles_symlink starship/starship.toml ~/.config/starship.toml
-insert_content_with_marker ~/.bashrc "starship" "$(cat ~/.config/starship.toml)"
 
 # system-monitoring
 mkdir -p ~/.config/btop
