@@ -29,7 +29,7 @@ create_symlink() {
 }
 
 create_dotfiles_symlink() {
-	create_symlink "$1" "$DOTFILES_DIR/$2"
+	create_symlink "$1" "$DOTFILES_DIR/files/$2"
 }
 
 create_copy() {
@@ -43,7 +43,7 @@ create_copy() {
 }
 
 create_dotfiles_copy() {
-	create_copy "$DOTFILES_DIR/$1" "$2"
+	create_copy "$DOTFILES_DIR/files/$1" "$2"
 }
 
 insert_content_with_marker() {
