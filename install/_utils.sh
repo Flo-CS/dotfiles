@@ -3,7 +3,7 @@
 create_backup() {
 	local file="$1"
 
-	if [ ! -e "$file" ]; then
+	if [ ! -e "$file" ] || [ -L "$file" ]; then
 		echo "File $file does not exist, no backup created."
 		return 0
 	fi
