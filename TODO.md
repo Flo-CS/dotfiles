@@ -33,3 +33,7 @@
 ### To check
 
 - [https://github.com/wwmm/easyeffects]
+
+### Best practices
+
+- How to correctly use sudo in scripts ?
