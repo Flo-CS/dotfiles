@@ -25,14 +25,22 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	# TODO: Improve this
-	local extra_args=("${@:3}")
+	create_backup "$destination" && mkdir -p "$(dirname "$destination")" && cp "$source" "$destination" && echo "Copied $source to $destination"
+}
 
-	create_backup "$destination" && cp "${extra_args[@]}" "$source" "$destination" && echo "Copied $source to $destination"
+create_recursive_copy() {
+	local source="$1"
+	local destination="$2"
+
+	create_backup "$destination" && mkdir -p "$(dirname "$destination")" && cp -r "$source" "$destination" && echo "Recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
 	create_copy "$DOTFILES_DIR/files/$1" "$2"
+}
+
+create_dotfiles_recursive_copy() {
+	create_recursive_copy "$DOTFILES_DIR/files/$1" "$2"
 }
 
 insert_content_with_marker() {
