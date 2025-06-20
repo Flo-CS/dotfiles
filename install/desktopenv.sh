@@ -32,3 +32,12 @@ install_packages wl-clipboard
 
 # fonts
 install_packages ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols
+
+# quickshell
+# # TODO: Why sudo is required? How to install as user?
+install_packages qt6-shadertools cli11
+git clone https://github.com/Flo-CS/quickshell.git ~/documents/quickshell
+cd ~/documents/quickshell
+cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
+	cmake --build build &&
+	sudo cmake --install build

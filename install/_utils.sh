@@ -25,14 +25,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup "$destination" && sudo mkdir -pf "$(dirname "$destination")" && sudo cp -f "$source" "$destination" && echo "Copied $source to $destination"
+	create_backup "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -f "$source" "$destination" && echo "Copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup "$destination" && sudo mkdir -pf "$(dirname "$destination")" && sudo cp -rf "$source" "$destination" && echo "Recursively copied $source to $destination"
+	create_backup "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -rf "$source" "$destination" && echo "Recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {

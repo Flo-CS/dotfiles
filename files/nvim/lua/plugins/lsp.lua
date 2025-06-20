@@ -129,6 +129,10 @@ return {
           end,
         },
       }
+
+      require('lspconfig').qmlls.setup {
+        cmd = { 'qmlls6' },
+      }
     end,
   },
   {

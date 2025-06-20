@@ -31,3 +31,6 @@ create_dotfiles_recursive_copy icons/. ~/.local/share/icons
 insert_content_with_marker ~/.bash_profile "hyprland-autostart" "if uwsm check may-start; then 
 	exec uwsm start hyprland.desktop
 fi"
+
+# quickshell
+create_dotfiles_symlink quickshell ~/.config/quickshell
