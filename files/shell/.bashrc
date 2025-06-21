@@ -33,12 +33,9 @@ alias shutdown='systemctl poweroff'
 
 # VIM
 alias vi='nvim'
-alias vim='nvim'
 
 alias nv='nvim'
 alias nvf='nvim "./$(f)"'
-
-alias truevim='vim'
 
 # GIT
 alias gs="git status"
