@@ -12,4 +12,4 @@ source ~/.bashrc
 nvm install --lts
 
 # git
-install_packages git git-filter-repo
+install_packages git git-filter-repo lazygit
