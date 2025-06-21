@@ -3,8 +3,8 @@
 source $DOTFILES_UTILS
 
 # hyprland
-touch ~/.config/hypr/hyprland/custom.conf
 create_dotfiles_symlink hypr ~/.config/hypr
+touch ~/.config/hypr/hyprland/custom.conf
 
 # hyprland-plugins
 # TODO: Check why hyprpm ask the sudo password
@@ -22,7 +22,10 @@ create_dotfiles_symlink kvantum ~/.config/Kvantum
 create_dotfiles_symlink swaync ~/.config/swaync
 
 # launcher
-create_dotfiles_symlink wofi ~/.config/wofi
+mkdir ~/.config/wofi/config
+create_dotfiles_symlink wofi/config ~/.config/wofi/config
+create_dotfiles_copy wofi/style.css ~/.config/wofi/style.css
+insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR/files/wofi/themes/rose-pine.css)" "/*" "*/"
 
 # icons
 create_dotfiles_recursive_copy icons/. ~/.local/share/icons

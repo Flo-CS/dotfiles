@@ -1,0 +1,79 @@
+@define-color base            #191724;
+@define-color surface         #1f1d2e;
+@define-color overlay         #26233a;
+
+@define-color muted           #6e6a86;
+@define-color subtle          #908caa;
+@define-color text            #e0def4;
+
+@define-color love            #eb6f92;
+@define-color gold            #f6c177;
+@define-color rose            #ebbcba;
+@define-color pine            #31748f;
+@define-color foam            #9ccfd8;
+@define-color iris            #c4a7e7;
+
+@define-color highlightLow    #21202e;
+@define-color highlightMed    #403d52;
+@define-color highlightHigh   #524f67;
+
+
+window {
+    margin: 0px;
+    background-color: @base;
+    border-radius: 0px;
+    border: 1px solid @muted;
+    color: @text;
+    font-family: 'Rubik', 'Symbols Nerd Font';
+    font-size: 16px;
+}
+
+#input {
+    margin: 0px;
+    padding: 5px;
+    border-radius: 0px;
+    border: none;
+    border-radius: 0px;
+    color: @text;
+    background-color: @overlay;
+    outline: none;
+}
+
+#inner-box {
+    margin: 0px;
+    border: none;
+    background-color: @overlay;
+    color: @base;
+    border-radius: 0px;
+}
+
+#outer-box {
+    margin: 1px;
+    border: none;
+    background-color: @base;
+}
+
+#scroll {
+    margin: 0px;
+    border: none;
+}
+
+#text {
+    margin: 5px;
+    border: none;
+    color: @text;
+} 
+
+#entry:selected {
+    background-color: @muted;
+    color: @text;
+    border-radius: 0px;
+    outline: none;
+}
+
+#entry:selected * {
+    background-color: @muted;
+    color: @text;
+    border-radius: 0px;
+    outline: none;
+}
