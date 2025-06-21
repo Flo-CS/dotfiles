@@ -33,7 +33,7 @@ Scope {
 
         PanelWindow {
             anchors.bottom: true
-            margins.bottom: screen.height / 6
+            margins.bottom: screen.height / 10
 
             implicitWidth: 400
             implicitHeight: 70
