@@ -16,6 +16,10 @@
 
 ## General
 
+### Urgent
+
+- Add windows menu to grub
+
 ### Reliability
 
 - Understand btrfs, subvolumes, etc.
