@@ -37,7 +37,7 @@ create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && sudo ln -sT "$target" "$link_name" && echo "Created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && echo "Created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
