@@ -14,7 +14,23 @@ create_backup_and_delete() {
 		return 0
 	fi
 
-	sudo cp -f "$file" "${file}.bak" && echo "Backup created: ${file}.bak" && sudo rm -rf "$file" && echo "Removed file: $file"
+	sudo cp -rf "$file" "${file}.bak" && echo "Backup created: ${file}.bak" && sudo rm -rf "$file" && echo "Removed file: $file"
+}
+
+create_backup() {
+	local file="$1"
+
+	if sudo test -L "$file"; then
+		echo "File $file is a symlink, no backup created."
+		return 0
+	fi
+
+	if ! sudo test -e "$file"; then
+		echo "File $file does not exist, no backup created."
+		return 0
+	fi
+
+	sudo cp -rf "$file" "${file}.bak" && echo "Backup created: ${file}.bak"
 }
 
 create_symlink() {
