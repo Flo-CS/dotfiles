@@ -20,6 +20,9 @@ alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]
 alias fzfd='fd --type d -H | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
 alias fzff='fd --type f -H | fzf --style full --height 60% --reverse --preview "bat {}" --preview-window=right:60%'
 
+# FIXME: does not work very properly for the moment, I don't thing this is the good approach
+alias rgf='rg --line-number --no-heading --color=always --smart-case . | fzf --ansi --style full --height 60% --reverse --delimiter : --preview "bat --color=always --highlight-line {2} {1}" --preview-window=right:60%'
+
 alias cdf='cd "./$(fzfd)"'
 
 alias batf='bat "./$(fzff)"'
