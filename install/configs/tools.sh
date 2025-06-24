@@ -10,7 +10,8 @@ bat cache --build
 
 # fzf
 mkdir -p ~/.local/bin/fzf
-create_dotfiles_symlink fzf/rose-pine.sh ~/.local/bin/fzf/rose-pine.sh
+create_dotfiles_symlink fzf/$FZF_THEME_NAME.sh ~/.local/bin/fzf/main-theme.sh
+insert_content_with_marker ~/.bashrc "fzf" "source ~/.local/bin/fzf/main-theme.sh"
 
 # alacritty
 mkdir -p ~/.config/alacritty

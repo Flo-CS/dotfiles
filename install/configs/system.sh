@@ -14,7 +14,7 @@ if [[ -n $windows_boot_partition_path ]]; then
 	insert_content_with_marker /etc/grub.d/40_custom "windows" "
 menuentry 'Windows Boot Manager' --class windows --class os {
     search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
-    chainloader (\${root})/EFI/Microsoft/Boot/bootmgfw.efi
+    chainloader (\${root})/efi/Microsoft/Boot/bootmgfw.efi
 }
 "
 else
