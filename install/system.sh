@@ -2,5 +2,5 @@
 
 source $DOTFILES_UTILS
 
-# audio
+section "Audio"
 install_packages sof-firmware pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack

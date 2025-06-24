@@ -1,43 +1,55 @@
 #!/usr/bin/env bash
 
+# Color functions
+color_reset="\033[0m"
+color_info="\033[1;34m"   # Bold Blue
+color_success="\033[1;32m" # Bold Green
+color_warn="\033[1;33m"    # Bold Yellow
+color_error="\033[1;31m"   # Bold Red
+
+info()    { echo -e "${color_info}info: ${color_reset} $*"; }
+success() { echo -e "${color_success}success: ${color_reset} $*"; }
+warn()    { echo -e "${color_warn}warning: ${color_reset} $*"; }
+error()   { echo -e "${color_error}error: ${color_reset} $*"; }
+
 create_backup_and_delete() {
 	local file="$1"
 
 	if sudo test -L "$file"; then
-		echo "File $file is a symlink, no backup created."
-		sudo rm -f "$file" && echo "Removed symlink: $file"
+		warn "File $file is a symlink, no backup created."
+		sudo rm -f "$file" && success "Removed symlink: $file"
 		return 0
 	fi
 
 	if ! sudo test -e "$file"; then
-		echo "File $file does not exist, no backup created."
+		warn "File $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && echo "Backup created: ${file}.bak" && sudo rm -rf "$file" && echo "Removed file: $file"
+	sudo cp -rf "$file" "${file}.bak" && success "Backup created: ${file}.bak" && sudo rm -rf "$file" && success "Removed file: $file"
 }
 
 create_backup() {
 	local file="$1"
 
 	if sudo test -L "$file"; then
-		echo "File $file is a symlink, no backup created."
+		warn "File $file is a symlink, no backup created."
 		return 0
 	fi
 
 	if ! sudo test -e "$file"; then
-		echo "File $file does not exist, no backup created."
+		warn "File $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && echo "Backup created: ${file}.bak"
+	sudo cp -rf "$file" "${file}.bak" && success "Backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && echo "Created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && success "Created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
@@ -48,14 +60,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && echo "Copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && success "Copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && echo "Recursively copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && success "Recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -93,18 +105,18 @@ insert_content_with_marker() {
 	fi
 
 	rm -f "$temp_file"
-	echo "Inserted content with marker $marker in $file"
+	success "Inserted content with marker $marker in $file"
 }
 
 install_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		echo "No packages specified for installation."
+		warn "No packages specified for installation."
 		return 1
 	fi
 
-	echo "Installing packages: ${packages[*]}"
+	info "Installing packages: ${packages[*]}"
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }
 
@@ -112,10 +124,14 @@ install_yay_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		echo "No yay packages specified for installation."
+		warn "No yay packages specified for installation."
 		return 1
 	fi
 
-	echo "Installing yay packages: ${packages[*]}"
+	info "Installing yay packages: ${packages[*]}"
 	yay -S --needed "${packages[@]}"
+}
+
+section() {
+	echo -e "\n${color_info}===== [ $* ] =====${color_reset}\n"
 }

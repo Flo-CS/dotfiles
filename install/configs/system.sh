@@ -2,10 +2,10 @@
 
 source $DOTFILES_UTILS
 
-# sudoers
+section "Sudoers"
 create_dotfiles_copy system/sudoers/$DOTFILES_USERNAME /etc/sudoers.d/$DOTFILES_USERNAME
 
-# grub
+section "GRUB"
 # os-prober is disabled by default in grub config and it's better for security reasons. But it is useful to detect other OSes and then add them manually to grub.
 windows_boot_partition_path=$(sudo os-prober | grep "Windows Boot Manager" | head -n 1 | cut -d'@' -f1)
 echo "Detected Windows Boot Manager at: $windows_boot_partition_path"

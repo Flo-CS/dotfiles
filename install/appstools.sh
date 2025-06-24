@@ -2,31 +2,31 @@
 
 source $DOTFILES_UTILS
 
-# terminal
+section "Terminal"
 install_packages alacritty
 install_packages starship
 
-# files-handling
+section "Files Handling"
 install_packages bat
 install_packages fd ripgrep fzf
 install_packages zoxide
 install_packages jq go-yq
 
-# system-monitoring
+section "System Monitoring"
 install_packages fastfetch
 install_packages btop
 
-# system-controls
+section "System Controls"
 install_packages brightnessctl playerctl
 install_packages power-profiles-daemon
 install_yay_packages -S bluetuith
 
-# disk
+section "Disk"
 install_packages gvfs udisks2
 
-# man-pages
+section "Man Pages"
 install_packages man-pages
 install_packages tldr
 
-# file-manager
+section "File Manager"
 install_packages thunar

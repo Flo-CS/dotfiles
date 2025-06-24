@@ -2,14 +2,14 @@
 
 source $DOTFILES_UTILS
 
-# neovim
+section "Neovim"
 install_packages neovim
 
-# nodejs
+section "Nodejs"
 install_packages nvm
 insert_content_with_marker ~/.bashrc "nvm" "source /usr/share/nvm/init-nvm.sh"
 source ~/.bashrc
 nvm install --lts
 
-# git
+section "Git"
 install_packages git git-filter-repo lazygit

@@ -2,10 +2,10 @@
 
 source $DOTFILES_UTILS
 
-# neovim
+section "Neovim"
 create_dotfiles_symlink nvim ~/.config/nvim
 
-# git
+section "Git"
 create_dotfiles_symlink gitconfig/.gitconfig ~/.gitconfig-default
 
 insert_content_with_marker ~/.gitconfig "gitconfig-default" "[include]

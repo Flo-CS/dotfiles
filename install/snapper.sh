@@ -2,5 +2,5 @@
 
 source $DOTFILES_UTILS
 
-# snapper
+section "Snapper"
 install_packages snapper snap-pac inotify-tools grub-btrfs
