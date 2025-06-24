@@ -8,7 +8,6 @@ color_warn="\033[1;33m"    # Bold Yellow
 color_error="\033[1;31m"   # Bold Red
 
 info() { echo -e "${color_info}info: ${color_reset} $*"; }
-success() { echo -e "${color_success}success: ${color_reset} $*"; }
 warn() { echo -e "${color_warn}warning: ${color_reset} $*"; }
 error() { echo -e "${color_error}error: ${color_reset} $*"; }
 
@@ -17,7 +16,7 @@ create_backup_and_delete() {
 
 	if sudo test -L "$file"; then
 		warn "file $file is a symlink, no backup created."
-		sudo rm -f "$file" && success "removed symlink: $file"
+		sudo rm -f "$file" && info "removed symlink: $file"
 		return 0
 	fi
 
@@ -26,7 +25,7 @@ create_backup_and_delete() {
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && success "backup created: ${file}.bak" && sudo rm -rf "$file" && success "removed file: $file"
+	sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak" && sudo rm -rf "$file" && info "removed file: $file"
 }
 
 create_backup() {
@@ -42,14 +41,14 @@ create_backup() {
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && success "backup created: ${file}.bak"
+	sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && success "created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && info "created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
@@ -60,14 +59,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && success "copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && info "copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && success "recursively copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && info "recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -107,7 +106,7 @@ insert_content_with_marker() {
 	fi
 
 	rm -f "$temp_file"
-	success "inserted content with marker $marker in $file"
+	info "inserted content with marker $marker in $file"
 }
 
 install_packages() {
