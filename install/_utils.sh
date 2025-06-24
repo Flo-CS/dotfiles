@@ -2,54 +2,54 @@
 
 # Color functions
 color_reset="\033[0m"
-color_info="\033[1;34m"   # Bold Blue
+color_info="\033[1;34m"    # Bold Blue
 color_success="\033[1;32m" # Bold Green
 color_warn="\033[1;33m"    # Bold Yellow
 color_error="\033[1;31m"   # Bold Red
 
-info()    { echo -e "${color_info}info: ${color_reset} $*"; }
+info() { echo -e "${color_info}info: ${color_reset} $*"; }
 success() { echo -e "${color_success}success: ${color_reset} $*"; }
-warn()    { echo -e "${color_warn}warning: ${color_reset} $*"; }
-error()   { echo -e "${color_error}error: ${color_reset} $*"; }
+warn() { echo -e "${color_warn}warning: ${color_reset} $*"; }
+error() { echo -e "${color_error}error: ${color_reset} $*"; }
 
 create_backup_and_delete() {
 	local file="$1"
 
 	if sudo test -L "$file"; then
-		warn "File $file is a symlink, no backup created."
-		sudo rm -f "$file" && success "Removed symlink: $file"
+		warn "file $file is a symlink, no backup created."
+		sudo rm -f "$file" && success "removed symlink: $file"
 		return 0
 	fi
 
 	if ! sudo test -e "$file"; then
-		warn "File $file does not exist, no backup created."
+		warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && success "Backup created: ${file}.bak" && sudo rm -rf "$file" && success "Removed file: $file"
+	sudo cp -rf "$file" "${file}.bak" && success "backup created: ${file}.bak" && sudo rm -rf "$file" && success "removed file: $file"
 }
 
 create_backup() {
 	local file="$1"
 
 	if sudo test -L "$file"; then
-		warn "File $file is a symlink, no backup created."
+		warn "file $file is a symlink, no backup created."
 		return 0
 	fi
 
 	if ! sudo test -e "$file"; then
-		warn "File $file does not exist, no backup created."
+		warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && success "Backup created: ${file}.bak"
+	sudo cp -rf "$file" "${file}.bak" && success "backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && success "Created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && success "created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
@@ -60,14 +60,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && success "Copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && success "copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && success "Recursively copied $source to $destination"
+	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && success "recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -93,9 +93,11 @@ insert_content_with_marker() {
 		local end_line=$(sudo grep -Fn "$end" "$file" | cut -d: -f1)
 
 		# Copy before, insert new content, copy after
-		sudo sed -n "1,$((start_line - 1))p" "$file" >"$temp_file"
-		printf '%s\n%s\n%s\n' "$start" "$content" "$end" >>"$temp_file"
-		sudo sed -n "$((end_line + 1)),\$p" "$file" >>"$temp_file"
+		{
+			sudo head -n $((start_line - 1)) "$file" 2>/dev/null || true
+			printf '%s\n%s\n%s\n' "$start" "$content" "$end"
+			sudo tail -n +$((end_line + 1)) "$file" 2>/dev/null || true
+		} >"$temp_file"
 		sudo cp "$temp_file" "$file"
 	else
 		# Append new content if markers don't exist
@@ -105,18 +107,18 @@ insert_content_with_marker() {
 	fi
 
 	rm -f "$temp_file"
-	success "Inserted content with marker $marker in $file"
+	success "inserted content with marker $marker in $file"
 }
 
 install_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		warn "No packages specified for installation."
+		warn "no packages specified for installation."
 		return 1
 	fi
 
-	info "Installing packages: ${packages[*]}"
+	info "installing packages: ${packages[*]}"
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }
 
@@ -124,11 +126,11 @@ install_yay_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		warn "No yay packages specified for installation."
+		warn "no yay packages specified for installation."
 		return 1
 	fi
 
-	info "Installing yay packages: ${packages[*]}"
+	info "installing yay packages: ${packages[*]}"
 	yay -S --needed "${packages[@]}"
 }
 
