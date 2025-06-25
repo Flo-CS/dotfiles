@@ -24,4 +24,4 @@ export FZF_THEME_NAME=rose-pine # X
 # Theming strategy: inject content of a file into a main config file
 export WOFI_THEME_NAME=rose-pine # X
 
-export WALLPAPER_FILE=mountain
+export WALLPAPER_FILE=mountain.jpg
