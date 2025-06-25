@@ -3,6 +3,7 @@ require 'settings'
 require 'autocommands'
 require 'mapping'
 require 'health'
+require 'theme'
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -15,7 +16,6 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  change_detection = { notify = false },
   spec = {
     { import = 'plugins' },
   },

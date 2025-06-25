@@ -50,4 +50,3 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldlevel = 99
 vim.opt.foldnestmax = 4
 
-vim.cmd.colorscheme 'rose-pine'
