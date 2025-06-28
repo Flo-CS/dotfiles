@@ -14,3 +14,6 @@ nvm install --lts
 section "Git"
 install_packages git git-filter-repo lazygit
 install_yay_packages git-credential-oauth
+
+section "Rust"
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
