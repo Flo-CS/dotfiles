@@ -14,6 +14,8 @@ export EDITOR=/usr/bin/nvim
 export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
 
+export PATH="$HOME/.local/bin:$PATH"
+
 # GENERAL
 # TODO: perhaps I should replace alias by functions to avoid issues with arguments
 alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat {}; fi" --preview-window=right:60%'

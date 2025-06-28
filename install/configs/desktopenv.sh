@@ -52,6 +52,9 @@ create_dotfiles_symlink wofi/config ~/.config/wofi/config
 create_dotfiles_copy wofi/style.css ~/.config/wofi/style.css
 insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR/files/wofi/themes/rose-pine.css)" "/*" "*/"
 
+section "Wofi menus"
+create_dotfiles_symlink bin/wofi-emoji ~/.local/bin/wofi-emoji
+
 section "Icons"
 create_dotfiles_recursive_copy icons/. ~/.local/share/icons
 
