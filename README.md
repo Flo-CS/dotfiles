@@ -48,8 +48,6 @@ sudo zypper install --auto-agree-with-licenses nvidia-video-G06 nvidia-driver-G0
       - Select no desktop environment
       - Select grub bootloader
       - Choose btfrs partition type
-2) Install nvidia drivers with the EndeavourOS nvidia-installer: `nvidia-inst --closed`
-3) Install git, git-credential-oauth, hyprland, alacritty
+2) Install nvidia drivers with the EndeavourOS nvidia-installer: `nvidia-inst --closed` (IF NECESSARY)
+3) Fetch dotfiles
 4) Run dotfiles
-5) Download KeepassXC AppImage (because trustworthy), warning it only runs on X for now
-6) Download KeepassXC database
