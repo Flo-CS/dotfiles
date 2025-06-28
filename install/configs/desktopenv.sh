@@ -22,10 +22,14 @@ create_dotfiles_symlink hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
 create_dotfiles_symlink hypr/hyprlock ~/.config/hypr/hyprlock
 
 section "Hyprland Plugins"
-hyprpm update
 read -p "Enter the version of hyprland-plugins (e.g. v0.48.0): " plugins_version
-hyprpm add https://github.com/hyprwm/hyprland-plugins $plugins_version
-hyprpm enable hyprexpo
+if test -z "$plugins_version"; then
+	echo "No version provided, cannot install hyprland-plugins"
+else
+	hyprpm update
+	hyprpm add https://github.com/hyprwm/hyprland-plugins $plugins_version
+	hyprpm enable hyprexpo
+fi
 
 section "Waybar"
 mkdir -p ~/.config/waybar

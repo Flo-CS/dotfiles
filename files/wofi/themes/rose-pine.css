@@ -17,11 +17,10 @@
 @define-color highlightMed    #403d52;
 @define-color highlightHigh   #524f67;
 
-
 window {
-    margin: 0px;
-    background-color: @base;
-    border-radius: 0px;
+    margin: 20px;
+    background-color: alpha(@base, 0.8);
+    border-radius: 10px;
     border: 1px solid @muted;
     color: @text;
     font-family: 'Rubik', 'Symbols Nerd Font';
@@ -29,11 +28,10 @@ window {
 }
 
 #input {
-    margin: 0px;
-    padding: 5px;
-    border-radius: 0px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
     border: none;
-    border-radius: 0px;
     color: @text;
     background-color: @overlay;
     outline: none;
@@ -42,19 +40,19 @@ window {
 #inner-box {
     margin: 0px;
     border: none;
-    background-color: @overlay;
+    background-color: transparent;
     color: @base;
     border-radius: 0px;
 }
 
 #outer-box {
-    margin: 1px;
+    margin: 10px;
     border: none;
-    background-color: @base;
+    background-color: transparent;
 }
 
 #scroll {
-    margin: 0px;
+    margin: 0px 10px;
     border: none;
 }
 
@@ -62,18 +60,21 @@ window {
     margin: 5px;
     border: none;
     color: @text;
-} 
+}
+
+#entry {
+    padding: 10px;
+    border-radius: 5px;
+}
 
 #entry:selected {
-    background-color: @muted;
+    background-color: @highlightMed;
     color: @text;
-    border-radius: 0px;
     outline: none;
 }
 
 #entry:selected * {
-    background-color: @muted;
+    background-color: @highlightMed;
     color: @text;
-    border-radius: 0px;
     outline: none;
 }
