@@ -44,7 +44,10 @@ create_dotfiles_symlink kvantum/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvcon
 insert_content_with_marker ~/.config/Kvantum/kvantum.kvconfig "theme" "theme=$KVANTUM_THEME_NAME"
 
 section "Swaync"
-create_dotfiles_symlink swaync ~/.config/swaync
+mkdir -p ~/.config/swaync
+create_dotfiles_copy swaync/style.css ~/.config/swaync/style.css
+create_dotfiles_symlink swaync/config.json ~/.config/swaync/config.json
+insert_content_with_marker ~/.config/swaync/style.css "theme" "$(cat $DOTFILES_DIR/files/swaync/themes/$SWAYNC_THEME_NAME.css)" "/*" "*/"
 
 section "Wofi"
 mkdir -p ~/.config/wofi/config

@@ -12,6 +12,7 @@ export BAT_THEME_NAME=rose-pine       # X
 export BTOP_THEME_NAME=rose-pine      # X
 export HYPRLAND_THEME_NAME=rose-pine  # X
 export WAYBAR_THEME_NAME=rose-pine    # X
+export SWAYNC_THEME_NAME=rose-pine    # X
 
 # Theming strategy: inject theme name into a main config file
 export STARSHIP_THEME_NAME=rose-pine     # X
