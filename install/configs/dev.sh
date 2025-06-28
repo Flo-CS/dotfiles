@@ -11,3 +11,8 @@ create_dotfiles_symlink gitconfig/.gitconfig ~/.gitconfig-default
 
 insert_content_with_marker ~/.gitconfig "gitconfig-default" "[include]
 	path = ~/.gitconfig-default"
+
+# TODO: perhaps to move, but it needs git to be configured first
+section "Configurer"
+git clone https://Flo-CS@github.com/Flo-CS/configurer ~/documents/configurer
+cargo install --path ~/documents/configurer
