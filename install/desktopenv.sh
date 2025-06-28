@@ -42,3 +42,7 @@ fi
 cd ~/documents/quickshell && git pull && cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
 	cmake --build build &&
 	sudo cmake --install build
+
+section "Flatpak"
+install_packages flatpak
+flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
