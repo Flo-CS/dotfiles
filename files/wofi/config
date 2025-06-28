@@ -1,5 +1,12 @@
 key_up=Ctrl-p
 key_down=Ctrl-n
+key_expand=Tab
+key_collapse=Shift-Tab
+key_back=Escape
+key_accept=Return
 
+mode=drun
 allow_images=true
 image_size=30
+term=alacritty
+insensitive=true

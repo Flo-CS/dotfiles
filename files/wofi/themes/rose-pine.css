@@ -35,6 +35,13 @@ window {
     color: @text;
     background-color: @overlay;
     outline: none;
+    box-shadow: none;
+}
+
+#input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
 }
 
 #inner-box {
@@ -60,13 +67,20 @@ window {
     margin: 5px;
     border: none;
     color: @text;
+    background-color: transparent;
 }
 
 #entry {
     padding: 10px;
     border-radius: 5px;
+    background-color: transparent;
 }
 
+#entry image {
+    margin-right: 10px;
+}
+
+/* Regular entry styling */
 #entry:selected {
     background-color: @highlightMed;
     color: @text;
@@ -78,3 +92,49 @@ window {
     color: @text;
     outline: none;
 }
+
+#entry:hover {
+    background-color: @highlightLow;
+}
+
+#entry:hover * {
+    background-color: @highlightLow;
+}
+
+/* Global fix for white backgrounds */
+* {
+    background-color: transparent;
+}
+
+/* Ensure all text elements have proper colors */
+#text, #entry #text, #entry * {
+    background-color: transparent;
+    color: @text;
+}
+
+#entry:selected #text, #entry:selected * {
+    background-color: @highlightMed;
+    color: @text;
+}
+
+/* Specific submenu styling */
+#entry submenu {
+    background-color: transparent;
+    color: @subtle;
+    margin-left: 20px;
+}
+
+#entry:selected submenu {
+    background-color: @highlightMed;
+    color: @text;
+}
+
+#entry submenu * {
+    background-color: transparent;
+    color: inherit;
+}
+
+#entry:selected submenu * {
+    background-color: @highlightMed;
+    color: @text;
+} 

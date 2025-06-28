@@ -14,30 +14,30 @@ error() { echo -e "${color_error}error: ${color_reset} $*"; }
 USE_SUDO=false
 
 run_with_sudo() {
-    if [ "$USE_SUDO" = true ]; then
-        sudo "$@"
-    else
-        "$@"
-    fi
+	if [ "$USE_SUDO" = true ]; then
+		sudo "$@"
+	else
+		"$@"
+	fi
 }
 
 with_sudo() {
-    USE_SUDO=true
-    "$@"
-    USE_SUDO=false
+	USE_SUDO=true
+	"$@"
+	USE_SUDO=false
 }
 
 create_backup_and_delete() {
 	local file="$1"
 
 	if run_with_sudo test -L "$file"; then
-		warn "file $file is a symlink, no backup created."
+		# warn "file $file is a symlink, no backup created."
 		run_with_sudo rm -f "$file" && info "removed symlink: $file"
 		return 0
 	fi
 
 	if ! run_with_sudo test -e "$file"; then
-		warn "file $file does not exist, no backup created."
+		# warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
@@ -48,12 +48,12 @@ create_backup() {
 	local file="$1"
 
 	if run_with_sudo test -L "$file"; then
-		warn "file $file is a symlink, no backup created."
+		# warn "file $file is a symlink, no backup created."
 		return 0
 	fi
 
 	if ! run_with_sudo test -e "$file"; then
-		warn "file $file does not exist, no backup created."
+		# warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
