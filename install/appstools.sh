@@ -19,7 +19,7 @@ install_packages btop
 section "System Controls"
 install_packages brightnessctl playerctl
 install_packages power-profiles-daemon
-install_yay_packages -S bluetuith
+install_yay_packages bluetuith
 
 section "Disk"
 install_packages gvfs udisks2

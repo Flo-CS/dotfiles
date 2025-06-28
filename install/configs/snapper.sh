@@ -8,7 +8,7 @@ source $DOTFILES_UTILS
 section "Snapper Config"
 sudo snapper -c root create-config /
 
-create_backup /etc/snapper/configs/root
+with_sudo create_backup /etc/snapper/configs/root
 
 sudo snapper -c root set-config ALLOW_USERS="$USER"
 sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="10"
@@ -21,7 +21,7 @@ sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
 
 # WARNING: only work on EndeavourOS because it uses dracut
 section "Grub-Btrfs Config"
-create_backup /etc/default/grub-btrfs/config
-insert_content_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+with_sudo create_backup /etc/default/grub-btrfs/config
+with_sudo insert_content_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
 sudo systemctl enable --now grub-btrfsd

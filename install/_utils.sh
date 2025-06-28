@@ -11,44 +11,60 @@ info() { echo -e "${color_info}info: ${color_reset} $*"; }
 warn() { echo -e "${color_warn}warning: ${color_reset} $*"; }
 error() { echo -e "${color_error}error: ${color_reset} $*"; }
 
+USE_SUDO=false
+
+run_with_sudo() {
+    if [ "$USE_SUDO" = true ]; then
+        sudo "$@"
+    else
+        "$@"
+    fi
+}
+
+with_sudo() {
+    USE_SUDO=true
+    "$@"
+    USE_SUDO=false
+}
+
 create_backup_and_delete() {
 	local file="$1"
 
-	if sudo test -L "$file"; then
+	if run_with_sudo test -L "$file"; then
 		warn "file $file is a symlink, no backup created."
-		sudo rm -f "$file" && info "removed symlink: $file"
+		run_with_sudo rm -f "$file" && info "removed symlink: $file"
 		return 0
 	fi
 
-	if ! sudo test -e "$file"; then
+	if ! run_with_sudo test -e "$file"; then
 		warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak" && sudo rm -rf "$file" && info "removed file: $file"
+	run_with_sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak" && run_with_sudo rm -rf "$file" && info "removed file: $file"
 }
 
 create_backup() {
 	local file="$1"
 
-	if sudo test -L "$file"; then
+	if run_with_sudo test -L "$file"; then
 		warn "file $file is a symlink, no backup created."
 		return 0
 	fi
 
-	if ! sudo test -e "$file"; then
+	if ! run_with_sudo test -e "$file"; then
 		warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak"
+	run_with_sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && sudo mkdir -p "$(dirname "$link_name")" && sudo ln -sT "$target" "$link_name" && info "created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && run_with_sudo mkdir -p "$(dirname "$link_name")" && run_with_sudo ln -sT "$target" "$link_name" && info "created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
@@ -59,14 +75,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp "$source" "$destination" && info "copied $source to $destination"
+	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp "$source" "$destination" && info "copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && sudo mkdir -p "$(dirname "$destination")" && sudo cp -r "$source" "$destination" && info "recursively copied $source to $destination"
+	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp -r "$source" "$destination" && info "recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -86,23 +102,23 @@ insert_content_with_marker() {
 	# Create temp file to preserve original location
 	local temp_file=$(mktemp)
 
-	if sudo grep -Fq "$start" "$file" 2>/dev/null; then
+	if run_with_sudo grep -Fq "$start" "$file" 2>/dev/null; then
 		# Replace content between markers
-		local start_line=$(sudo grep -Fn "$start" "$file" | cut -d: -f1)
-		local end_line=$(sudo grep -Fn "$end" "$file" | cut -d: -f1)
+		local start_line=$(run_with_sudo grep -Fn "$start" "$file" | cut -d: -f1)
+		local end_line=$(run_with_sudo grep -Fn "$end" "$file" | cut -d: -f1)
 
 		# Copy before, insert new content, copy after
 		{
-			sudo head -n $((start_line - 1)) "$file" 2>/dev/null || true
+			run_with_sudo head -n $((start_line - 1)) "$file" 2>/dev/null || true
 			printf '%s\n%s\n%s\n' "$start" "$content" "$end"
-			sudo tail -n +$((end_line + 1)) "$file" 2>/dev/null || true
+			run_with_sudo tail -n +$((end_line + 1)) "$file" 2>/dev/null || true
 		} >"$temp_file"
-		sudo cp "$temp_file" "$file"
+		run_with_sudo cp "$temp_file" "$file"
 	else
 		# Append new content if markers don't exist
-		sudo cp "$file" "$temp_file"
+		run_with_sudo cp "$file" "$temp_file"
 		printf '%s\n%s\n%s\n' "$start" "$content" "$end" >>"$temp_file"
-		sudo cp "$temp_file" "$file"
+		run_with_sudo cp "$temp_file" "$file"
 	fi
 
 	rm -f "$temp_file"

@@ -3,7 +3,7 @@
 source $DOTFILES_UTILS
 
 section "Sudoers"
-create_dotfiles_copy system/sudoers/$DOTFILES_USERNAME /etc/sudoers.d/$DOTFILES_USERNAME
+with_sudo create_dotfiles_copy system/sudoers/$DOTFILES_USERNAME /etc/sudoers.d/$DOTFILES_USERNAME
 
 section "GRUB"
 # os-prober is disabled by default in grub config and it's better for security reasons. But it is useful to detect other OSes and then add them manually to grub.
@@ -20,7 +20,7 @@ if [[ -n $windows_boot_partition_path ]]; then
 	fi
 
 	info "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-	insert_content_with_marker /etc/grub.d/40_custom "windows" "
+	with_sudo insert_content_with_marker /etc/grub.d/40_custom "windows" "
 menuentry 'Windows Boot Manager' --class windows --class os {
     search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi

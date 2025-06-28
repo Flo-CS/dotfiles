@@ -35,7 +35,7 @@ install_packages ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols
 
 section "Quickshell"
 install_packages qt6-shadertools cli11
-if ! sudo test -e ~/documents/quickshell; then
+if ! test -e ~/documents/quickshell; then
 	git clone https://github.com/Flo-CS/quickshell.git ~/documents/quickshell
 fi
 # TODO: Why sudo is required? How to install as user?
