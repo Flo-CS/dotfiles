@@ -1,7 +1,11 @@
+if [[ -z "$DOTFILES_DIR" ]]; then
+	echo "DOTFILES_DIR is not set. Please set it to the path of your dotfiles directory."
+	exit 1
+fi
+
 export DOTFILES_USERNAME=${DOTFILES_USERNAME:-${USER:-$(whoami)}}
 export DOTFILES_DEVICE_NAME=${DOTFILES_DEVICE_NAME:-${DEVICE_NAME:-$(hostname)}}
 
-export DOTFILES_DIR=${DOTFILES_DIR:-$HOME/dotfiles}
 export DOTFILES_INSTALL_DIR="$DOTFILES_DIR/install"
 export DOTFILES_CONFIGS_DIR="$DOTFILES_INSTALL_DIR/configs"
 export DOTFILES_UTILS="$DOTFILES_INSTALL_DIR/_utils.sh"
