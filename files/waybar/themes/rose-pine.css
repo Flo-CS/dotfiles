@@ -30,7 +30,7 @@ window#waybar {
 
 .modules-left,
 .modules-right {
-  padding: 12px 16px;
+  padding: 0 12px;
 }
 
 .modules-left,
@@ -40,19 +40,20 @@ window#waybar {
 
 #workspaces {
   margin-right: 10px;
+  border-bottom: 1px solid @muted; /* Same as global waybar because otherwise it looks weird when hovered, I don't want to search why */
 }
 
 #workspaces button {
   color: @subtle;
-  border: none;
+  border: 0px;
+  background: transparent;
   transition: all 0.3s ease;
 }
 
-#workspaces button.active {
-}
-
 #workspaces button:hover {
-  background: alpha(@muted, 0.1);
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background-color: @highlightLow;
 }
 
 #window {
@@ -64,29 +65,28 @@ window#waybar.empty #window {
   margin: 0;
 }
 
-#custom-notification {
-  color: @gold;
-  margin-left: 16px;
-}
-
 #cpu,
 #temperature,
 #memory,
 #backlight,
 #battery,
-#power-profiles-daemon {
-  margin-right: 16px;
+#power-profiles-daemon,
+#systemd-failed-units {
+  padding: 12px 8px;
 }
 
 #submap {
   margin-left: 16px;
   margin-right: 16px;
+  padding: 12px 0;
 }
 
 #privacy,
 #idle_inhibitor,
 #pulseaudio,
 #bluetooth,
-#network {
-  margin-right: 16px;
+#network,
+#clock,
+#custom-notification {
+  padding: 12px 8px;
 }
