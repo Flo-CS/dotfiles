@@ -1,4 +1,4 @@
-# Issues Solver
+# Issues FAQ
 
 ## No sound
 
