@@ -7,6 +7,8 @@ mkdir -p ~/.config/hypr
 create_dotfiles_symlink hypr/hyprland/custom-$DOTFILES_DEVICE_NAME.conf ~/.config/hypr/hyprland/custom.conf
 create_dotfiles_symlink hypr/hyprland/keybinds.conf ~/.config/hypr/hyprland/keybinds.conf
 create_dotfiles_symlink hypr/hyprland/rules.conf ~/.config/hypr/hyprland/rules.conf
+create_dotfiles_symlink hypr/hyprland/exec.conf ~/.config/hypr/hyprland/exec.conf
+create_dotfiles_symlink hypr/hyprland/env.conf ~/.config/hypr/hyprland/env.conf
 create_dotfiles_symlink hypr/hyprland-themes/$HYPRLAND_THEME_NAME.conf ~/.config/hypr/hyprland-themes/main-theme.conf
 create_dotfiles_symlink hypr/hyprland.conf ~/.config/hypr/hyprland.conf
 hyprctl reload
