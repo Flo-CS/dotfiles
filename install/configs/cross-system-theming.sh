@@ -6,6 +6,8 @@ section "GTK 3 Theming"
 
 section "GTK 4 Theming"
 
+section "GTK icons"
+
 section "QT Theming"
 mkdir -p ~/.config/Kvantum
 create_dotfiles_recursive_copy kvantum/themes/. ~/.config/Kvantum
