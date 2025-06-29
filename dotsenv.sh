@@ -25,4 +25,7 @@ export FZF_THEME_NAME=rose-pine # X
 # Theming strategy: inject content of a file into a main config file
 export WOFI_THEME_NAME=rose-pine # X
 
+# Theming strategy: WTF, this is so stupid
+export GTK_THEME_NAME=Rose-Pine # X
+
 export WALLPAPER_FILE=mountain.jpg

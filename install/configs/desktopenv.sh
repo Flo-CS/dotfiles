@@ -45,6 +45,10 @@ create_dotfiles_recursive_copy kvantum/themes/. ~/.config/Kvantum
 create_dotfiles_symlink kvantum/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
 insert_content_with_marker ~/.config/Kvantum/kvantum.kvconfig "theme" "theme=$KVANTUM_THEME_NAME"
 
+section "GTK 3"
+
+section "GTK 4"
+
 section "Swaync"
 mkdir -p ~/.config/swaync
 create_dotfiles_copy swaync/style.css ~/.config/swaync/style.css
@@ -60,8 +64,8 @@ insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR
 section "Wofi menus"
 create_dotfiles_symlink bin/wofi-emoji ~/.local/bin/wofi-emoji
 
-section "Icons"
-create_dotfiles_recursive_copy icons/. ~/.local/share/icons
+section "Cursor icons"
+create_dotfiles_recursive_copy cursor-icons/. ~/.local/share/icons
 
 section "Hyprland Autostart"
 insert_content_with_marker ~/.bash_profile "hyprland-autostart" "if uwsm check may-start; then 
