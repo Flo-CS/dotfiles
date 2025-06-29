@@ -10,39 +10,131 @@
 # here, since multilingual X sessions would not work properly if LANG is over-
 # ridden in every subshell.
 
+# ENVIRONMENT VARIABLES
 export EDITOR=/usr/bin/nvim
 export SYSTEMD_EDITOR=/usr/bin/nvim
 export TERMINAL=alacritty
-
 export PATH="$HOME/.local/bin:$PATH"
 
-# GENERAL
-# TODO: perhaps I should replace alias by functions to avoid issues with arguments
-alias f='fd -H | fzf --style full --height 60% --reverse --preview "if [ -d {} ]; then tree -C {}; else bat {}; fi" --preview-window=right:60%'
-alias fzfd='fd --type d -H | fzf --style full --height 60% --reverse --preview "tree -C {}" --preview-window=right:60%'
-alias fzff='fd --type f -H | fzf --style full --height 60% --reverse --preview "bat {}" --preview-window=right:60%'
+# GENERAL FUNCTIONS
 
-# FIXME: does not work very properly for the moment, I don't thing this is the good approach
-alias rgf='rg --line-number --no-heading --color=always --smart-case . | fzf --ansi --style full --height 60% --reverse --delimiter : --preview "bat --color=always --highlight-line {2} {1}" --preview-window=right:60%'
+# Find files and directories with fzf preview
+function f {
+    local starting_dir="${1:-.}"
 
-alias cdf='cd "./$(fzfd)"'
+    local file=$(fd -H . "$starting_dir" | fzf \
+        --style full \
+        --height 60% \
+        --reverse \
+        --preview "if [ -d {} ]; then tree -C {} 2>/dev/null || ls -la {}; else bat --style=numbers --color=always {} 2>/dev/null || cat {}; fi" \
+        --preview-window=right:60%)
 
-alias batf='bat "./$(fzff)"'
+    if [ -n "$file" ]; then
+        echo "$file"
+        return 0
+    else
+        return 1
+    fi
+}
 
+# Find directories only
+function fzfd {
+    local starting_dir="${1:-.}"
+
+    local dir=$(fd --type d -H . "$starting_dir" | fzf \
+        --style full \
+        --height 60% \
+        --reverse \
+        --preview "tree -C {} 2>/dev/null || ls -la {}" \
+        --preview-window=right:60%)
+
+    if [ -n "$dir" ]; then
+        echo "$dir"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Find files only
+function fzff {
+    local starting_dir="${1:-.}"
+
+    local file=$(fd --type f -H . "$starting_dir" | fzf \
+        --style full \
+        --height 60% \
+        --reverse \
+        --preview "bat --style=numbers --color=always {} 2>/dev/null || cat {}" \
+        --preview-window=right:60%)
+
+    if [ -n "$file" ]; then
+        echo "$file"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Ripgrep with fzf for content search
+function rgf {
+    local search_term="$1"
+    local query="${search_term:-.}"
+
+    local result=$(rg --line-number --no-heading --color=always --smart-case "$query" |
+        fzf --ansi \
+            --style full \
+            --height 60% \
+            --reverse \
+            --delimiter : \
+            --preview "bat --color=always --highlight-line {2} {1} 2>/dev/null || cat {1}" \
+            --preview-window=right:60%)
+
+    if [ -n "$result" ]; then
+        local file_path=$(echo "$result" | cut -d: -f1)
+        local line_number=$(echo "$result" | cut -d: -f2)
+        nvim +$line_number "$file_path"
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Change directory using fzf
+function cdf {
+    local dir
+    dir=$(fzfd "$1")
+    if [ -n "$dir" ]; then
+        cd "$dir"
+    fi
+}
+
+# View file with bat using fzf
+function batf {
+    local file
+    file=$(fzff "$1")
+    if [ -n "$file" ]; then
+        bat "$file"
+    fi
+}
+
+# Open file with nvim using fzf
+function nvf {
+    local file
+    file=$(f "$1")
+    if [ -n "$file" ]; then
+        nvim "$file"
+    fi
+}
+
+# ALIASES (keeping simple ones as aliases)
 alias lsa='ls --color=auto -la --group-directories-first'
-# alias ls='eza -a --icons=always'
-# alias ll='eza -al --icons=always'
-# alias lt='eza -a --tree --level=1 --icons=always'
-
 alias shutdown='systemctl poweroff'
 
-# VIM
+# VIM ALIASES
 alias vi='nvim'
-
 alias nv='nvim'
-alias nvf='nvim "./$(f)"'
 
-# GIT
+# GIT ALIASES
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
@@ -50,10 +142,11 @@ alias gp="git push"
 alias gpl="git pull"
 alias gd="git diff"
 
+# SHELL INTEGRATIONS
 if command -v starship &>/dev/null; then
-  eval "$(starship init bash)"
+    eval "$(starship init bash)"
 fi
 
 if command -v zoxide &>/dev/null; then
-  eval "$(zoxide init bash)"
+    eval "$(zoxide init bash)"
 fi
