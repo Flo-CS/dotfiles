@@ -29,6 +29,9 @@ install_packages wofi
 section "Clipboard"
 install_packages wl-clipboard
 
+section "Screenshots"
+install_packages flameshot
+
 section "Fonts"
 install_packages ttf-jetbrains-mono-nerd ttf-nerd-fonts-symbols
 
