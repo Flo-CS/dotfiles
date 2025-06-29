@@ -19,7 +19,6 @@ install_packages upower
 
 section "Customization"
 install_packages kvantum kvantum-qt5 # QT
-install_packages nwg-look            # GTK
 
 section "Notifications"
 install_packages swaync
