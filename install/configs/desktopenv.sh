@@ -39,16 +39,6 @@ create_dotfiles_symlink waybar/config.jsonc ~/.config/waybar/config.jsonc
 create_dotfiles_symlink waybar/style.css ~/.config/waybar/style.css
 create_dotfiles_symlink waybar/themes/$WAYBAR_THEME_NAME.css ~/.config/waybar/main-theme.css
 
-section "Kvantum"
-mkdir -p ~/.config/Kvantum
-create_dotfiles_recursive_copy kvantum/themes/. ~/.config/Kvantum
-create_dotfiles_symlink kvantum/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
-insert_content_with_marker ~/.config/Kvantum/kvantum.kvconfig "theme" "theme=$KVANTUM_THEME_NAME"
-
-section "GTK 3"
-
-section "GTK 4"
-
 section "Swaync"
 mkdir -p ~/.config/swaync
 create_dotfiles_copy swaync/style.css ~/.config/swaync/style.css

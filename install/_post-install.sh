@@ -11,6 +11,8 @@ $DOTFILES_CONFIGS_DIR/system.sh
 
 $DOTFILES_INSTALL_DIR/desktopenv.sh
 $DOTFILES_CONFIGS_DIR/desktopenv.sh
+$DOTFILES_CONFIGS_DIR/qt-theming.sh
+$DOTFILES_CONFIGS_DIR/gtk-theming.sh
 
 $DOTFILES_INSTALL_DIR/appstools.sh
 $DOTFILES_CONFIGS_DIR/appstools.sh
