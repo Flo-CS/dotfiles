@@ -30,3 +30,6 @@ else
 	error "no Windows Boot Manager found. Skipping Windows entry in GRUB."
 	exit 0
 fi
+
+section "Bluetooth"
+sudo systemctl enable --now bluetooth.service
