@@ -22,7 +22,7 @@ install_packages power-profiles-daemon
 install_yay_packages bluetuith
 
 section "Disk"
-install_packages gvfs udisks2
+install_packages gvfs udisks2 udiskie
 
 section "Man Pages"
 install_packages man-pages
