@@ -19,7 +19,7 @@ create_dotfiles_symlink hypr/hypridle.conf ~/.config/hypr/hypridle.conf
 section "Hyprpaper"
 create_dotfiles_symlink hypr/hyprpaper.conf ~/.config/hypr/hyprpaper.conf
 
-section "Hyprcursor"
+section "Hyprlock"
 create_dotfiles_symlink hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
 create_dotfiles_symlink hypr/hyprlock ~/.config/hypr/hyprlock
 
@@ -53,9 +53,6 @@ insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR
 
 section "Wofi menus"
 create_dotfiles_symlink bin/wofi-emoji ~/.local/bin/wofi-emoji
-
-section "Cursor icons"
-create_dotfiles_recursive_copy cursor-icons/. ~/.local/share/icons
 
 section "Hyprland Autostart"
 insert_content_with_marker ~/.bash_profile "hyprland-autostart" "if uwsm check may-start; then 

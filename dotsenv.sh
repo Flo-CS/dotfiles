@@ -19,8 +19,8 @@ export WAYBAR_THEME_NAME=rose-pine    # X
 export SWAYNC_THEME_NAME=rose-pine    # X
 
 # Theming strategy: inject theme name into a main config file
-export STARSHIP_THEME_NAME=rose-pine     # X
-export KVANTUM_THEME_NAME=rose-pine-pine # X
+export STARSHIP_THEME_NAME=rose-pine        # X
+export QT_KVANTUM_THEME_NAME=rose-pine-pine # X
 export NVIM_THEME_NAME=rose-pine
 
 # Theming strategy: call a script to set the env vars for theme inside bashrc
