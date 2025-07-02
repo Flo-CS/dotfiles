@@ -30,3 +30,6 @@ install_packages tldr
 
 section "File Manager"
 install_packages thunar
+
+section "Sync"
+install_packages rclone syncthing rsync
