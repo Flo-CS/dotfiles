@@ -33,3 +33,7 @@ install_packages thunar
 
 section "Sync"
 install_packages rclone syncthing rsync
+
+section "Transfers"
+# localsend
+install_packages kdeconnect
