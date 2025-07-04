@@ -29,7 +29,7 @@ install_packages man-pages
 install_packages tldr
 
 section "File Manager"
-install_packages thunar
+install_packages thunar yazi ranger nnn
 
 section "Sync"
 install_packages rclone syncthing rsync
