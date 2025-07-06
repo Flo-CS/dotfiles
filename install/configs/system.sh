@@ -31,5 +31,7 @@ else
 	exit 0
 fi
 
+grep -q '^GRUB_DEFAULT=' /etc/default/grub && sudo sed -i 's/^GRUB_DEFAULT=.*/GRUB_DEFAULT=saved/' /etc/default/grub
+
 section "Bluetooth"
 sudo systemctl enable --now bluetooth.service

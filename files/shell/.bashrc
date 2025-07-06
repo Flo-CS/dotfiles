@@ -150,3 +150,9 @@ fi
 if command -v zoxide &>/dev/null; then
     eval "$(zoxide init bash)"
 fi
+
+reboot_to_windows() {
+    windows_title=$(grep -i windows /boot/grub/grub.cfg | cut -d "'" -f 2)
+    sudo grub-reboot "$windows_title" && sudo reboot
+}
+alias reboot-to-windows='reboot_to_windows'
