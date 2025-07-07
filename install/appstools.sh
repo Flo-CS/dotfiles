@@ -4,6 +4,9 @@ source $DOTFILES_UTILS
 
 section "Terminal"
 install_packages alacritty
+uninstall_packages xterm
+sudo ln -s /usr/bin/alacritty /usr/bin/xterm # Stupid workaround to allow to run .desktop files that require by default xterm (i don't know how to change it)
+
 install_packages starship
 
 section "Files Handling"

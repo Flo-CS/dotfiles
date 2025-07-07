@@ -137,6 +137,18 @@ install_packages() {
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }
 
+uninstall_packages() {
+	local packages=("$@")
+
+	if [ ${#packages[@]} -eq 0 ]; then
+		warn "no packages specified for uninstallation."
+		return 1
+	fi
+
+	info "uninstalling packages: ${packages[*]}"
+	sudo pacman -R --noconfirm "${packages[@]}"
+}
+
 install_yay_packages() {
 	local packages=("$@")
 
