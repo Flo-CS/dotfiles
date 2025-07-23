@@ -26,6 +26,7 @@ if test -z "$HYPRLAND_PLUGINS_VERSION"; then
 	echo "No version provided, cannot install hyprland-plugins"
 else
 	hyprpm update
+	hyprpm remove https://github.com/hyprwm/hyprland-plugins
 	hyprpm add https://github.com/hyprwm/hyprland-plugins $HYPRLAND_PLUGINS_VERSION
 	hyprpm enable hyprexpo
 fi
