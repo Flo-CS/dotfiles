@@ -38,5 +38,4 @@ section "Sync"
 install_packages rclone syncthing rsync
 
 section "Transfers"
-# localsend
-install_packages kdeconnect
+install_packages kdeconnect localsend
