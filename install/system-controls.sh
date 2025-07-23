@@ -1,0 +1,2 @@
+install_packages brightnessctl
+install_packages power-profiles-daemon

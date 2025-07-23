@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 if [[ -z "$DOTFILES_DIR" ]]; then
 	echo "DOTFILES_DIR is not set. Please set it to the path of your dotfiles directory."
 	exit 1
@@ -6,9 +8,7 @@ fi
 export DOTFILES_USERNAME=${DOTFILES_USERNAME:-${USER:-$(whoami)}}
 export DOTFILES_DEVICE_NAME=${DOTFILES_DEVICE_NAME:-${DEVICE_NAME:-$(hostname)}}
 
-export DOTFILES_INSTALL_DIR="$DOTFILES_DIR/install"
-export DOTFILES_CONFIGS_DIR="$DOTFILES_INSTALL_DIR/configs"
-export DOTFILES_UTILS="$DOTFILES_INSTALL_DIR/_utils.sh"
+export DOTFILES_WORKING_DIR=/usr/local/share/dotfiles
 
 # Theming strategy: inject theme filename into a main config file
 export ALACRITTY_THEME_NAME=rose-pine # X
@@ -33,3 +33,5 @@ export WOFI_THEME_NAME=rose-pine # X
 export GTK_THEME_NAME=Rose-Pine # X
 
 export WALLPAPER_FILE=mountain.jpg
+
+export HYPRLAND_PLUGINS_VERSION=v0.48.0
