@@ -26,8 +26,8 @@ if test -z "$HYPRLAND_PLUGINS_VERSION"; then
 	echo "No version provided, cannot install hyprland-plugins"
 else
 	hyprpm update
-	hyprpm remove https://github.com/hyprwm/hyprland-plugins
-	hyprpm add https://github.com/hyprwm/hyprland-plugins $HYPRLAND_PLUGINS_VERSION
+	hyprpm remove --force https://github.com/hyprwm/hyprland-plugins
+	hyprpm add --force https://github.com/hyprwm/hyprland-plugins $HYPRLAND_PLUGINS_VERSION
 	hyprpm enable hyprexpo
 fi
 
@@ -56,14 +56,14 @@ install_packages swaync
 mkdir -p ~/.config/swaync
 create_dotfiles_copy swaync/style.css ~/.config/swaync/style.css
 create_dotfiles_symlink swaync/config.json ~/.config/swaync/config.json
-insert_content_with_marker ~/.config/swaync/style.css "theme" "$(cat $DOTFILES_DIR/configs/swaync/themes/$SWAYNC_THEME_NAME.css)" "/*" "*/"
+insert_content_with_marker ~/.config/swaync/style.css "theme" "$(cat $DOTFILES_DIR/config/swaync/themes/$SWAYNC_THEME_NAME.css)" "/*" "*/"
 
 section "Wofi"
 install_packages wofi
 mkdir -p ~/.config/wofi/config
 create_dotfiles_symlink wofi/config ~/.config/wofi/config
 create_dotfiles_copy wofi/style.css ~/.config/wofi/style.css
-insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR/configs/wofi/themes/rose-pine.css)" "/*" "*/"
+insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR/config/wofi/themes/rose-pine.css)" "/*" "*/"
 
 section "Wofi menus"
 create_dotfiles_symlink bin/wofi-emoji ~/.local/bin/wofi-emoji
