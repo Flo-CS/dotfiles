@@ -1,15 +1,6 @@
 #!/usr/bin/env bash
 
-# Color functions
-color_reset="\033[0m"
-color_info="\033[1;34m"    # Bold Blue
-color_success="\033[1;32m" # Bold Green
-color_warn="\033[1;33m"    # Bold Yellow
-color_error="\033[1;31m"   # Bold Red
-
-info() { echo -e "${color_info}info: ${color_reset} $*"; }
-warn() { echo -e "${color_warn}warning: ${color_reset} $*"; }
-error() { echo -e "${color_error}error: ${color_reset} $*"; }
+source ${DOTFILES_DIR}/bin/utils/logging.sh
 
 USE_SUDO=false
 
@@ -31,40 +22,40 @@ create_backup_and_delete() {
 	local file="$1"
 
 	if run_with_sudo test -L "$file"; then
-		# warn "file $file is a symlink, no backup created."
-		run_with_sudo rm -f "$file" && info "removed symlink: $file"
+		# log_warn "file $file is a symlink, no backup created."
+		run_with_sudo rm -f "$file" && log_info "removed symlink: $file"
 		return 0
 	fi
 
 	if ! run_with_sudo test -e "$file"; then
-		# warn "file $file does not exist, no backup created."
+		# log_warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	run_with_sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak" && run_with_sudo rm -rf "$file" && info "removed file: $file"
+	run_with_sudo cp -rf "$file" "${file}.bak" && log_info "backup created: ${file}.bak" && run_with_sudo rm -rf "$file" && log_info "removed file: $file"
 }
 
 create_backup() {
 	local file="$1"
 
 	if run_with_sudo test -L "$file"; then
-		# warn "file $file is a symlink, no backup created."
+		# log_warn "file $file is a symlink, no backup created."
 		return 0
 	fi
 
 	if ! run_with_sudo test -e "$file"; then
-		# warn "file $file does not exist, no backup created."
+		# log_warn "file $file does not exist, no backup created."
 		return 0
 	fi
 
-	run_with_sudo cp -rf "$file" "${file}.bak" && info "backup created: ${file}.bak"
+	run_with_sudo cp -rf "$file" "${file}.bak" && log_info "backup created: ${file}.bak"
 }
 
 create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
-	create_backup_and_delete "$link_name" && run_with_sudo mkdir -p "$(dirname "$link_name")" && run_with_sudo ln -sT "$target" "$link_name" && info "created symlink: $link_name -> $target"
+	create_backup_and_delete "$link_name" && run_with_sudo mkdir -p "$(dirname "$link_name")" && run_with_sudo ln -sT "$target" "$link_name" && log_info "created symlink: $link_name -> $target"
 }
 
 create_dotfiles_symlink() {
@@ -75,14 +66,14 @@ create_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp "$source" "$destination" && info "copied $source to $destination"
+	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp "$source" "$destination" && log_info "copied $source to $destination"
 }
 
 create_recursive_copy() {
 	local source="$1"
 	local destination="$2"
 
-	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp -r "$source" "$destination" && info "recursively copied $source to $destination"
+	create_backup_and_delete "$destination" && run_with_sudo mkdir -p "$(dirname "$destination")" && run_with_sudo cp -r "$source" "$destination" && log_info "recursively copied $source to $destination"
 }
 
 create_dotfiles_copy() {
@@ -122,18 +113,18 @@ insert_content_with_marker() {
 	fi
 
 	rm -f "$temp_file"
-	info "inserted content with marker $marker in $file"
+	log_info "inserted content with marker $marker in $file"
 }
 
 install_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		warn "no packages specified for installation."
+		log_warn "no packages specified for installation."
 		return 1
 	fi
 
-	info "installing packages: ${packages[*]}"
+	log_info "installing packages: ${packages[*]}"
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }
 
@@ -141,11 +132,11 @@ uninstall_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		warn "no packages specified for uninstallation."
+		log_warn "no packages specified for uninstallation."
 		return 1
 	fi
 
-	info "uninstalling packages: ${packages[*]}"
+	log_info "uninstalling packages: ${packages[*]}"
 	sudo pacman -R --noconfirm "${packages[@]}"
 }
 
@@ -153,14 +144,10 @@ install_yay_packages() {
 	local packages=("$@")
 
 	if [ ${#packages[@]} -eq 0 ]; then
-		warn "no yay packages specified for installation."
+		log_warn "no yay packages specified for installation."
 		return 1
 	fi
 
-	info "installing yay packages: ${packages[*]}"
+	log_info "installing yay packages: ${packages[*]}"
 	yay -S --needed "${packages[@]}"
-}
-
-section() {
-	echo -e "\n${color_info}===== [ $* ] =====${color_reset}\n"
 }
