@@ -8,7 +8,7 @@ install_files=$DOTFILES_DIR/install/*.sh
 selected_install_files=$(gum filter --no-limit $install_files)
 
 for f in $selected_install_files; do
-	. $f
+	source $f
 done
 
 sudo snapper -c root create --description "After system setup" -u important=yes
