@@ -34,4 +34,4 @@ export GTK_THEME_NAME=Rose-Pine # X
 
 export WALLPAPER_FILE=mountain.jpg
 
-export HYPRLAND_PLUGINS_VERSION=v0.48.0
+export HYPRLAND_PLUGINS_VERSION=v0.50.0
