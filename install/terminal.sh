@@ -1,6 +1,9 @@
 section "Gum, Glow"
 install_packages glow gum
 
+section "Atuin"
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
 section "Alacritty"
 install_packages alacritty
 uninstall_packages xterm
