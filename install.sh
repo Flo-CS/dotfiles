@@ -3,7 +3,7 @@
 source "$DOTFILES_DIR/dotsenv.sh" || exit 1
 source "$DOTFILES_DIR/dotsutils.sh" || exit 1
 
-install_files=$DOTFILES_DIR/install/*.sh
+install_files=$(fd .sh $DOTFILES_DIR/install)
 
 selected_install_files=$(gum filter --no-limit $install_files)
 
