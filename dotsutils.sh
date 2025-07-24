@@ -81,6 +81,10 @@ create_dotfiles_symlink() {
 	create_symlink "$DOTFILES_DIR/config/$1" "$2"
 }
 
+create_dotfiles_assets_symlink() {
+	create_symlink "$DOTFILES_DIR/assets/$1" "$2"
+}
+
 create_copy() {
 	local source="$1"
 	local destination="$2"
@@ -99,8 +103,16 @@ create_dotfiles_copy() {
 	create_copy "$DOTFILES_DIR/config/$1" "$2"
 }
 
+create_dotfiles_assets_copy() {
+	create_copy "$DOTFILES_DIR/assets/$1" "$2"
+}
+
 create_dotfiles_recursive_copy() {
 	create_recursive_copy "$DOTFILES_DIR/config/$1" "$2"
+}
+
+create_dotfiles_assets_recursive_copy() {
+	create_recursive_copy "$DOTFILES_DIR/assets/$1" "$2"
 }
 
 # FIXME: does not seem to work multiple times when the marker is first line

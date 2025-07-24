@@ -52,4 +52,4 @@ create_dotfiles_symlink kvantum/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvcon
 insert_content_with_marker ~/.config/Kvantum/kvantum.kvconfig "theme" "theme=$QT_KVANTUM_THEME_NAME"
 
 section "Cursor icons"
-create_dotfiles_recursive_copy cursor-icons/. ~/.local/share/icons
+create_dotfiles_assets_recursive_copy cursor-icons/. ~/.local/share/icons
