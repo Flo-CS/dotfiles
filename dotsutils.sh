@@ -78,7 +78,7 @@ create_symlink() {
 }
 
 create_dotfiles_symlink() {
-	create_symlink "$DOTFILES_DIR/config/$1" "$2"
+	create_symlink "$DOTFILES_DIR/config/default/$1" "$2"
 }
 
 create_dotfiles_assets_symlink() {
@@ -100,7 +100,7 @@ create_recursive_copy() {
 }
 
 create_dotfiles_copy() {
-	create_copy "$DOTFILES_DIR/config/$1" "$2"
+	create_copy "$DOTFILES_DIR/config/default/$1" "$2"
 }
 
 create_dotfiles_assets_copy() {
@@ -108,7 +108,7 @@ create_dotfiles_assets_copy() {
 }
 
 create_dotfiles_recursive_copy() {
-	create_recursive_copy "$DOTFILES_DIR/config/$1" "$2"
+	create_recursive_copy "$DOTFILES_DIR/config/default/$1" "$2"
 }
 
 create_dotfiles_assets_recursive_copy() {
