@@ -22,14 +22,9 @@ create_dotfiles_symlink hypr/hyprlock ~/.config/hypr/hyprlock
 
 section "Hyprland Plugins"
 install_packages cmake meson cpio git gcc
-if test -z "$HYPRLAND_PLUGINS_VERSION"; then
-	echo "No version provided, cannot install hyprland-plugins"
-else
-	hyprpm update
-	hyprpm remove --force https://github.com/hyprwm/hyprland-plugins
-	hyprpm add --force https://github.com/hyprwm/hyprland-plugins $HYPRLAND_PLUGINS_VERSION
-	hyprpm enable hyprexpo
-fi
+hyprpm add --force https://github.com/hyprwm/hyprland-plugins $HYPRLAND_PLUGINS_VERSION
+hyprpm update
+hyprpm enable hyprexpo
 
 section "Hyprland Autostart"
 insert_content_with_marker ~/.bash_profile "hyprland-autostart" "if uwsm check may-start; then 

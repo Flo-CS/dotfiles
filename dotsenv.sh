@@ -34,4 +34,5 @@ export GTK_THEME_NAME=Rose-Pine # X
 
 export WALLPAPER_FILE=mountain.jpg
 
-export HYPRLAND_PLUGINS_VERSION=v0.50.0
+# Can be empty if version should not be fixed, example: v0.50.0
+export HYPRLAND_PLUGINS_VERSION=
