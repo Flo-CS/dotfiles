@@ -8,8 +8,6 @@ fi
 export DOTFILES_USERNAME=${DOTFILES_USERNAME:-${USER:-$(whoami)}}
 export DOTFILES_DEVICE_NAME=${DOTFILES_DEVICE_NAME:-${DEVICE_NAME:-$(hostname)}}
 
-export DOTFILES_WORKING_DIR=~/.local/share/dotfiles
-
 # Theming strategy: inject theme filename into a main config file
 export ALACRITTY_THEME_NAME=rose-pine # X
 export BAT_THEME_NAME=rose-pine       # X
