@@ -1,55 +1,48 @@
-section "Waybar"
-install_packages waybar
-mkdir -p ~/.config/waybar
-create_dotfiles_symlink waybar/config.jsonc ~/.config/waybar/config.jsonc
-create_dotfiles_symlink waybar/style.css ~/.config/waybar/style.css
-create_dotfiles_symlink waybar/themes/$WAYBAR_THEME_NAME.css ~/.config/waybar/main-theme.css
+log_section "Waybar"
+install_pkgs waybar upower
+conf_ln waybar.jsonc ~/.config/waybar/config.jsonc
+theme_conf_ln waybar.css ~/.config/waybar/style.css
 
-install_packages upower
+log_section "QT Customization"
+install_pkgs kvantum kvantum-qt5
+conf_ln kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
+theme_conf_ln kvantum ~/.config/Kvantum/current-theme
 
-section "Customization"
-install_packages kvantum kvantum-qt5 # QT
+log_section "Swaync"
+install_pkgs swaync
+conf_ln swaync.json ~/.config/swaync/config.json
+theme_conf_ln swaync.css ~/.config/swaync/style.css
 
-section "Swaync"
-install_packages swaync
-mkdir -p ~/.config/swaync
-create_dotfiles_copy swaync/style.css ~/.config/swaync/style.css
-create_dotfiles_symlink swaync/config.json ~/.config/swaync/config.json
-insert_content_with_marker ~/.config/swaync/style.css "theme" "$(cat $DOTFILES_DIR/config/swaync/themes/$SWAYNC_THEME_NAME.css)" "/*" "*/"
+log_section "Wofi"
+install_pkgs wofi
+conf_ln wofi ~/.config/wofi/config
+theme_conf_ln wofi.css ~/.config/wofi/style.css
 
-section "Wofi"
-install_packages wofi
-mkdir -p ~/.config/wofi/config
-create_dotfiles_symlink wofi/config ~/.config/wofi/config
-create_dotfiles_copy wofi/style.css ~/.config/wofi/style.css
-insert_content_with_marker ~/.config/wofi/style.css "theme" "$(cat $DOTFILES_DIR/config/wofi/themes/rose-pine.css)" "/*" "*/"
+log_section "Wofi menus"
+bin_ln wofi-emoji ~/.local/bin/wofi-emoji
 
-section "Wofi menus"
-create_dotfiles_symlink bin/wofi-emoji ~/.local/bin/wofi-emoji
-
-section "Quickshell"
-install_packages qt6-shadertools cli11
+log_section "Quickshell"
+install_pkgs qt6-shadertools cli11
 if ! test -e ~/documents/quickshell; then
 	git clone https://github.com/Flo-CS/quickshell.git ~/documents/quickshell
+else
+	# TODO: Why sudo is required? How to install as user?
+	cd ~/documents/quickshell &&
+		git pull &&
+		cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
+		cmake --build build &&
+		sudo cmake --install build &&
+		cd -
 fi
-# TODO: Why sudo is required? How to install as user?
-cd ~/documents/quickshell && git pull && cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
-	cmake --build build &&
-	sudo cmake --install build
 
-create_dotfiles_symlink quickshell ~/.config/quickshell
+# TODO: move it inside assets or other folder
+conf_ln quickshell ~/.config/quickshell
 
-section "GTK 3 Theming"
+log_section "GTK 3 Theming"
 
-section "GTK 4 Theming"
+log_section "GTK 4 Theming"
 
-section "GTK icons"
+log_section "GTK icons"
 
-section "QT Theming"
-mkdir -p ~/.config/Kvantum
-create_dotfiles_recursive_copy kvantum/themes/. ~/.config/Kvantum
-create_dotfiles_symlink kvantum/kvantum.kvconfig ~/.config/Kvantum/kvantum.kvconfig
-insert_content_with_marker ~/.config/Kvantum/kvantum.kvconfig "theme" "theme=$QT_KVANTUM_THEME_NAME"
-
-section "Cursor icons"
-create_dotfiles_assets_recursive_copy cursor-icons/. ~/.local/share/icons
+log_section "Cursor icons"
+theme_conf_ln cursor-icons ~/.local/share/icons/cursor

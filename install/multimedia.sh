@@ -1,2 +1,2 @@
-section "Playerctl"
-install_packages playerctl
+log_section "Playerctl"
+install_pkgs playerctl

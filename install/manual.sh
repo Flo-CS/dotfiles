@@ -1,3 +1,2 @@
-section "Man Pages"
-install_packages man-pages
-install_packages tldr
+log_section "Man Pages"
+install_pkgs man-pages tldr

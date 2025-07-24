@@ -1,20 +1,17 @@
-section "Gum, Glow"
-install_packages glow gum
+log_section "Gum, Glow"
+install_pkgs glow gum
 
-section "Atuin"
+log_section "Atuin"
 curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 
-section "Alacritty"
-install_packages alacritty
-uninstall_packages xterm
-mkdir -p ~/.config/alacritty
-create_dotfiles_symlink alacritty/themes/$ALACRITTY_THEME_NAME.toml ~/.config/alacritty/main-theme.toml
-create_dotfiles_symlink alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
-
+log_section "Alacritty"
+install_pkgs alacritty
+uninstall_pkgs xterm
+conf_ln alacritty.toml ~/.config/alacritty/alacritty.toml
+theme_conf_ln alacritty.toml ~/.config/alacritty/current-theme.toml
 sudo ln -s /usr/bin/alacritty /usr/bin/xterm # Stupid workaround to allow to run .desktop files that require by default xterm (i don't know how to change it)
 
-section "Starship"
-install_packages starship
-mkdir -p ~/.config/starship
-create_dotfiles_copy starship/starship.toml ~/.config/starship.toml
-insert_content_with_marker ~/.config/starship.toml "theme" "palette = \"$STARSHIP_THEME_NAME\""
+log_section "Starship"
+install_pkgs starship
+conf_template starship.toml.j2
+conf_ln starship.toml ~/.config/starship.toml

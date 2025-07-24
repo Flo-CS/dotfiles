@@ -1,2 +1,2 @@
-section "Sudoers"
-with_sudo create_dotfiles_copy system/sudoers/$DOTFILES_USERNAME /etc/sudoers.d/$DOTFILES_USERNAME
+log_section "Sudoers"
+with_sudo conf_copy sudoers /etc/sudoers.d/sudoers-default

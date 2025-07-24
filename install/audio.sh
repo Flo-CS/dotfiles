@@ -1,5 +1,5 @@
-section "Sof-firmware"
-install_packages sof-firmware
+log_section "Sof-firmware"
+install_pkgs sof-firmware
 
-section "Pipewire"
-install_packages pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
+log_section "Pipewire"
+install_pkgs pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack

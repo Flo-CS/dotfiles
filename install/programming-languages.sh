@@ -1,14 +1,13 @@
-section "Jinja2"
-install_packages python-j2cli
+log_section "Jinja2"
+install_pkgs python-j2cli
 
-section "Python"
-install_packages python-pip
+log_section "Python"
+install_pkgs python-pip
 
-section "Nodejs"
-install_packages nvm
-insert_content_with_marker ~/.bashrc "nvm" "source /usr/share/nvm/init-nvm.sh"
+log_section "Nodejs"
+install_pkgs nvm
 source ~/.bashrc
 nvm install --lts
 
-section "Rust"
+log_section "Rust"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh

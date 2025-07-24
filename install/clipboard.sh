@@ -1,2 +1,2 @@
-section "Clipboard"
-install_packages wl-clipboard
+log_section "Clipboard"
+install_pkgs wl-clipboard

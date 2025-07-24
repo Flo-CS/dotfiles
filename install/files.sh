@@ -1,34 +1,31 @@
-section "Bat"
-install_packages bat
-mkdir -p "$(bat --config-dir)"
-create_dotfiles_symlink bat/config "$(bat --config-dir)/config"
-create_dotfiles_symlink bat/themes/$BAT_THEME_NAME.tmTheme "$(bat --config-dir)/themes/main-theme.tmTheme"
+log_section "Bat"
+install_pkgs bat
+conf_ln bat "$(bat --config-dir)/config"
+theme_conf_ln bat.tmTheme "$(bat --config-dir)/themes/current.tmTheme"
 bat cache --build
 
-section "Fzf"
-install_packages fzf
-mkdir -p ~/.local/bin/fzf
-create_dotfiles_symlink fzf/$FZF_THEME_NAME.sh ~/.local/bin/fzf/main-theme.sh
-insert_content_with_marker ~/.bashrc "fzf" "source ~/.local/bin/fzf/main-theme.sh"
+log_section "Fzf"
+install_pkgs fzf
+theme_conf_ln fzf.sh ~/.local/bin/fzf/current-theme.sh
 
-section "Fd"
-install_packages fd
+log_section "Fd"
+install_pkgs fd
 
-section "Ripgrep"
-install_packages ripgrep
+log_section "Ripgrep"
+install_pkgs ripgrep
 
-section "Zoxide"
-install_packages zoxide
+log_section "Zoxide"
+install_pkgs zoxide
 
-section "Jq and Go-yq"
-install_packages jq go-yq
+log_section "Jq and Go-yq"
+install_pkgs jq go-yq
 
-section "Files managers"
-install_packages thunar yazi ranger nnn
+log_section "Files managers"
+install_pkgs thunar yazi ranger nnn
 
-section "Sync"
-install_packages rclone syncthing rsync
+log_section "Sync"
+install_pkgs rclone syncthing rsync
 
-section "Localsend"
+log_section "Localsend"
 # FIXME:
-# install_packages localsend
+# install_pkgs localsend

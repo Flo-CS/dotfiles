@@ -1,8 +1,7 @@
-section "Fastfetch"
-install_packages fastfetch
+log_section "Fastfetch"
+install_pkgs fastfetch
 
-section "Btop"
-install_packages btop
-mkdir -p ~/.config/btop
-create_dotfiles_symlink btop/btop.conf ~/.config/btop/btop.conf
-create_dotfiles_symlink btop/themes/$BTOP_THEME_NAME.theme ~/.config/btop/main-theme.theme
+log_section "Btop"
+install_pkgs btop
+conf_ln btop.conf ~/.config/btop/btop.conf
+theme_conf_ln btop.theme ~/.config/btop/current.theme

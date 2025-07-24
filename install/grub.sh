@@ -1,4 +1,4 @@
-section "GRUB"
+log_section "GRUB"
 # os-prober is disabled by default in grub config and it's better for security reasons. But it is useful to detect other OSes and then add them manually to grub.
 windows_boot_partition_path=$(sudo os-prober | grep "Windows Boot Manager" | head -n 1 | cut -d'@' -f1)
 log_info "detected Windows Boot Manager at: $windows_boot_partition_path"
@@ -13,14 +13,14 @@ if [[ -n $windows_boot_partition_path ]]; then
 	fi
 
 	log_info "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-	with_sudo insert_content_with_marker /etc/grub.d/40_custom "windows" "
+	with_sudo insert_with_marker /etc/grub.d/40_custom "windows" "
 menuentry 'Windows Boot Manager' --class windows --class os {
     search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
 }
 "
 else
-	log_error "no Windows Boot Manager found. Skipping Windows entry in GRUB."
+	log_warn "no Windows Boot Manager found. Skipping Windows entry in GRUB."
 fi
 
 grep -q '^GRUB_DEFAULT=' /etc/default/grub && sudo sed -i 's/^GRUB_DEFAULT=.*/GRUB_DEFAULT=saved/' /etc/default/grub

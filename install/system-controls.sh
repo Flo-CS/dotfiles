@@ -1,2 +1,2 @@
-install_packages brightnessctl
-install_packages power-profiles-daemon
+log_section "System Controls"
+install_pkgs brightnessctl power-profiles-daemon

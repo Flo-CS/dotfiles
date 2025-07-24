@@ -145,6 +145,10 @@ reboot_to_windows() {
 }
 alias reboot-to-windows='reboot_to_windows'
 
-# DOTFILES ENVIRONMENT
-export DOTFILES_DIR="$HOME/dotfiles"
-source "$DOTFILES_DIR/dotsenv.sh"
+source ~/.local/bin/fzf/current-theme.sh
+
+. "$HOME/.atuin/bin/env"
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"
+. "$HOME/.cargo/env"

@@ -1,2 +1,2 @@
-section "User Dirs"
-create_dotfiles_symlink user-dirs.dirs ~/.config/user-dirs.dirs
+log_section "User Dirs"
+conf_ln user-dirs.dirs ~/.config/user-dirs.dirs

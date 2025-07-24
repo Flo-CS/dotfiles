@@ -1,5 +1,5 @@
-section "Bluetooth"
+log_section "Bluetooth"
 sudo systemctl enable --now bluetooth.service
 
-section "Bluetooth TUI"
-install_yay_packages bluetuith
+log_section "Bluetuith"
+install_yay_pkgs bluetuith

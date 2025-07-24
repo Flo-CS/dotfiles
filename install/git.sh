@@ -1,8 +1,4 @@
-section "Git"
-install_packages git git-filter-repo lazygit
-install_yay_packages git-credential-oauth
-
-create_dotfiles_symlink gitconfig/.gitconfig ~/.gitconfig-default
-
-insert_content_with_marker ~/.gitconfig "gitconfig-default" "[include]
-	path = ~/.gitconfig-default"
+log_section "Git"
+install_pkgs git git-filter-repo lazygit git-delta
+install_yay_pkgs git-credential-oauth
+conf_ln .gitconfig ~/.gitconfig

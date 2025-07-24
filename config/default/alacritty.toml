@@ -1,5 +1,5 @@
 [general]
-import = ["~/.local/share/dotfiles/theme/current/alacritty.toml"]
+import = ["current-theme.toml"]
 
 [font]
 normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }

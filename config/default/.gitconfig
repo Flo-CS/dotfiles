@@ -1,5 +1,5 @@
 [init]
-	defautlBranch = main
+	defaultBranch = main
 [push]
 	autoSetupRemote = true
 [user]

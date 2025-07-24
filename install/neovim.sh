@@ -1,4 +1,4 @@
-section "Neovim"
-install_packages neovim
-create_dotfiles_symlink nvim ~/.config/nvim
-echo $NVIM_THEME_NAME >~/.config/nvim/.theme
+log_section "Neovim"
+install_pkgs neovim
+conf_ln nvim ~/.config/nvim
+theme_conf_ln nvim.theme ~/.config/nvim/.theme
