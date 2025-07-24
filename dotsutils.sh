@@ -69,6 +69,11 @@ create_symlink() {
 	local target="$1"
 	local link_name="$2"
 
+	if ! run_with_sudo test -e "$target" && run_with_sudo -e "$link_name"; then
+		log_warn "target $target does not exist, but existing $link_name will be copied instead."
+		run_with_sudo cp -rf "$link_name" "$target" && log_info "copied $link_name to $target"
+	fi
+
 	create_backup_and_delete "$link_name" && run_with_sudo mkdir -p "$(dirname "$link_name")" && run_with_sudo ln -sT "$target" "$link_name" && log_info "created symlink: $link_name -> $target"
 }
 
