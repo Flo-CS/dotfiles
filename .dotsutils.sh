@@ -2,6 +2,10 @@
 
 CONF_LOCAL_PATH=$DOTFILES_DIR/config/local/$DOTFILES_ID
 
+# ----------------------
+# -- LN/COPY/TEMPLATE --
+# ----------------------
+
 conf_ln() {
 	if test -e "$DOTFILES_DIR/config/local/$DOTFILES_ID/$1"; then
 		__symlink "$DOTFILES_DIR/config/local/$DOTFILES_ID/$1" "$2"
@@ -121,19 +125,26 @@ __run_with_sudo() {
 # ---- LOGGING ----
 # -----------------
 
-color_reset="\033[0m"
-color_info="\033[1;34m"    # Bold Blue
-color_success="\033[1;32m" # Bold Green
-color_warn="\033[1;33m"    # Bold Yellow
-color_error="\033[1;31m"   # Bold Red
+export FOREGROUND="#908caa"
+export BACKGROUND="#191724"
+export BORDER_BACKGROUND="#403d52"
+export BORDER="normal"
 
-log_info() { echo -e "${color_info}info: ${color_reset} $*"; }
-log_warn() { echo -e "${color_warn}warning: ${color_reset} $*"; }
-log_error() { echo -e "${color_error}error: ${color_reset} $*"; }
-log_success() { echo -e "${color_success}success: ${color_reset} $*"; }
+log_info() {
+	gum log --structured --level info "$*"
+}
+log_warn() {
+	gum log --structured --level warn "$*"
+}
+log_error() {
+	gum log --structured --level error "$*"
+}
+log_success() {
+	gum log --structured --level success "$*"
+}
 
 log_section() {
-	echo -e "\n${color_info}===== [ $* ] =====${color_reset}\n"
+	gum style --align center --width 50 "$*"
 }
 
 # -----------------
@@ -180,11 +191,6 @@ backup() {
 install_pkgs() {
 	local packages=("$@")
 
-	if [ ${#packages[@]} -eq 0 ]; then
-		log_warn "no packages specified for installation."
-		return 1
-	fi
-
 	log_info "installing packages: ${packages[*]}"
 	sudo pacman -S --noconfirm --needed "${packages[@]}"
 }
@@ -192,22 +198,12 @@ install_pkgs() {
 uninstall_pkgs() {
 	local packages=("$@")
 
-	if [ ${#packages[@]} -eq 0 ]; then
-		log_warn "no packages specified for uninstallation."
-		return 1
-	fi
-
 	log_info "uninstalling packages: ${packages[*]}"
 	sudo pacman -R --noconfirm "${packages[@]}"
 }
 
 install_yay_pkgs() {
 	local packages=("$@")
-
-	if [ ${#packages[@]} -eq 0 ]; then
-		log_warn "no yay packages specified for installation."
-		return 1
-	fi
 
 	log_info "installing yay packages: ${packages[*]}"
 	yay -S --needed "${packages[@]}"
