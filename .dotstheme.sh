@@ -14,4 +14,11 @@ select_theme() {
 	gum choose --header "Select a theme" $(list_themes)
 }
 
-set_theme $(select_theme)
+case "$1" in
+--list)
+	list_themes
+	;;
+--set)
+	set_theme "$2"
+	;;
+esac

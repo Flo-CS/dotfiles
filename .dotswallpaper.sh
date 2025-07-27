@@ -15,4 +15,11 @@ select_wallpaper() {
 	gum choose --header "Select a wallpaper" $(list_wallpapers)
 }
 
-set_wallpaper $(select_wallpaper)
+case "$1" in
+--list)
+	list_wallpapers
+	;;
+--set)
+	set_wallpaper "$2"
+	;;
+esac

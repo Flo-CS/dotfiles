@@ -1,48 +1,5 @@
 #!/usr/bin/env bash
 
-INSTALL_OPTIONS=(
-	"1-bash"
-	"1-terminal"
-	"1-git"
-	"2-hyprlandia"
-	"3-audio"
-	"3-bin"
-	"3-bluetooth"
-	"3-clipboard"
-	"3-desktop"
-	"3-disks"
-	"3-docker"
-	"3-files"
-	"3-flatpak"
-	"3-fonts"
-	"3-grub"
-	"3-manual"
-	"3-multimedia"
-	"3-neovim"
-	"3-programming_languages"
-	"3-sudoers"
-	"3-system_backup"
-	"3-system_controls"
-	"3-system_monitoring"
-	"3-xdg"
-)
-
-install() {
-	local selected_install_options=$(gum filter --no-limit --header "What to install ?" "${INSTALL_OPTIONS[@]}" | sort -u)
-	for option in $selected_install_options; do
-		local fn=$(echo "$option" | cut -d"-" -f 2)
-		"__install_${fn}"
-	done
-}
-
-create_after_install_backup() {
-	local do_backup=$(gum confirm "Do you want to create a system backup snapshot ?")
-	if [[ $do_backup == "true" ]]; then
-		local snapshot_description =$(gum input --placeholder "Snapshot description" --value "After system setup")
-		sudo snapper -c root create --description $snapshot_description -u important=yes
-	fi
-}
-
 __install_audio() {
 	pacman_install sof-firmware
 	pacman_install pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
@@ -184,8 +141,9 @@ __install_grub() {
 			fi
 		fi
 
+		echo $(pwd)
 		log_info "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-		sudo -E ./.dotsenv.sh insert_with_marker /etc/grub.d/40_custom "windows" "
+		sudo -E $DOTS_DIR/.dotsenv.sh insert_with_marker /etc/grub.d/40_custom "windows" "
 menuentry 'Windows Boot Manager' --class windows --class os {
     search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
@@ -236,14 +194,14 @@ __install_programming_languages() {
 	pacman_install python-pip
 
 	pacman_install nvm
-	source ~/.bashrc
+	source ~/.bashrc || log_error "Failed to source .bashrc to load nvm" # FIXME:: this seems to always been broken, why?
 	nvm install --lts || log_error "nvm install failed, maybe nvm is not properly configured"
 
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 }
 
 __install_sudoers() {
-	sudo -E ./.dotsenv.sh copy config/default/sudoers /etc/sudoers.d/sudoers-default
+	sudo -E $DOTS_DIR/.dotsenv.sh copy config/default/sudoers /etc/sudoers.d/sudoers-default
 }
 
 __install_system_backup() {
@@ -254,7 +212,7 @@ __install_system_backup() {
 
 	sudo snapper -c root create-config / || log_error "Failed to create snapper config, maybe root config already exists"
 
-	sudo -E ./.dotsenv.sh backup /etc/snapper/configs/root
+	sudo -E $DOTS_DIR/.dotsenv.sh backup /etc/snapper/configs/root
 
 	sudo snapper -c root set-config ALLOW_USERS="$USER"
 	sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="10"
@@ -266,8 +224,8 @@ __install_system_backup() {
 	sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
 
 	# WARNING: only work on EndeavourOS because it uses dracut
-	sudo -E ./.dotsenv.sh backup /etc/default/grub-btrfs/config
-	sudo -E ./.dotsenv.sh insert_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+	sudo -E $DOTS_DIR/.dotsenv.sh backup /etc/default/grub-btrfs/config
+	sudo -E $DOTS_DIR/.dotsenv.sh insert_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
 	sudo systemctl enable --now grub-btrfsd
 }
@@ -302,6 +260,49 @@ __install_terminal() {
 
 __install_xdg() {
 	symlink config/default/user-dirs.dirs ~/.config/user-dirs.dirs
+}
+
+INSTALL_OPTIONS=(
+	"1-bash"
+	"1-terminal"
+	"1-git"
+	"2-hyprlandia"
+	"3-audio"
+	"3-bin"
+	"3-bluetooth"
+	"3-clipboard"
+	"3-desktop"
+	"3-disks"
+	"3-docker"
+	"3-files"
+	"3-flatpak"
+	"3-fonts"
+	"3-grub"
+	"3-manual"
+	"3-multimedia"
+	"3-neovim"
+	"3-programming_languages"
+	"3-sudoers"
+	"3-system_backup"
+	"3-system_controls"
+	"3-system_monitoring"
+	"3-xdg"
+)
+
+install() {
+	local selected_install_options=$(gum filter --no-limit --header "What to install ?" "${INSTALL_OPTIONS[@]}" | sort -u)
+	for option in $selected_install_options; do
+		local fn=$(echo "$option" | cut -d"-" -f 2)
+		"__install_${fn}"
+	done
+}
+
+create_after_install_backup() {
+	local do_backup=$(gum confirm "Do you want to create a system backup snapshot ?")
+	if [[ $do_backup == "true" ]]; then
+		local snapshot_description =$(gum input --placeholder "Snapshot description" --value "After system setup")
+		sudo snapper -c root create --description $snapshot_description -u important=yes
+	fi
 }
 
 install

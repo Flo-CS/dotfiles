@@ -1,3 +1,7 @@
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+
 # ENVIRONMENT VARIABLES
 export EDITOR=/usr/bin/nvim
 export SYSTEMD_EDITOR=/usr/bin/nvim
@@ -147,8 +151,6 @@ alias reboot-to-windows='reboot_to_windows'
 
 source ~/.local/bin/fzf/current-theme.sh
 
-. "$HOME/.atuin/bin/env"
+source /usr/share/nvm/init-nvm.sh
 
-[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
 . "$HOME/.cargo/env"
