@@ -16,10 +16,10 @@ select_wallpaper() {
 }
 
 case "$1" in
---list)
+list)
 	list_wallpapers
 	;;
---set)
+set)
 	set_wallpaper "$2"
 	;;
 esac

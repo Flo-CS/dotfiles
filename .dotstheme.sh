@@ -15,10 +15,10 @@ select_theme() {
 }
 
 case "$1" in
---list)
+list)
 	list_themes
 	;;
---set)
+set)
 	set_theme "$2"
 	;;
 esac
