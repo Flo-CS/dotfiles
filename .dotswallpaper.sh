@@ -3,8 +3,8 @@
 WALLPAPERS_PATH="$DOTS_DIR/assets/wallpapers"
 
 set_wallpaper() {
-	ln -sfT $WALLPAPERS_PATH/$1 $WALLPAPERS_PATH/current
-	hyprctl hyprpaper reload ,"$WALLPAPERS_PATH/current"
+	symlink assets/wallpapers/$1 ~/.local/share/wallpapers/current
+	hyprctl hyprpaper reload , ~/.local/share/wallpapers/current
 }
 
 list_wallpapers() {
