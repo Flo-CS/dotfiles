@@ -1,0 +1,91 @@
+@define-color base            #0a0a0a;
+@define-color surface         #141414;
+@define-color overlay         #1e1e1e;
+
+@define-color muted           #3a3a3a;
+@define-color subtle          #666666;
+@define-color text            #e8e8e8;
+
+@define-color accent          #4a9b5e;
+@define-color accentDim       #2d5a36;
+@define-color secondary       #5a8a6b;
+@define-color warning         #d97757;
+@define-color gold            #b8860b;
+
+@define-color highlightLow    #181818;
+@define-color highlightMed    #252525;
+@define-color highlightHigh   #3a3a3a;
+
+* {
+  font-family: "Symbols Nerd Font", "Rubik";
+  font-size: 13px;
+  color: @text;
+}
+
+window#waybar {
+  background-color: alpha(@base, 1);
+  border-bottom: 1px solid @muted;
+}
+
+.modules-left,
+.modules-right {
+  padding: 0 12px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+}
+
+#workspaces {
+  margin-right: 10px;
+  border-bottom: 1px solid @muted; /* Same as global waybar because otherwise it looks weird when hovered, I don't want to search why */
+}
+
+#workspaces button {
+  color: @subtle;
+  border: 0px;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background-color: @highlightLow;
+}
+
+#window {
+  color: @accent;
+  font-weight: 500;
+}
+
+window#waybar.empty #window {
+  margin: 0;
+}
+
+#cpu,
+#temperature,
+#memory,
+#backlight,
+#battery,
+#power-profiles-daemon,
+#systemd-failed-units {
+  padding: 12px 8px;
+}
+
+#submap {
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 12px 0;
+}
+
+#privacy,
+#idle_inhibitor,
+#pulseaudio,
+#bluetooth,
+#network,
+#clock,
+#custom-notification {
+  padding: 12px 8px;
+}

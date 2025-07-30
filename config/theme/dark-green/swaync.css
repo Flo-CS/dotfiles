@@ -1,0 +1,187 @@
+@define-color base            #0a0a0a;
+@define-color surface         #141414;
+@define-color overlay         #1e1e1e;
+
+@define-color muted           #3a3a3a;
+@define-color subtle          #666666;
+@define-color text            #e8e8e8;
+
+@define-color accent          #4a9b5e;
+@define-color accentDim       #2d5a36;
+@define-color secondary       #5a8a6b;
+@define-color warning         #d97757;
+@define-color gold            #b8860b;
+
+@define-color highlightLow    #181818;
+@define-color highlightMed    #252525;
+@define-color highlightHigh   #3a3a3a; 
+
+* {
+  all: unset;
+  font-size: 14px;
+  font-family: "Symbols Nerd Font", "Rubik";
+  transition: 50ms;
+}
+
+.floating-notifications.background .notification-row .notification-background {
+  border-radius: 8px;
+  margin: 0;
+  margin-right: 20px;
+  margin-top: 20px;
+  background-color: alpha(@surface, 1);
+  color: @text;
+  padding: 0;
+  border: 1px solid @muted;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification {
+  border-radius: 4px;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification.critical {
+  border-left: 3px solid @warning;
+  box-shadow: none;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification .notification-content {
+  margin: 14px;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification .notification-content .summary {
+  color: @text;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification .notification-content .time {
+  color: @subtle;
+  font-size: 14px;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification .notification-content .body {
+  color: @text;
+  font-size: 14px;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * {
+  min-height: 3.4em;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action {
+  border-radius: 3px;
+  color: @text;
+  font-size: 14px;
+  background-color: @overlay;
+  border: 1px solid @muted;
+  padding: 8px 12px;
+}
+
+.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
+  background-color: @highlightMed;
+  color: @text;
+}
+
+.control-center {
+  border: 1px solid @muted;
+  border-radius: 8px;
+  margin: 20px;
+  background-color: alpha(@base, 1);
+  color: @text;
+  padding: 16px;
+}
+
+.control-center .widget-title > label {
+  color: @text;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.control-center .widget-title button {
+  border-radius: 5px;
+  color: @text;
+  font-size: 14px;
+  background-color: @overlay;
+  border: 1px solid @muted;
+  padding: 8px 12px;
+}
+
+.control-center .widget-title button:hover {
+  background-color: @highlightMed;
+  color: @text;
+}
+
+.control-center .notification-row .notification-background {
+  border-radius: 8px;
+  color: @text;
+  background-color: @overlay;
+  border: 1px solid @muted;
+  margin-top: 14px;
+}
+
+.control-center .notification-row .notification-background .notification {
+  border-radius: 4px;
+}
+
+.control-center .notification-row .notification-background .notification.critical {
+  border-left: 3px solid @warning;
+  box-shadow: none;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content {
+  margin: 14px;
+  margin-right: 10px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content .summary {
+  color: @text;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content .time {
+  color: @subtle;
+  font-size: 14px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content .body {
+  color: @text;
+  font-size: 14px;
+}
+
+.control-center .notification-row .notification-background .notification > *:last-child > * {
+  min-height: 3.4em;
+}
+
+.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
+  border-radius: 3px;
+  color: @text;
+  font-size: 14px;
+  background-color: @surface;
+  border: 1px solid @muted;
+  margin: 7px;
+  padding: 8px 12px;
+}
+
+.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
+  background-color: @highlightMed;
+  color: @text;
+}
+
+.control-center .notification-row .notification-background:hover {
+  background-color: @highlightLow;
+}
+
+/* TODO: this does not work, but I want to disable this f**king collapse animation*/
+.control-center .notification .notification-default-action,.notification-action  {
+  transition: 50ms;
+}
+
+/* Progress bars */
+.notification.critical progress {
+  background-color: @warning;
+}
+
+.notification.low progress,
+.notification.normal progress {
+  background-color: @secondary;
+}
