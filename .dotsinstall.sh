@@ -44,6 +44,17 @@ __install_desktop() {
 	symlink config/default/wofi ~/.config/wofi/config
 	symlink config/theme/current/wofi.css ~/.config/wofi/style.css
 
+	# "GTK 3 Theming"
+
+	# "GTK 4 Theming"
+
+	# "GTK icons"
+
+	# "Cursor icons"
+	symlink config/theme/current/cursor-icons ~/.local/share/icons/cursor
+}
+
+__install_quickshell() {
 	# "Quickshell"
 	pacman_install qt6-shadertools cli11
 	if ! test -e ~/documents/quickshell; then
@@ -60,15 +71,6 @@ __install_desktop() {
 
 	# TODO: move it inside assets or other folder
 	symlink config/default/quickshell ~/.config/quickshell
-
-	# "GTK 3 Theming"
-
-	# "GTK 4 Theming"
-
-	# "GTK icons"
-
-	# "Cursor icons"
-	symlink config/theme/current/cursor-icons ~/.local/share/icons/cursor
 }
 
 __install_disks() {
@@ -298,10 +300,13 @@ install() {
 }
 
 create_after_install_backup() {
-	local do_backup=$(gum confirm "Do you want to create a system backup snapshot ?")
-	if [[ $do_backup == "true" ]]; then
-		local snapshot_description =$(gum input --placeholder "Snapshot description" --value "After system setup")
-		sudo snapper -c root create --description $snapshot_description -u important=yes
+	if gum confirm "Do you want to create a system backup snapshot?"; then
+		local snapshot_description=$(gum input --placeholder "Snapshot description" --value "After system setup")
+		if ! sudo snapper -c root create --description "$snapshot_description" -u important=yes; then
+			echo "Warning: Snapshot creation failed" >&2
+		fi
+	else
+		log_info "Skipping system backup snapshot creation"
 	fi
 }
 
