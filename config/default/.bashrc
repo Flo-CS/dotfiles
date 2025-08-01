@@ -72,7 +72,7 @@ function rgf {
     local search_term="$1"
     local query="${search_term:-.}"
 
-    local result=$(rg --line-number --no-heading --color=always --smart-case "$query" |
+    local result=$(rg --line-number --no-heading --color=always --smart-case --hidden "$query" |
         fzf --ansi \
             --style full \
             --height 60% \
