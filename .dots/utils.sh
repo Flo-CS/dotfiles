@@ -1,5 +1,17 @@
 #!/usr/bin/env bash
 
+if [[ -z "$DOTS_DIR" ]]; then
+	export DOTS_DIR=$(gum input --placeholder "Enter the path to your dotfiles directory" --value "$HOME/.dotfiles")
+fi
+
+if [[ -z "$DOTS_ID" ]]; then
+	export DOTS_ID=$(gum input --placeholder "Enter your dots ID for machine specific files (e.g.: jean.desktop)" --value "$(basename "$DOTS_DIR")")
+fi
+
+# ------------------
+# ---- SYMLINKS ----
+# ------------------
+
 symlink() {
 	local target="$DOTS_DIR/$1"
 	local link_name="$2"
@@ -7,18 +19,15 @@ symlink() {
 	backup_and_delete "$link_name" && mkdir -p "$(dirname "$link_name")" && ln -sT "$target" "$link_name" && log_info "created symlink $link_name -> $target"
 }
 
+# -------------------
+# ---- TEMPLATES ----
+# -------------------
+
 template() {
 	local template_file="$DOTS_DIR/$1"
 	local output_file="${1%.j2}"
 
 	j2 "$template_file" >"$output_file" && log_info "rendered template $template_file to $output_file"
-}
-
-copy() {
-	local source="$DOTS_DIR/$1"
-	local destination="$2"
-
-	backup_and_delete "$destination" && mkdir -p "$(dirname "$destination")" && cp "$source" "$destination" && log_info "copied $source to $destination"
 }
 
 # FIXME: does not seem to work multiple times when the marker is first line
@@ -51,6 +60,17 @@ insert_with_marker() {
 
 	rm -f "$temp_file"
 	log_info "inserted content with marker $marker in $file"
+}
+
+# ------------------
+# ------ COPY ------
+# ------------------
+
+copy() {
+	local source="$DOTS_DIR/$1"
+	local destination="$2"
+
+	backup_and_delete "$destination" && mkdir -p "$(dirname "$destination")" && cp "$source" "$destination" && log_info "copied $source to $destination"
 }
 
 # -----------------
@@ -132,3 +152,5 @@ yay_install() {
 	log_info "installing yay packages: $@"
 	yay -S --needed "$@"
 }
+
+"$@"

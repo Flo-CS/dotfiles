@@ -1,5 +1,7 @@
 # TODO
 
+Make wiki as a another git repository to group all doc together
+
 ## OpenSUSE Tumbleweed
 
 ### To learn

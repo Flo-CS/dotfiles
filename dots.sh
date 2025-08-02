@@ -2,25 +2,25 @@
 
 set -euo pipefail # Exit on error, undefined variable, or failed command in a pipeline
 
-. ./.dotsenv.sh
+. ./.dots/utils.sh
 
 OPTIONS=("install" "set theme" "set wallpaper" "list themes" "list wallpapers")
 
 selected_option=$(gum choose --header "What to do ?" "${OPTIONS[@]}")
 case "$selected_option" in
 "install")
-	. ./.dotsinstall.sh
+	. ./.dots/install.sh
 	;;
 "set theme")
-	. ./.dotstheme.sh set
+	. ./.dots/theme.sh set
 	;;
 "set wallpaper")
-	. ./.dotswallpaper.sh set
+	. ./.dots/wallpaper.sh set
 	;;
 "list themes")
-	. ./.dotstheme.sh list
+	. ./.dots/theme.sh list
 	;;
 "list wallpapers")
-	. ./.dotswallpaper.sh list
+	. ./.dots/wallpaper.sh list
 	;;
 esac

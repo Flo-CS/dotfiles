@@ -145,7 +145,7 @@ __install_grub() {
 
 		echo $(pwd)
 		log_info "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-		sudo -E $DOTS_DIR/.dotsenv.sh insert_with_marker /etc/grub.d/40_custom "windows" "
+		sudo -E $DOTS_DIR/.dots/utils.sh insert_with_marker /etc/grub.d/40_custom "windows" "
 menuentry 'Windows Boot Manager' --class windows --class os {
     search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
     chainloader /EFI/Microsoft/Boot/bootmgfw.efi
@@ -203,7 +203,7 @@ __install_programming_languages() {
 }
 
 __install_sudoers() {
-	sudo -E $DOTS_DIR/.dotsenv.sh copy config/default/sudoers /etc/sudoers.d/sudoers-default
+	sudo -E $DOTS_DIR/.dots/utils.sh copy config/default/sudoers /etc/sudoers.d/sudoers-default
 }
 
 __install_system_backup() {
@@ -214,7 +214,7 @@ __install_system_backup() {
 
 	sudo snapper -c root create-config / || log_error "Failed to create snapper config, maybe root config already exists"
 
-	sudo -E $DOTS_DIR/.dotsenv.sh backup /etc/snapper/configs/root
+	sudo -E $DOTS_DIR/.dots/utils.sh backup /etc/snapper/configs/root
 
 	sudo snapper -c root set-config ALLOW_USERS="$USER"
 	sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="10"
@@ -226,8 +226,8 @@ __install_system_backup() {
 	sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
 
 	# WARNING: only work on EndeavourOS because it uses dracut
-	sudo -E $DOTS_DIR/.dotsenv.sh backup /etc/default/grub-btrfs/config
-	sudo -E $DOTS_DIR/.dotsenv.sh insert_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+	sudo -E $DOTS_DIR/.dots/utils.sh backup /etc/default/grub-btrfs/config
+	sudo -E $DOTS_DIR/.dots/utils.sh insert_with_marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
 	sudo systemctl enable --now grub-btrfsd
 }
