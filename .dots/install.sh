@@ -248,6 +248,7 @@ __install_terminal() {
 	pacman_install glow gum
 
 	curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+	symlink config/default/atuin.toml ~/.config/atuin/config.toml
 
 	pacman_install alacritty
 	pacman_uninstall xterm || log_warn "xterm is already uninstalled, skipping"
