@@ -22,11 +22,6 @@ Make wiki as a another git repository to group all doc together
 
 - Understand btrfs, subvolumes, etc.
 
-### Customization
-
-- linux global system theme
-- linux dark/light mode
-
 ### Packages
 
 - replace wofi because it's not very maintained anymore (by fuzzel ?)
