@@ -292,24 +292,37 @@ INSTALL_OPTIONS=(
 	"3-xdg"
 )
 
-install() {
-	local selected_install_options=$(gum filter --no-limit --header "What to install ?" "${INSTALL_OPTIONS[@]}" | sort -u)
-	for option in $selected_install_options; do
-		local fn=$(echo "$option" | cut -d"-" -f 2)
-		"__install_${fn}"
+__build_install_fn_from_option() {
+	local option="$1"
+	local fn=$(echo "$option" | cut -d"-" -f 2)
+	echo "__install_${fn}"
+}
+
+list_install_options() {
+	echo ${INSTALL_OPTIONS[@]} | tr ' ' '\n' | sort -u
+}
+
+choose_install_options() {
+	gum filter --no-limit --header "What to install ?" $(list_install_options)
+}
+
+install_options() {
+	for option in $1; do
+		local fn=$(__build_install_fn_from_option "$option")
+		if type "$fn" &>/dev/null; then
+			log_section "Installing $option"
+			"$fn"
+		else
+			log_error "Install function '$fn' not found for option '$option'"
+		fi
 	done
 }
 
-create_after_install_backup() {
-	if gum confirm "Do you want to create a system backup snapshot?"; then
-		local snapshot_description=$(gum input --placeholder "Snapshot description" --value "After system setup")
-		if ! sudo snapper -c root create --description "$snapshot_description" -u important=yes; then
-			echo "Warning: Snapshot creation failed" >&2
-		fi
-	else
-		log_info "Skipping system backup snapshot creation"
-	fi
-}
-
-install
-create_after_install_backup
+case "$1" in
+install)
+	install_options ${2:-$(choose_install_options)}
+	;;
+list)
+	list_install_options
+	;;
+esac

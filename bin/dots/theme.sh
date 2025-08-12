@@ -19,6 +19,6 @@ list)
 	list_themes
 	;;
 set)
-	set_theme $(select_theme)
+	set_theme ${2:-$(select_theme)}
 	;;
 esac

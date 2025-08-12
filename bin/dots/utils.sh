@@ -77,9 +77,8 @@ copy() {
 # ---- LOGGING ----
 # -----------------
 
-gum_themed() {
-	gum style --foreground "$FOREGROUND" --background "$BACKGROUND" --border "$BORDER" --border-background "$BORDER_BACKGROUND" "$@"
-}
+FOREGROUND="#ffffff"
+BORDER=normal
 
 log_info() {
 	gum log --structured --level info "$*"
@@ -98,7 +97,7 @@ log_success() {
 }
 
 log_section() {
-	gum_themed style --align center --width 50 "$*"
+	gum style --foreground "$FOREGROUND" --border "$BORDER" --align center --width 50 "$*"
 }
 
 # -----------------

@@ -4,12 +4,12 @@ set -euo pipefail # Exit on error, undefined variable, or failed command in a pi
 
 . ./bin/dots/utils.sh
 
-OPTIONS=("install" "set theme" "set wallpaper" "list themes" "list wallpapers")
+OPTIONS=("install" "set theme" "set wallpaper" "list themes" "list wallpapers" "backup")
 
 selected_option=$(gum choose --header "What to do ?" "${OPTIONS[@]}")
 case "$selected_option" in
 "install")
-	. ./bin/dots/install.sh
+	. ./bin/dots/install.sh install
 	;;
 "set theme")
 	. ./bin/dots/theme.sh set
@@ -22,5 +22,8 @@ case "$selected_option" in
 	;;
 "list wallpapers")
 	. ./bin/dots/wallpaper.sh list
+	;;
+"backup")
+	. ./bin/dots/backup.sh backup
 	;;
 esac

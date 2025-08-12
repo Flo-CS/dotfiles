@@ -20,6 +20,6 @@ list)
 	list_wallpapers
 	;;
 set)
-	set_wallpaper $(select_wallpaper)
+	set_wallpaper ${2:-$(select_wallpaper)}
 	;;
 esac
