@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. $DOTS_DIR/bin/dots/utils.sh
+
 WALLPAPERS_PATH="$DOTS_DIR/assets/wallpapers"
 
 set_wallpaper() {
@@ -15,11 +17,17 @@ select_wallpaper() {
 	gum choose --header "Select a wallpaper" $(list_wallpapers)
 }
 
-case "$1" in
-list)
-	list_wallpapers
-	;;
-set)
-	set_wallpaper ${2:-$(select_wallpaper)}
-	;;
-esac
+main() {
+	local command="$1"
+	case "$command" in
+	list)
+		list_wallpapers
+		;;
+	set)
+		local wallpaper="${2:-$(select_wallpaper)}"
+		set_wallpaper "$wallpaper"
+		;;
+	esac
+}
+
+main "$@"

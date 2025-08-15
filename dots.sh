@@ -2,28 +2,31 @@
 
 set -euo pipefail # Exit on error, undefined variable, or failed command in a pipeline
 
-. ./bin/dots/utils.sh
+if [[ -z "$DOTS_DIR" ]]; then
+	export DOTS_DIR=$(gum input --placeholder "Enter the path to your dotfiles directory" --value "$HOME/.dotfiles")
+fi
 
-OPTIONS=("install" "set theme" "set wallpaper" "list themes" "list wallpapers" "backup")
+if [[ -z "$DOTS_ID" ]]; then
+	export DOTS_ID=$(gum input --placeholder "Enter your dots ID for machine specific files (e.g.: jean.desktop)" --value "$(basename "$DOTS_DIR")")
+fi
 
-selected_option=$(gum choose --header "What to do ?" "${OPTIONS[@]}")
-case "$selected_option" in
-"install")
-	. ./bin/dots/install.sh install
-	;;
-"set theme")
-	. ./bin/dots/theme.sh set
-	;;
-"set wallpaper")
-	. ./bin/dots/wallpaper.sh set
-	;;
-"list themes")
-	. ./bin/dots/theme.sh list
-	;;
-"list wallpapers")
-	. ./bin/dots/wallpaper.sh list
-	;;
-"backup")
-	. ./bin/dots/backup.sh backup
-	;;
-esac
+main() {
+	local command="$1"
+	shift
+	case "$command" in
+	install)
+		. $DOTS_DIR/bin/dots/install.sh "$@"
+		;;
+	theme)
+		. $DOTS_DIR/bin/dots/theme.sh "$@"
+		;;
+	wallpaper)
+		. $DOTS_DIR/bin/dots/wallpaper.sh "$@"
+		;;
+	backup)
+		. $DOTS_DIR/bin/dots/backup.sh "$@"
+		;;
+	esac
+}
+
+main "$@"

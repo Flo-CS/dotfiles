@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. $DOTS_DIR/bin/dots/utils.sh
+
 THEMES_PATH="$DOTS_DIR/config/theme"
 
 set_theme() {
@@ -14,11 +16,17 @@ select_theme() {
 	gum choose --header "Select a theme" $(list_themes)
 }
 
-case "$1" in
-list)
-	list_themes
-	;;
-set)
-	set_theme ${2:-$(select_theme)}
-	;;
-esac
+main() {
+	local command="$1"
+	case "$command" in
+	list)
+		list_themes
+		;;
+	set)
+		local theme="${2:-$(select_theme)}"
+		set_theme "$theme"
+		;;
+	esac
+}
+
+main "$@"

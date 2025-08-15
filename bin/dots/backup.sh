@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+. $DOTS_DIR/bin/dots/utils.sh
+
 backup() {
 	if gum confirm "Do you want to create a system backup snapshot?"; then
 		local snapshot_description=$(gum input --placeholder "Snapshot description")
@@ -13,8 +15,13 @@ backup() {
 	fi
 }
 
-case "$1" in
-backup)
-	backup
-	;;
-esac
+main() {
+	local command="$1"
+	case "$command" in
+	backup)
+		backup
+		;;
+	esac
+}
+
+main "$@"
