@@ -152,5 +152,3 @@ alias reboot-to-windows='reboot_to_windows'
 source ~/.local/bin/fzf/current-theme.sh
 
 source /usr/share/nvm/init-nvm.sh
-
-. "$HOME/.cargo/env"

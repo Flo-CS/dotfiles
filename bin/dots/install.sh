@@ -66,6 +66,13 @@ _config_desktop() {
 	symlink config/theme/current/cursor-icons ~/.local/share/icons/cursor
 }
 
+_refresh_desktop() {
+	# Waybar
+	pkill -x waybar && uwsm app -- waybar
+	# Swaync
+	swaync-client -R && swaync-client -rs
+}
+
 _install_quickshell() {
 	pacman_install qt6-shadertools cli11
 	if ! test -e ~/documents/quickshell; then
@@ -183,6 +190,9 @@ _config_hyprlandia() {
 	symlink config/local/$DOTS_ID/hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
 	symlink config/default/hypr/hypridle.conf ~/.config/hypr/hypridle.conf
 	symlink config/default/hypr/hyprpaper.conf ~/.config/hypr/hyprpaper.conf
+}
+
+_refresh_hyprlandia() {
 	hyprctl reload || log_warn "hyprctl reload failed, maybe hyprland is not running yet"
 }
 
@@ -346,7 +356,7 @@ main() {
 	local command="$1"
 	case "$command" in
 	run)
-		local areas=${2:-"install,config"}
+		local areas=${2:-"install,config,refresh"}
 		local options=${3:-$(choose_options)}
 		run_options "$areas" "$options"
 		;;
