@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+export PATH=~/.dotfiles/bin:$PATH
+
+dmenu() {
+	local text=$1
+	local options=$2
+
+	echo -e $options | wofi --dmenu --prompt $text
+}
+
+select_theme_menu() {
+	selected=$(dmenu "Select theme" $(dots-theme-list))
+
+	echo "Selected theme: $selected"
+
+	if [[ -z "$selected" ]]; then
+		echo "No theme selected."
+		exit 1
+	fi
+
+	dots-theme-set "$selected"
+}
+
+refresh_menu() {
+	local options=$(fd dots-refresh-* ~/.dotfiles/bin | sed 's|^.*/||' | sed 's|-| |g')
+
+	selected=$(dmenu "Refresh menu" "$options")
+
+	if [[ -z "$selected" ]]; then
+		echo "No refresh option selected."
+		exit 1
+	fi
+
+	# Execute the selected refresh script
+	~/.dotfiles/bin/dots-refresh-"$selected"
+
+}
+
+main_menu() {
+	selected=$(dmenu "Dots menu" "💅 Theme\n🔄 Refresh\n")
+
+	case "$selected" in
+	*"Theme"*)
+		select_theme_menu
+		;;
+	*"Refresh"*)
+		refresh_menu
+		;;
+	*)
+		echo "No valid option selected."
+		exit 1
+		;;
+	esac
+}
+
+main_menu

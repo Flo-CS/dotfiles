@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+target="$DOTS_DIR/$1"
+link_name="$2"
+
+local_target="$target#$DOTS_ID"
+if [[ -f "$local_target" ]]; then
+	target=${local_target}
+	echo "Using local file: $target"
+fi
+
+dots-backup-file "$link_name"
+rm -rf "$link_name" && echo "removed $link_name"
+mkdir -p "$(dirname "$link_name")"
+ln -sT "$target" "$link_name" && echo "symlinked $link_name -> $target"

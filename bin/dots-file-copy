@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source="$DOTS_DIR/$1"
+target="$2"
+
+local_source="$source#$DOTS_ID"
+if [[ -f "$local_source" ]]; then
+	source=${local_source}
+	echo "Using local file: $source"
+fi
+
+dots-backup-file "$target"
+rm -rf "$target" && echo "removed $target"
+mkdir -p "$(dirname "$target")"
+cp -rf $source $target && echo "copied $source -> $target"

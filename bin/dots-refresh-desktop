@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Waybar
+pkill -x waybar
+uwsm app -s b -- waybar &>/dev/null &
+
+# Swaync
+swaync-client -R &>/dev/null &
+swaync-client -rs &>/dev/null &
+
+hyprctl reload &>/dev/null &

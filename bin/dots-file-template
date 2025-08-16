@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+template_file="$DOTS_DIR/$1"
+output_file="${1%.j2}"
+
+local_template_file="$template_file#$DOTS_ID"
+if [[ -f "$local_template_file" ]]; then
+	template_file=${local_template_file}
+	echo "Using local file: $template_file"
+fi
+
+j2 "$template_file" >"$output_file" && echo "rendered template $template_file to $output_file"

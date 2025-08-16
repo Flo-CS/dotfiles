@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "installing yay packages: $@"
+yay -S --needed "$@"

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if [[ ! -f "~/.local/share/wallpapers/current" ]]; then
+	$DOTS_DIR/bin/dots-wallpaper-set $($DOTS_DIR/bin/dots-wallpaper-list | head -n 1)
+fi

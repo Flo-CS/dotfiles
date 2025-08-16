@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+mkdir -p ~/.local/share/wallpapers
+ln -sfT "$DOTS_DIR/assets/wallpapers/$1" ~/.local/share/wallpapers/current
+
+hyprctl hyprpaper reload , ~/.local/share/wallpapers/current

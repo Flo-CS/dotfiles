@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+if test -L "$file"; then
+	exit 0
+fi
+
+if ! test -e "$file"; then
+	exit 0
+fi
+
+timestamp=$(date +%Y%m%d_%H%M%S)
+
+cp -rf "$file" "${file}.${timestamp}" && echo "backup created ${file}.${timestamp}"

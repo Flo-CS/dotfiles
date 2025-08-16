@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+install_flatpak() {
+    dots-pkg-install flatpak
+    flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+}
+
+install_git() {
+    dots-pkg-install git git-filter-repo lazygit git-delta
+    dots-pkg-yay-install git-credential-oauth
+}
+
+install_template() {
+    dots-pkg-install python-j2cli
+}
+
+install_ui() {
+    dots-pkg-install glow gum
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    install_flatpak
+    install_git
+    install_template
+    install_ui
+fi

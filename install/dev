@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+install_docker() {
+    dots-pkg-install docker docker-compose
+    dots-pkg-yay-install lazydocker
+    sudo systemctl enable --now docker.socket # Start on first usage, different from .service which start on boot
+}
+
+install_languages() {
+    dots-pkg-install python-pip
+
+    dots-pkg-install nvm
+    source ~/.bashrc || echo "Failed to source .bashrc to load nvm" >&2 # FIXME:: this seems to always been broken, why?
+    nvm install --lts || echo "nvm install failed, maybe nvm is not properly configured" >&2
+
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+}
+
+install_neovim() {
+    dots-pkg-install neovim
+}
+
+install_terminal() {
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
+    dots-pkg-install alacritty
+    dots-pkg-remove xterm || echo "xterm is already uninstalled, skipping"
+    sudo ln -sf /usr/bin/alacritty /usr/bin/xterm # Stupid workaround to allow to run .desktop files that require by default xterm (i don't know how to change it)
+
+    dots-pkg-install starship
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    install_docker
+    install_languages
+    install_neovim
+    install_terminal
+fi

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+ln -sfT "$DOTS_DIR/themes/$1" "$DOTS_DIR/themes/current"
+
+dots-refresh-desktop
+dots-refresh-terminal

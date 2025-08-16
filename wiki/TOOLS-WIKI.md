@@ -18,10 +18,3 @@ The only simple and secure solution I found is using git-credential-oauth
 
 INFO: To learn more [https://git-scm.com/doc/credential-helpers] and [https://git-scm.com/docs/gitcredentials]
 
-## Starship
-
-Starship is a tool to add a prompt style to the terminal
-
-Alternatives:
-
-- oh-my-posh

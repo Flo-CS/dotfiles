@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "uninstalling packages: $@"
+sudo pacman -R --noconfirm "$@"
