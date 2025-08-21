@@ -48,13 +48,14 @@ show_update() {
 }
 
 show_main_menu() {
-	selected=$(printf "💅 Theme\n🔄 Refresh\n🌄 Wallpaper\n🍦 Update\n" | dmenu "Dots menu")
+	selected=$(printf "💅 Theme\n🔄 Refresh\n🌄 Wallpaper\n🍦 Update\n🪦 Shutdown\n" | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
 	*"Update"*) terminal show_update ;;
+	*"Shutdown"*) shutdown ;;
 	esac
 }
 
