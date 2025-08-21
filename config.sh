@@ -8,7 +8,8 @@ configure_shell() {
 }
 
 configure_uwsm() {
-	dots-file-link config/uwsm ~/.config/uwsm
+	dots-file-link config/uwsm/env ~/.config/uwsm/env
+	dots-file-link config/uwsm/env-hyprland ~/.config/uwsm/env-hyprland
 }
 
 configure_git() {
@@ -84,9 +85,10 @@ configure_xdg() {
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-	dots-env-check-set
+	. dots-env-check-set
 
 	configure_shell
+	configure_uwsm
 	configure_git
 	configure_bat
 	configure_cursor

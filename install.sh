@@ -13,9 +13,9 @@ show_section() {
 show_section "Checking and setting up environment"
 sudo mkdir -p /usr/local/bin/dots
 sudo cp -r $DOTS_DIR/bin/* /usr/local/bin
-$DOTS_DIR/bin/dots-env-check-set
-$DOTS_DIR/bin/dots-theme-init
-$DOTS_DIR/bin/dots-wallpaper-init
+. dots-env-check-set
+dots-theme-init
+dots-wallpaper-init
 
 show_section "Installing prerequisites [1/6]"
 $DOTS_DIR/install/prerequesites
