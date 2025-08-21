@@ -7,5 +7,3 @@ fi
 if [[ -z ${DOTS_ID+x} ]]; then
 	export DOTS_ID=$(gum input --placeholder "Enter your dots ID used to identify specific local configurations (e.g. 'desktop', 'laptop')")
 fi
-
-export PATH="$DOTS_DIR/bin:$PATH"

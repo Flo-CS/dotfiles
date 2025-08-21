@@ -1,30 +1,18 @@
 #!/usr/bin/env bash
 
 DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-
 set -euo pipefail
 
-on_error() {
-	printf "Installation failed, please retry"
-}
-trap on_error ERR
-
-on_exit() {
-	printf '\nExiting...\n'
-}
-trap on_exit EXIT
-
-show_art() {
-	art=''
-	clear
-	printf "\n$art\n"
-}
+trap 'printf "Installation failed, please retry\n"' ERR
+trap 'printf "Exiting...\n"' EXIT
 
 show_section() {
 	gum style --border double " $1 "
 }
 
 show_section "Checking and setting up environment"
+sudo mkdir -p /usr/local/bin/dots
+sudo cp -r $DOTS_DIR/bin/* /usr/local/bin
 $DOTS_DIR/bin/dots-env-check-set
 $DOTS_DIR/bin/dots-theme-init
 $DOTS_DIR/bin/dots-wallpaper-init
@@ -48,7 +36,6 @@ show_section "Applying configurations [6/6]"
 $DOTS_DIR/config.sh
 
 show_section "Finalizing installation"
-should_reboot=$(gum confirm "Do you want to reboot now?")
-if [[ "$should_reboot" == "true" ]]; then
+gum confirm "Do you want to reboot now?" && {
 	sudo reboot
-fi
+}

@@ -1,0 +1,11 @@
+XCURSOR_THEME=BreezeX-RoséPineDawn
+XCURSOR_SIZE=24
+
+QT_QPA_PLATFORM=wayland;xcb
+QT_QPA_PLATFORMTHEME=qt6ct
+QT_STYLE_OVERRIDE=Kvantum
+
+TERMINAL=alacritty # Actually used for some TUI apps
+
+# env = LIBVA_DRIVER_NAME,nvidia
+# env = __GLX_VENDOR_LIBRARY_NAME,nvidia

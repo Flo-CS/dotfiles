@@ -1,52 +1,43 @@
 #!/usr/bin/env bash
 
-export PATH=~/.dotfiles/bin:$PATH
-
 dmenu() {
-	local text=$1
-	local options=$2
-
-	echo -e $options | wofi --dmenu --prompt $text
+	local prompt=$1
+	wofi --dmenu --prompt "$prompt"
 }
 
 select_theme_menu() {
-	selected=$(dmenu "Select theme" $(dots-theme-list))
-
-	echo "Selected theme: $selected"
+	echo $(dots-theme-list)
+	selected=$(dots-theme-list | dmenu "Select theme")
 
 	if [[ -z "$selected" ]]; then
 		echo "No theme selected."
 		exit 1
 	fi
 
+	echo "Selected theme: $selected"
 	dots-theme-set "$selected"
 }
 
 refresh_menu() {
-	local options=$(fd dots-refresh-* ~/.dotfiles/bin | sed 's|^.*/||' | sed 's|-| |g')
-
-	selected=$(dmenu "Refresh menu" "$options")
+	selected=$(fd '^dots-refresh-' "$DOTS_DIR/bin" -x basename {} |
+		sed 's/^dots-refresh-//' |
+		dmenu "Refresh menu")
 
 	if [[ -z "$selected" ]]; then
 		echo "No refresh option selected."
 		exit 1
 	fi
 
-	# Execute the selected refresh script
-	~/.dotfiles/bin/dots-refresh-"$selected"
-
+	cmd=${selected// /-}
+	"$DOTS_DIR/bin/dots-refresh-$cmd"
 }
 
 main_menu() {
-	selected=$(dmenu "Dots menu" "💅 Theme\n🔄 Refresh\n")
+	selected=$(printf "💅 Theme\n🔄 Refresh\n" | dmenu "Dots menu")
 
 	case "$selected" in
-	*"Theme"*)
-		select_theme_menu
-		;;
-	*"Refresh"*)
-		refresh_menu
-		;;
+	*"Theme"*) select_theme_menu ;;
+	*"Refresh"*) refresh_menu ;;
 	*)
 		echo "No valid option selected."
 		exit 1

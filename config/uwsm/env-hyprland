@@ -1,0 +1,4 @@
+# Can also be set using hyprctl setcursor
+HYPRCURSOR_THEME=BreezeX-RoséPineDawn
+HYPRCURSOR_SIZE=24
+

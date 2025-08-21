@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 configure_shell() {
 	dots-file-link config/.bashrc ~/.bashrc
 	dots-file-link config/.bash_profile ~/.bash_profile
+}
+
+configure_uwsm() {
+	dots-file-link config/uwsm ~/.config/uwsm
 }
 
 configure_git() {
@@ -70,7 +76,7 @@ configure_terminal() {
 }
 
 configure_privileged() {
-	sudo -E $(which dots-file-copy) config/sudoers /etc/sudoers.d/sudoers-default
+	sudo -E dots-file-copy config/sudoers /etc/sudoers.d/sudoers-default
 }
 
 configure_xdg() {
@@ -78,6 +84,8 @@ configure_xdg() {
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+	dots-env-check-set
+
 	configure_shell
 	configure_git
 	configure_bat

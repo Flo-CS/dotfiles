@@ -12,4 +12,6 @@ fi
 
 timestamp=$(date +%Y%m%d_%H%M%S)
 
-cp -rf "$file" "${file}.${timestamp}" && echo "backup created ${file}.${timestamp}"
+backup_path="/var/backups/$(basename $file).${timestamp}"
+
+cp -r "$file" "$backup_path" && echo "backup created ${backup_path}"

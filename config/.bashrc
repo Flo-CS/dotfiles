@@ -2,12 +2,6 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 PS1='[\u@\h \W]\$ '
 
-# ENVIRONMENT VARIABLES
-export EDITOR=/usr/bin/nvim
-export SYSTEMD_EDITOR=/usr/bin/nvim
-export TERMINAL=alacritty
-export PATH="$HOME/.local/bin:$DOTS_DIR/bin:$PATH"
-
 # GENERAL FUNCTIONS
 
 # Find files and directories with fzf preview
@@ -124,7 +118,7 @@ function nvf {
     fi
 }
 
-# ALIASES (keeping simple ones as aliases)
+# ALIASES
 alias lsa='ls --color=auto -la --group-directories-first'
 alias shutdown='systemctl poweroff'
 

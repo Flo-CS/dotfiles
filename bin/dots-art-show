@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+art=''
+clear
+printf "\n$art\n"
