@@ -5,44 +5,57 @@ dmenu() {
 	wofi --dmenu --prompt "$prompt"
 }
 
-select_theme_menu() {
-	echo $(dots-theme-list)
+terminal() {
+	alacritty --class Dots.Menu -e $1
+}
+
+show_select_theme_menu() {
 	selected=$(dots-theme-list | dmenu "Select theme")
 
 	if [[ -z "$selected" ]]; then
-		echo "No theme selected."
-		exit 1
+		show_main_menu
 	fi
 
-	echo "Selected theme: $selected"
 	dots-theme-set "$selected"
 }
 
-refresh_menu() {
+show_select_wallpaper_menu() {
+	selected=$(dots-wallpaper-list | dmenu "Select wallpaper")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	fi
+
+	dots-wallpaper-set "$selected"
+}
+
+show_refresh_menu() {
 	selected=$(fd '^dots-refresh-' "$DOTS_DIR/bin" -x basename {} |
 		sed 's/^dots-refresh-//' |
 		dmenu "Refresh menu")
 
 	if [[ -z "$selected" ]]; then
-		echo "No refresh option selected."
-		exit 1
+		show_main_menu
 	fi
 
 	cmd=${selected// /-}
-	"$DOTS_DIR/bin/dots-refresh-$cmd"
+	dots-refresh-$cmd
 }
 
-main_menu() {
-	selected=$(printf "💅 Theme\n🔄 Refresh\n" | dmenu "Dots menu")
+show_update() {
+	git -C "$DOTS_DIR" pull
+	$DOTS_DIR/install.sh
+}
+
+show_main_menu() {
+	selected=$(printf "💅 Theme\n🔄 Refresh\n🌄 Wallpaper\n🍦 Update\n" | dmenu "Dots menu")
 
 	case "$selected" in
-	*"Theme"*) select_theme_menu ;;
-	*"Refresh"*) refresh_menu ;;
-	*)
-		echo "No valid option selected."
-		exit 1
-		;;
+	*"Theme"*) show_select_theme_menu ;;
+	*"Refresh"*) show_refresh_menu ;;
+	*"Wallpaper"*) show_select_wallpaper_menu ;;
+	*"Update"*) terminal show_update ;;
 	esac
 }
 
-main_menu
+show_main_menu

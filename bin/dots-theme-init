@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 if [[ ! -d "$DOTS_DIR/themes/current" ]]; then
-	$DOTS_DIR/bin/dots-theme-set $($DOTS_DIR/bin/dots-theme-list | head -n 1)
+	dots-theme-set $(dots-theme-list | head -n 1)
 fi
