@@ -34,6 +34,7 @@ Scope {
         PanelWindow {
             anchors.bottom: true
             margins.bottom: screen.height / 10
+            exclusiveZone: 0
 
             implicitWidth: 400
             implicitHeight: 70
@@ -43,7 +44,9 @@ Scope {
             mask: Region {}
 
             Rectangle {
-                anchors.fill: parent
+                anchors {
+                    fill: parent
+                }
                 radius: 10
                 color: "#E0000000"
 
