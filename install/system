@@ -8,7 +8,7 @@ install_backup() {
 
     sudo snapper -c root create-config / || echo "Failed to create snapper config, maybe root config already exists" >&2
 
-    sudo -E dots-backup-file /etc/snapper/configs/root
+    sudo -E $(which dots-backup-file) /etc/snapper/configs/root
 
     sudo snapper -c root set-config ALLOW_USERS="$USER"
     sudo snapper -c root set-config TIMELINE_LIMIT_HOURLY="10"
@@ -20,8 +20,8 @@ install_backup() {
     sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
 
     # WARNING: only work on EndeavourOS because it uses dracut
-    sudo -E dots-backup-file /etc/default/grub-btrfs/config
-    sudo -E dots-insert-with-marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+    sudo -E $(which dots-backup-file) /etc/default/grub-btrfs/config
+    sudo -E $(which dots-insert-with-marker) /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
     sudo systemctl enable --now grub-btrfsd
 }
@@ -41,7 +41,7 @@ install_grub() {
         fi
 
         echo "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-        sudo -E dots-insert-with-marker /etc/grub.d/40_custom "windows" "
+        sudo -E $(which dots-insert-with-marker) /etc/grub.d/40_custom "windows" "
     menuentry 'Windows Boot Manager' --class windows --class os {
         search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi

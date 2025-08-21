@@ -70,7 +70,7 @@ configure_terminal() {
 }
 
 configure_privileged() {
-	sudo -E dots-file-copy config/sudoers /etc/sudoers.d/sudoers-default
+	sudo -E $(which dots-file-copy) config/sudoers /etc/sudoers.d/sudoers-default
 }
 
 configure_xdg() {
