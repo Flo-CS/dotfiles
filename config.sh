@@ -93,4 +93,6 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
 	configure_terminal
 	configure_privileged
 	configure_xdg
+
+	dots-refresh-all
 fi
