@@ -21,7 +21,7 @@ install_backup() {
 
     # WARNING: only work on EndeavourOS because it uses dracut
     sudo -E $(which dots-backup-file) /etc/default/grub-btrfs/config
-    sudo -E $(which dots-insert-with-marker) /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+    sudo -E $(which dots-file-insert-with-marker) /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
     sudo systemctl enable --now grub-btrfsd
 }
@@ -41,7 +41,7 @@ install_grub() {
         fi
 
         echo "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-        sudo -E $(which dots-insert-with-marker) /etc/grub.d/40_custom "windows" "
+        sudo -E $(which dots-file-insert-with-marker) /etc/grub.d/40_custom "windows" "
     menuentry 'Windows Boot Manager' --class windows --class os {
         search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
@@ -54,7 +54,6 @@ install_grub() {
     grep -q '^GRUB_DEFAULT=' /etc/default/grub && sudo sed -i 's/^GRUB_DEFAULT=.*/GRUB_DEFAULT=saved/' /etc/default/grub
 
 }
-
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     install_backup
