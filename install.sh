@@ -11,7 +11,7 @@ show_section() {
 }
 
 show_section "Checking and setting up environment"
-sudo cp -r $DOTS_DIR/bin/* /usr/local/bin
+$DOTS_DIR/bin.sh
 . dots-env-check-set
 dots-theme-init
 dots-wallpaper-init
