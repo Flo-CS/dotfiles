@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
+# BASH CONFIG
+
 set -euo pipefail
+
+# FUNCTIONS
 
 configure_shell() {
 	dots-file-link config/.bashrc ~/.bashrc
@@ -84,25 +88,23 @@ configure_xdg() {
 	dots-file-link config/user-dirs.dirs ~/.config/user-dirs.dirs
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-	. dots-env-check-set
+# SEQUENCE
 
-	configure_shell
-	configure_uwsm
-	configure_git
-	configure_bat
-	configure_cursor
-	configure_hyprland
-	configure_monitoring
-	configure_qt
-	configure_quickshell
-	configure_swaync
-	configure_waybar
-	configure_wofi
-	configure_neovim
-	configure_terminal
-	configure_privileged
-	configure_xdg
+configure_shell
+configure_uwsm
+configure_git
+configure_bat
+configure_cursor
+configure_hyprland
+configure_monitoring
+configure_qt
+configure_quickshell
+configure_swaync
+configure_waybar
+configure_wofi
+configure_neovim
+configure_terminal
+configure_privileged
+configure_xdg
 
-	dots-refresh-all
-fi
+dots-refresh-all

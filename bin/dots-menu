@@ -6,7 +6,11 @@ dmenu() {
 }
 
 terminal() {
-	alacritty --class Dots.Menu -e $1
+	alacritty --class Dots.Menu -e $@
+}
+
+present_terminal() {
+	alacritty --class Dots.Menu -e bash -c "dots-show-logo; eval \"$@\"; dots-show-done;"
 }
 
 show_select_theme_menu() {
@@ -14,9 +18,9 @@ show_select_theme_menu() {
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
+	else
+		dots-theme-set "$selected"
 	fi
-
-	dots-theme-set "$selected"
 }
 
 show_select_wallpaper_menu() {
@@ -24,38 +28,37 @@ show_select_wallpaper_menu() {
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
+	else
+		dots-wallpaper-set "$selected"
 	fi
-
-	dots-wallpaper-set "$selected"
 }
 
 show_refresh_menu() {
-	selected=$(fd '^dots-refresh-' "$DOTS_DIR/bin" -x basename {} |
-		sed 's/^dots-refresh-//' |
-		dmenu "Refresh menu")
+	selected=$(fd '^dots-refresh-' "$DOTS_DIR/bin" -x basename {} | sed 's/^dots-refresh-//' | dmenu "Refresh menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
+	else
+		cmd=${selected// /-}
+		dots-refresh-$cmd
 	fi
-
-	cmd=${selected// /-}
-	dots-refresh-$cmd
-}
-
-show_update() {
-	git -C "$DOTS_DIR" pull
-	$DOTS_DIR/install.sh
 }
 
 show_main_menu() {
-	selected=$(printf "💅 Theme\n🔄 Refresh\n🌄 Wallpaper\n🍦 Update\n🪦 Shutdown\n" | dmenu "Dots menu")
+	selected=$(printf '💅 Theme
+🔄 Refresh
+🌄 Wallpaper
+🍦 Update
+🗄️ Sync bin
+☕ Sync config' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
-	*"Update"*) terminal show_update ;;
-	*"Shutdown"*) shutdown ;;
+	*"Update"*) present_terminal dots-update ;;
+	*"Sync bin"*) present_terminal $DOTS_DIR/bin.sh ;;
+	*"Sync config"*) present_terminal $DOTS_DIR/config.sh ;;
 	esac
 }
 

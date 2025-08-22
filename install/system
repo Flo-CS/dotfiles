@@ -54,7 +54,5 @@ install_grub() {
 
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    install_backup
-    install_grub
-fi
+install_backup
+install_grub

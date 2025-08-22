@@ -6,3 +6,4 @@ source ~/.dotfiles/config/.bash_profile
 
 . "$HOME/.atuin/bin/env"
 . "$HOME/.cargo/env"
+export PATH="$HOME/development/flutter/bin:$PATH"

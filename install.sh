@@ -1,20 +1,28 @@
 #!/usr/bin/env bash
 
-DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+# BASH CONFIG
+
 set -euo pipefail
 
-trap 'printf "Installation failed, please retry\n"' ERR
-trap 'printf "Exiting...\n"' EXIT
+# UTILS
 
 show_section() {
 	gum style --border double " $1 "
 }
 
-show_section "Checking and setting up environment"
+# STARTUP
+
+DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 $DOTS_DIR/bin.sh
-. dots-env-check-set
-dots-theme-init
-dots-wallpaper-init
+
+# SEQUENCE
+
+dots-show-logo
+
+show_section "Checking and setting up environment"
+. dots-init-env
+dots-init-theme
+dots-init-wallpaper
 
 show_section "Installing prerequisites [1/6]"
 $DOTS_DIR/install/prerequesites

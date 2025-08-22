@@ -6,14 +6,34 @@ install_docker() {
     sudo systemctl enable --now docker.socket # Start on first usage, different from .service which start on boot
 }
 
-install_languages() {
+install_python() {
     dots-pkg-install python-pip
+}
 
+install_rust() {
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+}
+
+install_nodejs() {
     dots-pkg-install nvm
     source ~/.bashrc || echo "Failed to source .bashrc to load nvm" >&2 # FIXME:: this seems to always been broken, why?
     nvm install --lts || echo "nvm install failed, maybe nvm is not properly configured" >&2
+}
 
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+install_android_studio() {
+    dots-pkg-yay-install android-studio
+    # TODO: Make a full installation
+}
+
+install_flutter() {
+    dots-pkg-install curl git unzip xz zip glu
+    mkdir -p ~/development
+
+    curl --proto '=https' --tlsv1.2 -sSf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.1-stable.tar.xz -o /tmp/flutter.tar.xz
+    tar -xf /tmp/flutter.tar.xz -C ~/development/
+
+    echo 'export PATH="$HOME/development/flutter/bin:$PATH"' >>~/.bash_profile
+    # TODO: Make a full installation
 }
 
 install_neovim() {
@@ -21,7 +41,7 @@ install_neovim() {
 }
 
 install_terminal() {
-    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+    curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh | sh
 
     dots-pkg-install alacritty
     dots-pkg-remove xterm || echo "xterm is already uninstalled, skipping"
@@ -30,9 +50,11 @@ install_terminal() {
     dots-pkg-install starship
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    install_docker
-    install_languages
-    install_neovim
-    install_terminal
-fi
+install_docker
+install_python
+install_rust
+install_nodejs
+install_android_studio
+install_flutter
+install_neovim
+install_terminal

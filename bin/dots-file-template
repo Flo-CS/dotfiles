@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 template_file="$DOTS_DIR/$1"
-output_file="${1%.j2}"
+output_file="${template_file%.j2}"
 
 local_template_file="$template_file#$DOTS_ID"
 if [[ -f "$local_template_file" ]]; then

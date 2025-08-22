@@ -5,7 +5,6 @@ install_audio() {
     dots-pkg-install pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
 }
 
-
 install_bluetooth() {
     sudo systemctl enable --now bluetooth.service
     dots-pkg-yay-install bluetuith
@@ -109,25 +108,23 @@ install_wofi() {
     dots-pkg-install wofi
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    install_audio
-    install_bluetooth
-    install_clipboard
-    install_disks
-    install_docs
-    install_files_management
-    install_files_manipulation
-    install_files_sync
-    install_fonts
-    install_hyprlandia
-    install_monitoring
-    install_multimedia
-    install_network
-    install_power
-    install_qt
-    install_quickshell
-    install_screen
-    install_swaync
-    install_waybar
-    install_wofi
-fi
+install_audio
+install_bluetooth
+install_clipboard
+install_disks
+install_docs
+install_files_management
+install_files_manipulation
+install_files_sync
+install_fonts
+install_hyprlandia
+install_monitoring
+install_multimedia
+install_network
+install_power
+install_qt
+install_quickshell
+install_screen
+install_swaync
+install_waybar
+install_wofi

@@ -2,4 +2,4 @@
 
 art=''
 clear
-printf "\n$art\n"
+printf "$art"

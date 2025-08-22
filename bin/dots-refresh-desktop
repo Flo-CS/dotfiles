@@ -2,7 +2,7 @@
 
 # Waybar
 pkill -x waybar
-uwsm app -s b -- waybar &>/dev/null &
+setsid uwsm app -- waybar >/dev/null 2>&1 &
 
 # Swaync
 swaync-client -R &>/dev/null &

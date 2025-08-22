@@ -18,9 +18,7 @@ install_ui() {
     dots-pkg-install glow gum
 }
 
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
-    install_flatpak
-    install_git
-    install_template
-    install_ui
-fi
+install_flatpak
+install_git
+install_template
+install_ui
