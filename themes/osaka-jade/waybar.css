@@ -5,8 +5,8 @@
 }
 
 window#waybar {
-  background-color: alpha(#11221C, 0.90);
-  border-bottom: 2px solid #53685B;
+  background-color: alpha(#11221C, 0.95);
+  border-bottom: 1px solid #53685B;
   border-radius: 0;
 }
 
