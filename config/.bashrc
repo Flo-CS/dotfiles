@@ -149,5 +149,6 @@ reboot_to_windows() {
 alias reboot-to-windows='reboot_to_windows'
 
 source $DOTS_DIR/themes/current/fzf.sh
+source $DOTS_DIR/themes/current/gum.sh
 
 source /usr/share/nvm/init-nvm.sh

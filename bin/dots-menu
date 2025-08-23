@@ -11,7 +11,7 @@ terminal() {
 }
 
 waiting_terminal() {
-	alacritty --class Dots.Menu -e bash -c "dots-show-logo; eval \"$@\"; dots-show-done;"
+	alacritty --class Dots.Menu -e bash -i -c "dots-show-logo; eval \"$@\"; dots-show-done;"
 }
 
 show_select_theme_menu() {
