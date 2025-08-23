@@ -6,4 +6,9 @@ set -euo pipefail
 
 # SEQUENCE
 
-sudo cp -r $DOTS_DIR/bin/* /usr/local/bin
+files=$(ls $DOTS_DIR/bin)
+for file in $files; do
+	echo "Copying $file to /usr/local/bin"
+	sudo cp -rf $DOTS_DIR/bin/$file /usr/local/bin
+	sudo chmod +x /usr/local/bin/$file
+done

@@ -3,6 +3,7 @@
 install_audio() {
     dots-pkg-install sof-firmware
     dots-pkg-install pipewire wireplumber pipewire-audio pipewire-pulse pipewire-jack
+    dots-pkg-install wiremix
 }
 
 install_bluetooth() {
@@ -65,10 +66,6 @@ install_multimedia() {
     dots-pkg-install playerctl
 }
 
-install_network() {
-    dots-pkg-install impala
-}
-
 install_power() {
     dots-pkg-install upower power-profiles-daemon
 }
@@ -120,7 +117,6 @@ install_fonts
 install_hyprlandia
 install_monitoring
 install_multimedia
-install_network
 install_power
 install_qt
 install_quickshell

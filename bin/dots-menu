@@ -9,7 +9,7 @@ terminal() {
 	alacritty --class Dots.Menu -e $@
 }
 
-present_terminal() {
+waiting_terminal() {
 	alacritty --class Dots.Menu -e bash -c "dots-show-logo; eval \"$@\"; dots-show-done;"
 }
 
@@ -44,21 +44,57 @@ show_refresh_menu() {
 	fi
 }
 
+show_update_menu() {
+	selected=$(printf '🍦 Full
+🗄️ Dots binaries
+☕ Configs' | dmenu "Update menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"Full"*) waiting_terminal dots-update-full ;;
+		*"Dots binaries"*) waiting_terminal dots-update-bin ;;
+		*"Configs"*) waiting_terminal dots-update-config ;;
+		esac
+	fi
+}
+
+show_system_menu() {
+	selected=$(printf '🔄 Reboot
+⏻ Shutdown
+🔒 Lock' | dmenu "System menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"Reboot"*) systemctl reboot ;;
+		*"Shutdown"*) systemctl poweroff ;;
+		*"Lock"*) dots-lock-screen ;;
+		esac
+	fi
+}
+
 show_main_menu() {
 	selected=$(printf '💅 Theme
 🔄 Refresh
 🌄 Wallpaper
 🍦 Update
-🗄️ Sync bin
-☕ Sync config' | dmenu "Dots menu")
+📇 System
+🔵 Bluetooth
+🛜 Network
+🔊 Audio' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
-	*"Update"*) present_terminal dots-update ;;
-	*"Sync bin"*) present_terminal $DOTS_DIR/bin.sh ;;
-	*"Sync config"*) present_terminal $DOTS_DIR/config.sh ;;
+	*"Update"*) show_update_menu ;;
+	*"System"*) show_system_menu ;;
+	*"Bluetooth"*) terminal bluetuith ;;
+	*"Network"*) terminal nmtui ;;
+	*"Audio"*) terminal wiremix ;;
 	esac
 }
 

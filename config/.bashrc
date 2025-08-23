@@ -113,7 +113,7 @@ function nvf {
         nvim .
         cd "$before"
         return
-    else
+    elif [ -n "$file" ]; then
         nvim "$file"
     fi
 }

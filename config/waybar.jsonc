@@ -138,8 +138,7 @@
       "default": ["", "", ""],
     },
     "scroll-step": 1,
-    "on-click": "pavucontrol",
-    "on-click": "pavucontrol",
+    "on-click": "alacritty --class Dots.Menu -e wiremix",
   },
   "bluetooth": {
     "format": " {status}",
@@ -152,13 +151,13 @@
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_alias} {device_battery_percentage}%",
     "tooltip": false,
-    "on-click": "$TERMINAL -e bluetuith",
+    "on-click": "alacritty --class Dots.Menu -e bluetuith",
   },
   "network": {
     "format-wifi": " {essid} ({signalStrength}%)",
     "format-ethernet": "🖧 {ifname}",
     "format-disconnected": "⚠ Disconnected",
-    "on-click": "$TERMINAL -e nmtui",
+    "on-click": "alacritty --class Dots.Menu -e nmtui",
     "tooltip": false,
   },
   "clock#time": {

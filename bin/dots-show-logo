@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
 art=''
-clear
 printf "$art"

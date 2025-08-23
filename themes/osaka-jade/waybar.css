@@ -23,8 +23,8 @@
 }
 
 window#waybar {
-  background-color: alpha(@base, 1);
-  border: none;
+  background-color: alpha(@base, 0.90);
+  border-bottom: 2px solid @muted;
   border-radius: 0;
 }
 

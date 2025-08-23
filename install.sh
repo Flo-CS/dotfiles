@@ -12,7 +12,9 @@ show_section() {
 
 # STARTUP
 
+sudo pacman -S --noconfirm gum
 DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+show_section "Setting up binaries"
 $DOTS_DIR/bin.sh
 
 # SEQUENCE
