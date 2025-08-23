@@ -5,3 +5,4 @@ source ~/.dotfiles/config/.bashrc
 eval "$(atuin init bash)"
 
 . "$HOME/.cargo/env"
+export PATH="$HOME/development/flutter/bin:$PATH"

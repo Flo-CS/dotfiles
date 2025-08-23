@@ -16,26 +16,33 @@ install_rust() {
 
 install_nodejs() {
     dots-pkg-install nvm
-    source ~/.bashrc || echo "Failed to source .bashrc to load nvm" >&2 # FIXME:: this seems to always been broken, why?
+    source /usr/share/nvm/init-nvm.sh
     nvm install --lts || echo "nvm install failed, maybe nvm is not properly configured" >&2
 }
 
+# TODO: Make a full installation
 install_android_studio() {
     dots-pkg-yay-install android-studio
-    # TODO: Make a full installation
 }
 
+# TODO: Make a full installation
 install_flutter() {
     dots-pkg-install curl git unzip xz zip glu
     mkdir -p ~/development
 
-    curl --proto '=https' --tlsv1.2 -sSf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.1-stable.tar.xz -o /tmp/flutter.tar.xz
-    tar -xf /tmp/flutter.tar.xz -C ~/development/
+    local installed_version=$(flutter --version | grep -oP 'Flutter \K[0-9.]+')
+    local target_version="3.35.1"
 
-    if ! grep -q 'export PATH="$HOME/development/flutter/bin:$PATH"' ~/.bash_profile; then
-        echo "Adding Flutter to PATH in ~/.bash_profile"
+    if version-ge "$installed_version" "$target_version"; then
+        echo "Flutter $installed_version is already installed, skipping installation"
+    else
+        curl --proto '=https' --tlsv1.2 -sSf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$target_version-stable.tar.xz -o /tmp/flutter.tar.xz
+        tar -xf /tmp/flutter.tar.xz -C ~/development/
+
+        if ! grep -q 'export PATH="$HOME/development/flutter/bin:$PATH"' ~/.bashrc; then
+            echo 'export PATH="$HOME/development/flutter/bin:$PATH"' >>~/.bashrc
+        fi
     fi
-    # TODO: Make a full installation
 }
 
 install_neovim() {
