@@ -77,6 +77,23 @@ show_system_menu() {
 	fi
 }
 
+show_screenshot_menu() {
+	selected=$(printf '󰍹 Fullscreen
+󰍺 Area
+󰍻 Window' | dmenu "Screenshot menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"Fullscreen"*) dots-exec-screenshot output ;;
+		*"Area"*) dots-exec-screenshot region ;;
+		*"Window"*) dots-exec-screenshot window ;;
+		esac
+	fi
+
+}
+
 show_main_menu() {
 	selected=$(printf ' Theme
 󱍷 Refresh
@@ -85,7 +102,8 @@ show_main_menu() {
 󰇄 System
  Bluetooth
 󰀂 Network
- Audio' | dmenu "Dots menu")
+ Audio
+󰹑 Screenshot' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
@@ -93,6 +111,7 @@ show_main_menu() {
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
 	*"Update"*) show_update_menu ;;
 	*"System"*) show_system_menu ;;
+	*"Screenshot"*) show_screenshot_menu ;;
 	*"Bluetooth"*) terminal bluetuith ;;
 	*"Network"*) terminal nmtui ;;
 	*"Audio"*) terminal wiremix ;;
