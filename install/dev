@@ -32,7 +32,9 @@ install_flutter() {
     curl --proto '=https' --tlsv1.2 -sSf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.35.1-stable.tar.xz -o /tmp/flutter.tar.xz
     tar -xf /tmp/flutter.tar.xz -C ~/development/
 
-    echo 'export PATH="$HOME/development/flutter/bin:$PATH"' >>~/.bash_profile
+    if ! grep -q 'export PATH="$HOME/development/flutter/bin:$PATH"' ~/.bash_profile; then
+        echo "Adding Flutter to PATH in ~/.bash_profile"
+    fi
     # TODO: Make a full installation
 }
 

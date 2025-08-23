@@ -1,45 +1,28 @@
-@define-color base            #11221C;
-@define-color surface         #214237;
-@define-color overlay         #23372B;
-
-@define-color muted           #53685B;
-@define-color subtle          #589A5F;
-@define-color text            #e6d8ba;
-
-@define-color accent          #2DD5B7;
-@define-color accentDim       #509475;
-@define-color secondary       #549e6a;
-@define-color warning         #FF5345;
-@define-color gold            #E5C736;
-
-@define-color highlightLow    #214237;
-@define-color highlightMed    #23372B;
-@define-color highlightHigh   #53685B;
-
 window {
     margin: 20px;
-    background-color: alpha(@base, 0.9);
-    border-radius: 10px;
-    border: 1px solid @muted;
-    color: @text;
-    font-family: 'Rubik', 'Symbols Nerd Font';
+    background-color: alpha(#11221C, 0.97);
+    border-radius: 4px;
+    border: 2px solid #53685B;
+    color: #e6d8ba;
+    font-family: 'Symbols Nerd Font', 'Rubik';
     font-size: 16px;
 }
 
 #input {
     margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    color: @text;
-    background-color: @overlay;
+    margin-bottom: 14px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 0px solid #53685B;
+    color: #e6d8ba;
+    background-color: #23372B;
     outline: none;
     box-shadow: none;
+    transition: 0;
 }
 
 #input:focus {
     outline: none;
-    border: none;
     box-shadow: none;
 }
 
@@ -47,7 +30,7 @@ window {
     margin: 0px;
     border: none;
     background-color: transparent;
-    color: @base;
+    color: #11221C;
     border-radius: 0px;
 }
 
@@ -65,39 +48,40 @@ window {
 #text {
     margin: 5px;
     border: none;
-    color: @text;
+    color: #e6d8ba;
     background-color: transparent;
 }
 
 #entry {
-    padding: 10px;
-    border-radius: 5px;
+    padding: 6px 6px;
+    border-radius: 2px;
     background-color: transparent;
 }
 
 #entry image {
-    margin-right: 10px;
+    margin-right: 2px;
 }
 
 /* Regular entry styling */
 #entry:selected {
-    background-color: @highlightMed;
-    color: @text;
+    background-color: #23372B;
+    color: #e6d8ba;
     outline: none;
+    border-bottom: 1px solid #589A5F;
 }
 
 #entry:selected * {
-    background-color: @highlightMed;
-    color: @text;
+    background-color: #23372B;
+    color: #e6d8ba;
     outline: none;
 }
 
 #entry:hover {
-    background-color: @highlightLow;
+    background-color: #214237;
 }
 
 #entry:hover * {
-    background-color: @highlightLow;
+    background-color: #214237;
 }
 
 /* Global fix for white backgrounds */
@@ -108,24 +92,24 @@ window {
 /* Ensure all text elements have proper colors */
 #text, #entry #text, #entry * {
     background-color: transparent;
-    color: @text;
+    color: #e6d8ba;
 }
 
 #entry:selected #text, #entry:selected * {
-    background-color: @highlightMed;
-    color: @text;
+    background-color: #23372B;
+    color: #e6d8ba;
 }
 
 /* Specific submenu styling */
 #entry submenu {
     background-color: transparent;
-    color: @subtle;
+    color: #589A5F;
     margin-left: 20px;
 }
 
 #entry:selected submenu {
-    background-color: @highlightMed;
-    color: @text;
+    background-color: #23372B;
+    color: #e6d8ba;
 }
 
 #entry submenu * {
@@ -134,6 +118,6 @@ window {
 }
 
 #entry:selected submenu * {
-    background-color: @highlightMed;
-    color: @text;
+    background-color: #23372B;
+    color: #e6d8ba;
 }

@@ -1,9 +1,29 @@
 #!/usr/bin/env bash
 
+unset DOTS_DIR
+unset DOTS_ID
+unset DOTS_HYPRLAND_PLUGINS_VERSION
+
+if [[ -f ~/.dots-env ]]; then
+	source ~/.dots-env
+else
+	echo "Initializing ~/.dots-env..."
+	touch ~/.dots-env
+	echo #!/usr/bin/env bash > ~/.dots-env
+fi
+
 if [[ -z ${DOTS_DIR+x} ]]; then
-	export DOTS_DIR=$(gum input --placeholder "Enter the path of your dotfiles directory" --value "$HOME/.dotfiles")
+	DOTS_DIR=$(gum input --placeholder "Enter the path of your dotfiles directory" --value "$HOME/.dotfiles")
+	echo "export DOTS_DIR=$DOTS_DIR" >>~/.dots-env
 fi
 
 if [[ -z ${DOTS_ID+x} ]]; then
-	export DOTS_ID=$(gum input --placeholder "Enter your dots ID used to identify specific local configurations (e.g. 'desktop', 'laptop')")
+	DOTS_ID=$(gum input --placeholder "Enter your dots ID used to identify specific local configurations (e.g. 'desktop', 'laptop')")
+	echo "export DOTS_ID=$DOTS_ID" >>~/.dots-env
 fi
+
+if [[ -z ${DOTS_HYPRLAND_PLUGINS_VERSION+x} ]]; then
+	echo "export DOTS_HYPRLAND_PLUGINS_VERSION=" >>~/.dots-env
+fi
+
+source ~/.dots-env

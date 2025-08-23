@@ -1,7 +1,3 @@
-export DOTS_DIR=$HOME/.dotfiles
-export DOTS_ID=laptop
-export DOTS_HYPRLAND_PLUGINS_VERSION="" # For example: "v0.50.0". Can be empty if version should not be fixed.
-
 source ~/.dotfiles/config/.bash_profile
 
 . "$HOME/.atuin/bin/env"

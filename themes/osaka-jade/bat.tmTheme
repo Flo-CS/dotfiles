@@ -306,10 +306,8 @@
   <string>sRGB</string>
   <key>semanticClass</key>
   <string>theme.dark.osaka-jade</string>
-  <key>author</key>
-  <string>Basecamp</string>
   <key>comment</key>
-  <string>Osaka Jade theme from Omarchy</string>
+  <string>Osaka Jade theme</string>
   <key>uuid</key>
   <string>B4991673-80EB-41A2-BEFF-03216A233730</string>
 </dict>

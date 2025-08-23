@@ -7,7 +7,8 @@ key_accept=Return
 
 mode=drun
 allow_images=true
-image_size=30
+image_size=20
 term=alacritty
 insensitive=true
-width=1000px
+width=800px
+height=500px

@@ -1,30 +1,12 @@
-@define-color base            #11221C;
-@define-color surface         #214237;
-@define-color overlay         #23372B;
-
-@define-color muted           #53685B;
-@define-color subtle          #589A5F;
-@define-color text            #e6d8ba;
-
-@define-color accent          #2DD5B7;
-@define-color accentDim       #509475;
-@define-color secondary       #549e6a;
-@define-color warning         #FF5345;
-@define-color gold            #E5C736;
-
-@define-color highlightLow    #214237;
-@define-color highlightMed    #23372B;
-@define-color highlightHigh   #53685B;
-
 * {
   font-family: "Symbols Nerd Font", "Rubik";
   font-size: 13px;
-  color: @text;
+  color: #e6d8ba;
 }
 
 window#waybar {
-  background-color: alpha(@base, 0.90);
-  border-bottom: 2px solid @muted;
+  background-color: alpha(#11221C, 0.90);
+  border-bottom: 2px solid #53685B;
   border-radius: 0;
 }
 
@@ -45,7 +27,7 @@ window#waybar {
 }
 
 #workspaces button {
-  color: @subtle;
+  color: #589A5F;
   border: none;
   background: transparent;
   transition: all 0.3s ease;
@@ -54,11 +36,11 @@ window#waybar {
 #workspaces button:hover {
   box-shadow: inherit;
   text-shadow: inherit;
-  background-color: @highlightLow;
+  background-color: #214237;
 }
 
 #window {
-  color: @accent;
+  color: #2DD5B7;
   font-weight: 500;
 }
 

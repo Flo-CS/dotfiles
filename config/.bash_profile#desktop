@@ -1,13 +1,5 @@
-export DOTS_DIR=$HOME/.dotfiles
-export DOTS_ID=desktop
-export DOTS_HYPRLAND_PLUGINS_VERSION="" # For example: "v0.50.0". Can be empty if version should not be fixed.
-
 source ~/.dotfiles/config/.bash_profile
 
 . "$HOME/.atuin/bin/env"
 . "$HOME/.cargo/env"
-export PATH="$HOME/development/flutter/bin:$PATH"
-export PATH="$HOME/development/flutter/bin:$PATH"
-export PATH="$HOME/development/flutter/bin:$PATH"
-export PATH="$HOME/development/flutter/bin:$PATH"
 export PATH="$HOME/development/flutter/bin:$PATH"

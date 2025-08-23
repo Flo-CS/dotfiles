@@ -2,6 +2,7 @@
 
 dmenu() {
 	local prompt=$1
+	pkill -x wofi
 	wofi --dmenu --prompt "$prompt"
 }
 
@@ -45,25 +46,25 @@ show_refresh_menu() {
 }
 
 show_update_menu() {
-	selected=$(printf '🍦 Full
-🗄️ Dots binaries
-☕ Configs' | dmenu "Update menu")
+	selected=$(printf 'Full
+Binaries
+Configs' | dmenu "Update menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
 		case "$selected" in
 		*"Full"*) waiting_terminal dots-update-full ;;
-		*"Dots binaries"*) waiting_terminal dots-update-bin ;;
+		*"Binaries"*) waiting_terminal dots-update-bin ;;
 		*"Configs"*) waiting_terminal dots-update-config ;;
 		esac
 	fi
 }
 
 show_system_menu() {
-	selected=$(printf '🔄 Reboot
+	selected=$(printf ' Reboot
 ⏻ Shutdown
-🔒 Lock' | dmenu "System menu")
+ Lock' | dmenu "System menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
@@ -71,20 +72,20 @@ show_system_menu() {
 		case "$selected" in
 		*"Reboot"*) systemctl reboot ;;
 		*"Shutdown"*) systemctl poweroff ;;
-		*"Lock"*) dots-lock-screen ;;
+		*"Lock"*) dots-system-lock ;;
 		esac
 	fi
 }
 
 show_main_menu() {
-	selected=$(printf '💅 Theme
-🔄 Refresh
-🌄 Wallpaper
-🍦 Update
-📇 System
-🔵 Bluetooth
-🛜 Network
-🔊 Audio' | dmenu "Dots menu")
+	selected=$(printf ' Theme
+󱍷 Refresh
+󰸉 Wallpaper
+󰚰 Update
+󰇄 System
+ Bluetooth
+󰀂 Network
+ Audio' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
@@ -92,18 +93,9 @@ show_main_menu() {
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
 	*"Update"*) show_update_menu ;;
 	*"System"*) show_system_menu ;;
-	*"Bluetooth"*)
-		terminal bluetuith
-		show_main_menu
-		;;
-	*"Network"*)
-		terminal nmtui
-		show_main_menu
-		;;
-	*"Audio"*)
-		terminal wiremix
-		show_main_menu
-		;;
+	*"Bluetooth"*) terminal bluetuith ;;
+	*"Network"*) terminal nmtui ;;
+	*"Audio"*) terminal wiremix ;;
 	esac
 }
 

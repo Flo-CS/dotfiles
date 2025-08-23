@@ -1,8 +1,4 @@
 #
-#
-#  ORIGINAL FROM CATPPUCCIN
-#  MODIFIED FOR OSAKA-JADE
-#
 #  ID     osaka-jade
 #  NAME   Osaka Jade
 #  TYPE   dark
@@ -10,8 +6,7 @@
 
 
 [%General]
-author=Basecamp based on catpuccin style
-comment=Osaka Jade theme from Omarchy
+comment=Osaka Jade theme
 combo_focus_rect=true
 spread_menuitems=true
 left_tabs=true
