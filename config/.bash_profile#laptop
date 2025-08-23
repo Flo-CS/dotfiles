@@ -2,3 +2,4 @@ source ~/.dotfiles/config/.bash_profile
 
 . "$HOME/.atuin/bin/env"
 . "$HOME/.cargo/env"
+. /usr/share/nvm/init-nvm.sh
