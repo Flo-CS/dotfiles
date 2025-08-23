@@ -10,5 +10,5 @@ allow_images=true
 image_size=20
 term=alacritty
 insensitive=true
-width=800px
-height=500px
+width=600px
+height=400px
