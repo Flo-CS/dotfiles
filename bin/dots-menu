@@ -92,9 +92,18 @@ show_main_menu() {
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
 	*"Update"*) show_update_menu ;;
 	*"System"*) show_system_menu ;;
-	*"Bluetooth"*) terminal bluetuith ;;
-	*"Network"*) terminal nmtui ;;
-	*"Audio"*) terminal wiremix ;;
+	*"Bluetooth"*)
+		terminal bluetuith
+		show_main_menu
+		;;
+	*"Network"*)
+		terminal nmtui
+		show_main_menu
+		;;
+	*"Audio"*)
+		terminal wiremix
+		show_main_menu
+		;;
 	esac
 }
 
