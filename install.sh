@@ -15,14 +15,14 @@ show_section() {
 sudo pacman -S --noconfirm gum
 DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 show_section "Setting up binaries"
-$DOTS_DIR/bin.sh
+$DOTS_DIR/bin/dots-deploy-bin
 
 # SEQUENCE
 
 dots-show-logo
 
 show_section "Checking and setting up environment"
-. dots-init-env
+source dots-init-env
 dots-init-theme
 dots-init-wallpaper
 
@@ -42,7 +42,7 @@ show_section "Installing desktop environment and applications [5/6]"
 $DOTS_DIR/install/desktop
 
 show_section "Applying configurations [6/6]"
-$DOTS_DIR/config.sh
+dots-deploy-config
 
 show_section "Finalizing installation"
 gum confirm "Do you want to reboot now?" && {

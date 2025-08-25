@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-# BASH CONFIG
-
 set -euo pipefail
-
-# FUNCTIONS
 
 configure_shell() {
 	dots-file-link config/.bashrc ~/.bashrc
@@ -87,8 +83,6 @@ configure_privileged() {
 configure_xdg() {
 	dots-file-link config/user-dirs.dirs ~/.config/user-dirs.dirs
 }
-
-# SEQUENCE
 
 configure_shell
 configure_uwsm

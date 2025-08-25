@@ -46,17 +46,17 @@ show_refresh_menu() {
 }
 
 show_update_menu() {
-	selected=$(printf 'Full
-Binaries
-Configs' | dmenu "Update menu")
+	selected=$(printf 'Update dots
+Deploy binaries
+Deploy configs' | dmenu "Update menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
 		case "$selected" in
-		*"Full"*) waiting_terminal dots-update-full ;;
-		*"Binaries"*) waiting_terminal dots-update-bin ;;
-		*"Configs"*) waiting_terminal dots-update-config ;;
+		*"Update dots"*) waiting_terminal dots-update ;;
+		*"Deploy binaries"*) waiting_terminal dots-deploy-bin ;;
+		*"Deploy configs"*) waiting_terminal dots-deploy-config ;;
 		esac
 	fi
 }
