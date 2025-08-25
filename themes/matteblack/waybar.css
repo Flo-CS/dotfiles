@@ -1,0 +1,83 @@
+* {
+  font-family: "Symbols Nerd Font", "JiraCode Nerd Font";
+  font-size: 14px;
+  color: #8a8a8d;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+window#waybar > box {
+    border-bottom: 1px solid #1e1e1e;
+    border-radius: 0;
+    background-color: alpha(#1e1e1e, 0.95);
+}
+
+.modules-left,
+.modules-right {
+  padding: 0 6px;
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+}
+
+#workspaces {
+  margin-right: 10px;
+  border: none;
+  border-radius: 0;
+}
+
+#workspaces button {
+  color: #8a8a8d;
+  border: none;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+  box-shadow: inherit;
+  text-shadow: inherit;
+  background-color: #333333;
+}
+
+#window {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+window#waybar.empty #window {
+  margin: 0;
+}
+
+#cpu,
+#temperature,
+#memory,
+#backlight,
+#battery,
+#power-profiles-daemon,
+#systemd-failed-units {
+  padding: 0px 12px;
+  border: none;
+  border-radius: 0;
+}
+
+#submap {
+  margin-left: 16px;
+  margin-right: 16px;
+  padding: 12px 0;
+}
+
+#privacy,
+#idle_inhibitor,
+#pulseaudio,
+#bluetooth,
+#network,
+#clock,
+#custom-notification {
+  padding: 0px 12px;
+  border: none;
+  border-radius: 0;
+}
