@@ -79,6 +79,10 @@ configure_xdg() {
 	dots-file-link config/user-dirs.dirs ~/.config/user-dirs.dirs
 }
 
+configure_mako() {
+	dots-file-link themes/current/mako.ini ~/.config/mako/config
+}
+
 configure_shell
 configure_uwsm
 configure_git
@@ -94,5 +98,6 @@ configure_neovim
 configure_terminal
 configure_privileged
 configure_xdg
+configure_mako
 
 dots-refresh-all

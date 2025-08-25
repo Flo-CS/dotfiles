@@ -105,6 +105,10 @@ install_screenshot() {
     dots-pkg-install hyprshot satty
 }
 
+install_mako() {
+    dots-pkg-install mako
+}
+
 install_audio
 install_bluetooth
 install_clipboard
@@ -124,3 +128,4 @@ install_screen
 install_waybar
 install_wofi
 install_screenshot
+install_mako

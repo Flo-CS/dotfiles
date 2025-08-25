@@ -4,4 +4,7 @@
 pkill -x waybar
 setsid uwsm app -- waybar >/dev/null 2>&1 &
 
+# Mako
+makoctl reload
+
 hyprctl reload &>/dev/null &
