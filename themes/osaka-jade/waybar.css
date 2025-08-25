@@ -9,7 +9,7 @@ window#waybar {
 }
 
 window#waybar > box {
-    border-bottom: 1px solid #53685B;
+    border-bottom: 1px solid #11221C;
     border-radius: 0;
     background-color: alpha(#11221C, 0.95);
 }
