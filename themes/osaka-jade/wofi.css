@@ -1,8 +1,8 @@
 window {
     margin: 20px;
     background-color: alpha(#11221C, 0.97);
-    border-radius: 4px;
-    border: 2px solid #53685B;
+    border-radius: 10px;
+    border: 1px solid #53685B;
     color: #e6d8ba;
     font-family: 'Symbols Nerd Font', 'Rubik';
     font-size: 16px;
@@ -11,8 +11,8 @@ window {
 #input {
     margin: 10px;
     margin-bottom: 14px;
-    padding: 5px 10px;
-    border-radius: 2px;
+    padding: 6px 10px;
+    border-radius: 6px;
     border: 0px solid #53685B;
     color: #e6d8ba;
     background-color: #23372B;
@@ -38,6 +38,7 @@ window {
     margin: 10px;
     border: none;
     background-color: transparent;
+    margin-bottom: 20px
 }
 
 #scroll {
@@ -53,8 +54,8 @@ window {
 }
 
 #entry {
-    padding: 6px 6px;
-    border-radius: 2px;
+    padding: 8px 6px;
+    border-radius: 6px;
     background-color: transparent;
 }
 
@@ -67,7 +68,6 @@ window {
     background-color: #23372B;
     color: #e6d8ba;
     outline: none;
-    border-bottom: 1px solid #589A5F;
 }
 
 #entry:selected * {

@@ -45,26 +45,31 @@ show_refresh_menu() {
 	fi
 }
 
-show_update_menu() {
-	selected=$(printf 'Update dots
-Deploy binaries
-Deploy configs' | dmenu "Update menu")
+show_applications_menu() {
+	if wofi --show drun; then
+		exit 0
+	else
+		show_main_menu
+	fi
+}
 
+show_deploy_menu() {
+	selected=$(printf '  Binaries
+  Configs' | dmenu "Deploy menu")
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
 		case "$selected" in
-		*"Update dots"*) waiting_terminal dots-update ;;
-		*"Deploy binaries"*) waiting_terminal dots-deploy-bin ;;
-		*"Deploy configs"*) waiting_terminal dots-deploy-config ;;
+		*"Binaries"*) waiting_terminal dots-deploy-bin ;;
+		*"Configs"*) waiting_terminal dots-deploy-config ;;
 		esac
 	fi
 }
 
 show_system_menu() {
-	selected=$(printf ' Reboot
-⏻ Shutdown
- Lock' | dmenu "System menu")
+	selected=$(printf '  Reboot
+⏻  Shutdown
+  Lock' | dmenu "System menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
@@ -78,9 +83,9 @@ show_system_menu() {
 }
 
 show_screenshot_menu() {
-	selected=$(printf '󰍹 Fullscreen
-󰍺 Area
-󰍻 Window' | dmenu "Screenshot menu")
+	selected=$(printf '󰍹  Fullscreen
+󰍺  Area
+󰍻  Window' | dmenu "Screenshot menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
@@ -95,26 +100,30 @@ show_screenshot_menu() {
 }
 
 show_main_menu() {
-	selected=$(printf ' Theme
-󱍷 Refresh
-󰸉 Wallpaper
-󰚰 Update
-󰇄 System
- Bluetooth
-󰀂 Network
- Audio
-󰹑 Screenshot' | dmenu "Dots menu")
+	selected=$(printf '  Theme
+󱍷  Refresh
+󰸉  Wallpaper
+󰚰  Update
+󰆨  Deploy
+󰇄  System
+  Bluetooth
+󰀂  Network
+  Audio
+󰹑  Screenshot
+󰣆  Applications' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
-	*"Update"*) show_update_menu ;;
+	*"Update"*) waiting_terminal dots-update ;;
+	*"Deploy"*) show_deploy_menu ;;
 	*"System"*) show_system_menu ;;
 	*"Screenshot"*) show_screenshot_menu ;;
 	*"Bluetooth"*) terminal bluetuith ;;
 	*"Network"*) terminal nmtui ;;
 	*"Audio"*) terminal wiremix ;;
+	*"Applications"*) show_applications_menu ;;
 	esac
 }
 
