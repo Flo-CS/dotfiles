@@ -4,8 +4,4 @@
 pkill -x waybar
 setsid uwsm app -- waybar >/dev/null 2>&1 &
 
-# Swaync
-swaync-client -R &>/dev/null &
-swaync-client -rs &>/dev/null &
-
 hyprctl reload &>/dev/null &

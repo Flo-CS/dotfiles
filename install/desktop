@@ -93,10 +93,6 @@ install_screen() {
     dots-pkg-install brightnessctl
 }
 
-install_swaync() {
-    dots-pkg-install swaync
-}
-
 install_waybar() {
     dots-pkg-install waybar
 }
@@ -125,7 +121,6 @@ install_power
 install_qt
 install_quickshell
 install_screen
-install_swaync
 install_waybar
 install_wofi
 install_screenshot

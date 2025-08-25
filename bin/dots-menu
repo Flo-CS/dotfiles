@@ -10,6 +10,10 @@ terminal() {
 	alacritty --class Dots.Menu -e $@
 }
 
+terminal_big() {
+	alacritty --class Dots.BigMenu -e $@
+}
+
 waiting_terminal() {
 	alacritty --class Dots.Menu -e bash -i -c "dots-show-logo; eval \"$@\"; dots-show-done;"
 }
@@ -110,7 +114,8 @@ show_main_menu() {
 󰀂  Network
   Audio
 󰹑  Screenshot
-󰣆  Applications' | dmenu "Dots menu")
+󰣆  Applications
+󰟌  Monitor' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
@@ -124,6 +129,7 @@ show_main_menu() {
 	*"Network"*) terminal nmtui ;;
 	*"Audio"*) terminal wiremix ;;
 	*"Applications"*) show_applications_menu ;;
+	*"Monitor"*) terminal_big btop ;;
 	esac
 }
 

@@ -48,11 +48,6 @@ configure_quickshell() {
 	dots-file-link config/quickshell ~/.config/quickshell
 }
 
-configure_swaync() {
-	dots-file-link config/swaync.json ~/.config/swaync/config.json
-	dots-file-link themes/current/swaync.css ~/.config/swaync/style.css
-}
-
 configure_waybar() {
 	dots-file-link config/waybar.jsonc ~/.config/waybar/config.jsonc
 	dots-file-link themes/current/waybar.css ~/.config/waybar/style.css
@@ -93,7 +88,6 @@ configure_hyprland
 configure_monitoring
 configure_qt
 configure_quickshell
-configure_swaync
 configure_waybar
 configure_wofi
 configure_neovim

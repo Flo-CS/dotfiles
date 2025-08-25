@@ -2,7 +2,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 35,
+  "height": 40,
   "spacing": 0,
   "modules-left": [
     "cpu",
@@ -24,8 +24,7 @@
     "pulseaudio",
     "bluetooth",
     "network",
-    "clock#time",
-    "custom/notification",
+    "clock#time"
   ],
   "cpu": {
     "format": " {usage}%",
@@ -161,13 +160,8 @@
     "tooltip": false,
   },
   "clock#time": {
-    "format": " {:%H:%M}",
+    "format": " {:%d/%m/%Y  %H:%M}",
     "tooltip": false,
-  },
-  "custom/notification": {
-    "format": "",
-    "tooltip": false,
-    "on-click": "swaync-client -t -sw",
   },
 }
 
