@@ -23,6 +23,8 @@ install_nodejs() {
 # TODO: Make a full installation
 install_android_studio() {
     dots-pkg-yay-install android-studio
+    # TODO: Set env vars for android-studio, actually they had been written manually inside the bashrc file
+    # https://developer.android.com/tools/variables#envar
 }
 
 # TODO: Make a full installation

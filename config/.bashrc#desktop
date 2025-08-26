@@ -6,3 +6,5 @@ eval "$(atuin init bash)"
 
 . "$HOME/.cargo/env"
 export PATH="$HOME/development/flutter/bin:$PATH"
+export ANDROID_AVD_HOME="$HOME/.config/.android/avd"
+export ANDROID_SDK_HOME="$HOME/development/android/sdk"

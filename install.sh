@@ -45,6 +45,6 @@ show_section "Applying configurations [6/6]"
 dots-deploy-config
 
 show_section "Finalizing installation"
-gum confirm "Do you want to reboot now?" && {
+gum confirm "Do you want to reboot now? It may be absolutely necessary for some programs to work correctly" && {
 	sudo reboot
 }
