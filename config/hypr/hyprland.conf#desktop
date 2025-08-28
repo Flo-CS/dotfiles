@@ -3,3 +3,10 @@ source=~/.dotfiles/config/hypr/hyprland.conf
 input {
     sensitivity = -0.5 # -1.0 - 1.0, 0 means no modification.
 }
+
+# TODO: this is not very reliable
+windowrulev2 = pseudo, floating:0, onworkspace:w[tv1]
+windowrulev2 = pseudo, floating:0, onworkspace:f[1]
+windowrulev2 = size 60% 100%, floating:0, onworkspace:w[tv1]
+windowrulev2 = size 60% 100%, floating:0, onworkspace:f[1]
+

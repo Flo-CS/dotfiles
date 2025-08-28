@@ -2,8 +2,9 @@
 
 dmenu() {
 	local prompt=$1
+
 	pkill -x wofi
-	wofi --dmenu --prompt "$prompt"
+	wofi --dmenu --prompt "$prompt" --insensitive
 }
 
 terminal() {
@@ -95,12 +96,32 @@ show_screenshot_menu() {
 		show_main_menu
 	else
 		case "$selected" in
-		*"Fullscreen"*) dots-exec-screenshot output ;;
-		*"Area"*) dots-exec-screenshot region ;;
-		*"Window"*) dots-exec-screenshot window ;;
+		*"Fullscreen"*) dots-cmd-screenshot output ;;
+		*"Area"*) dots-cmd-screenshot region ;;
+		*"Window"*) dots-cmd-screenshot window ;;
 		esac
 	fi
+}
 
+show_power_profile_menu() {
+	selected=$(printf '󰂄  Power Saver
+󰂅  Balanced
+󰂆  Performance' | dmenu "Power profile menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"Power Saver"*) powerprofilesctl set power-saver ;;
+		*"Balanced"*) powerprofilesctl set balanced ;;
+		*"Performance"*) powerprofilesctl set performance ;;
+		esac
+		if [[ $? -eq 0 ]]; then
+			notify-send "Power profile set to $(powerprofilesctl get)" -u low
+		else
+			notify-send "Failed to set power profile" -u critical
+		fi
+	fi
 }
 
 show_main_menu() {
@@ -115,7 +136,8 @@ show_main_menu() {
   Audio
 󰹑  Screenshot
 󰣆  Applications
-󰟌  Monitor' | dmenu "Dots menu")
+󰟌  Monitor
+󰩲  Power profile' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
@@ -125,11 +147,12 @@ show_main_menu() {
 	*"Deploy"*) show_deploy_menu ;;
 	*"System"*) show_system_menu ;;
 	*"Screenshot"*) show_screenshot_menu ;;
-	*"Bluetooth"*) terminal bluetuith ;;
+	*"Bluetooth"*) terminal bluetuith --no-warning ;;
 	*"Network"*) terminal nmtui ;;
 	*"Audio"*) terminal wiremix ;;
 	*"Applications"*) show_applications_menu ;;
 	*"Monitor"*) terminal_big btop ;;
+	*"Power profile"*) show_power_profile_menu ;;
 	esac
 }
 

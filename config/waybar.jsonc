@@ -1,17 +1,12 @@
 // -*- mode: jsonc -*-
 {
+  "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  "height": 40,
+  // "height": 30,
   "spacing": 0,
   "modules-left": [
-    "cpu",
-    "temperature",
-    "memory",
-    "backlight",
-    "battery",
-    "power-profiles-daemon",
-    "systemd-failed-units",
+    "clock#time"
   ],
   "modules-center": [
     "hyprland/submap",
@@ -19,12 +14,13 @@
     "hyprland/window",
   ],
   "modules-right": [
+    "backlight",
+    "battery",
     "privacy",
     "idle_inhibitor",
     "pulseaudio",
     "bluetooth",
     "network",
-    "clock#time"
   ],
   "cpu": {
     "format": " {usage}%",
@@ -52,17 +48,6 @@
     "format": "{icon} {capacity}%",
     "format-icons": ["", "", "", "", ""],
     "tooltip": false,
-  },
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "",
-      "performance": "",
-      "balanced": "",
-      "power-saver": "",
-    },
   },
   "systemd-failed-units": {
     "hide-on-ok": false,
@@ -118,7 +103,7 @@
     "tooltip": false,
   },
   "hyprland/window": {
-    "format": "{title}",
+    "format": "",
     "icon": true,
     "icon-size": 16,
     "max-length": 60,
@@ -150,7 +135,7 @@
     "format-connected": " {device_alias}",
     "format-connected-battery": " {device_alias} {device_battery_percentage}%",
     "tooltip": false,
-    "on-click": "alacritty --class Dots.Menu -e bluetuith",
+    "on-click": "alacritty --class Dots.Menu -e bluetuith --no-warning",
   },
   "network": {
     "format-wifi": " {essid} ({signalStrength}%)",
@@ -160,7 +145,7 @@
     "tooltip": false,
   },
   "clock#time": {
-    "format": " {:%d/%m/%Y  %H:%M}",
+    "format": "{:%d/%m/%Y  %H:%M}",
     "tooltip": false,
   },
 }

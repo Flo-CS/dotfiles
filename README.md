@@ -54,3 +54,6 @@ Inconvenients:
 - Update of the copied config folder at first install is not in sync with the "distro" repo. Is it an inconvenient ?
 - Migrations can't resolve all divergent changes, for example, in case of a software change (e.g. node.js to bun), we can't just uninstall node.js, what for the users who still want to use it ? Using the first option, at least user can see the changes and choose what to do (?)
 
+## Special thanks
+
+I originally started my dotfiles config by my self, but after some work, I discovered Omarchy and took some inspiration in its architecture and some of its configs to improve mine.
