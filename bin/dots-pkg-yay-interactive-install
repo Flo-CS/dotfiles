@@ -10,5 +10,5 @@ pkg_to_install=$(
 )
 
 if [[ -n "$pkg_to_install" ]]; then
-  echo "$pkg_to_install" | tr '\n' ' ' | xargs yay -S --noconfirm
+  echo "$pkg_to_install" | tr '\n' ' ' | xargs yay -S --noconfirm --answerclean None --answerdiff All
 fi

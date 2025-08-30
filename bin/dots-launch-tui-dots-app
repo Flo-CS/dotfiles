@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cmd="$*"
-alacritty --class Dots.App -e $cmd
+setsid uwsm app -- alacritty --class Dots.App -e $cmd
