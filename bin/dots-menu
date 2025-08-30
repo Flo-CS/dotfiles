@@ -7,15 +7,15 @@ dmenu() {
 	wofi --dmenu --prompt "$prompt" --insensitive
 }
 
-terminal() {
+terminal_menu() {
 	alacritty --class Dots.Menu -e $@
 }
 
-terminal_big() {
-	alacritty --class Dots.BigMenu -e $@
+terminal_app() {
+	alacritty --class Dots.App -e $@
 }
 
-waiting_terminal() {
+waiting_terminal_menu() {
 	alacritty --class Dots.Menu -e bash -i -c "dots-show-logo; eval \"$@\"; dots-show-done;"
 }
 
@@ -65,8 +65,8 @@ show_deploy_menu() {
 		show_main_menu
 	else
 		case "$selected" in
-		*"Binaries"*) waiting_terminal dots-deploy-bin ;;
-		*"Configs"*) waiting_terminal dots-deploy-config ;;
+		*"Binaries"*) waiting_terminal_menu dots-deploy-bin ;;
+		*"Configs"*) waiting_terminal_menu dots-deploy-config ;;
 		esac
 	fi
 }
@@ -143,15 +143,15 @@ show_main_menu() {
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
-	*"Update"*) waiting_terminal dots-update ;;
+	*"Update"*) waiting_terminal_menu ClassicFloating dots-update ;;
 	*"Deploy"*) show_deploy_menu ;;
 	*"System"*) show_system_menu ;;
 	*"Screenshot"*) show_screenshot_menu ;;
-	*"Bluetooth"*) terminal bluetuith --no-warning ;;
-	*"Network"*) terminal nmtui ;;
-	*"Audio"*) terminal wiremix ;;
+	*"Bluetooth"*) terminal_menu bluetuith --no-warning ;;
+	*"Network"*) terminal_menu nmtui ;;
+	*"Audio"*) terminal_menu wiremix ;;
 	*"Applications"*) show_applications_menu ;;
-	*"Monitor"*) terminal_big btop ;;
+	*"Monitor"*) terminal_app btop ;;
 	*"Power profile"*) show_power_profile_menu ;;
 	esac
 }

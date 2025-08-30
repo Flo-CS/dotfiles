@@ -31,3 +31,9 @@
 - [] Fix audio devices priority
 
 - [] Check .config folder to check for files to save in dots
+
+- [] Add screensaver that is shown above the lock screen
+
+- [] Add branding
+
+- [] Add easy vpn switch

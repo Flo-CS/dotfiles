@@ -28,12 +28,12 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "alacritty --class Dots.BigMenu -e btop"
+    "on-click": "alacritty --class Dots.App -e btop"
   },
   "memory": {
     "interval": 5,
     "format": "",
-    "on-click": "alacritty --class Dots.BigMenu -e btop"
+    "on-click": "alacritty --class Dots.App -e btop"
   },
   "backlight": {
     "format": "{icon}",
