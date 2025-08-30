@@ -5,3 +5,10 @@
 [user]
 	email = 53081078+Flo-CS@users.noreply.github.com
 	name = Flo-CS
+[core]
+	editor = nvim
+[merge]
+	tool = nvimdiff
+[diff]
+	tool = nvimdiff
+	guitool = nvimdiff

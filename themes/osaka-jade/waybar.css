@@ -1,40 +1,57 @@
 * {
-  font-family: "Symbols Nerd Font", "JiraCode Nerd Font";
-  font-size: 14px;
+  font-family: "Symbols Nerd Font", "Rubik";
+  min-height: 0;
   color: #e6d8ba;
 }
 
 window#waybar {
-    background-color: transparent;
-}
-
-window#waybar > box {
     border-bottom: 1px solid #11221C;
-    border-radius: 0;
     background-color: alpha(#11221C, 0.95);
 }
 
-.modules-left,
-.modules-right {
-  padding: 0 6px;
+.modules-left {
+  margin-left: 10px;
 }
 
-.modules-left,
-.modules-center,
 .modules-right {
-}
-
-#workspaces {
   margin-right: 10px;
-  border: none;
-  border-radius: 0;
+}
+
+tooltip {
+  padding: 2px;
+  border-radius: 0px;
+  background-color: #11221C;
+}
+
+#systemd-failed-units,
+#cpu,
+#memory,
+#bluetooth,
+#network,
+#pulseaudio {
+  margin: 0 12px;
+}
+
+#window,
+#workspaces,
+#submap {
+  margin: 0 6px;
+}
+
+#privacy,
+#idle_inhibitor,
+#battery,
+#backlight,
+#clock {
+  margin: 0 12px;
 }
 
 #workspaces button {
-  color: #589A5F;
-  border: none;
+  font-weight: 500;
+  font-size: 16px;
   background: transparent;
-  transition: all 0.3s ease;
+  transition: 0s all;
+  border:none;
 }
 
 #workspaces button:hover {
@@ -43,41 +60,7 @@ window#waybar > box {
   background-color: #214237;
 }
 
-#window {
-  color: #2DD5B7;
-  font-weight: 500;
+#workspaces button.empty {
+  opacity: 0.5;
 }
 
-window#waybar.empty #window {
-  margin: 0;
-}
-
-#cpu,
-#temperature,
-#memory,
-#backlight,
-#battery,
-#power-profiles-daemon,
-#systemd-failed-units {
-  padding: 0px 12px;
-  border: none;
-  border-radius: 0;
-}
-
-#submap {
-  margin-left: 16px;
-  margin-right: 16px;
-  padding: 0px 12px;
-}
-
-#privacy,
-#idle_inhibitor,
-#pulseaudio,
-#bluetooth,
-#network,
-#clock,
-#custom-notification {
-  padding: 0px 12px;
-  border: none;
-  border-radius: 0;
-}

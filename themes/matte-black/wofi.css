@@ -1,8 +1,8 @@
 window {
     margin: 20px;
     background-color: alpha(#1e1e1e, 0.95);
-    border-radius: 10px;
-    border: 1px solid #8a8a8d;
+    border-radius: 0px;
+    border: 2px solid #8a8a8d;
     color: #8a8a8d;
     font-family: 'Symbols Nerd Font', 'Rubik';
     font-size: 16px;
@@ -12,7 +12,7 @@ window {
     margin: 10px;
     margin-bottom: 14px;
     padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 0px;
     border: 0px solid #8a8a8d;
     color: #8a8a8d;
     background-color: #333333;
@@ -55,7 +55,7 @@ window {
 
 #entry {
     padding: 8px 6px;
-    border-radius: 6px;
+    border-radius: 0px;
     background-color: transparent;
 }
 

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+wallpaper_name=$(dots-wallpaper-get)
+echo "$wallpaper_name" >$DOTS_DIR/themes/current/wallpaper.theme
