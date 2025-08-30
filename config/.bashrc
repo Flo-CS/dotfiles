@@ -62,9 +62,17 @@ function fzff {
 }
 
 # Ripgrep with fzf for content search
+# TODO: behavior is not very user friendly
 function rgf {
-    local search_term="$1"
-    local query="${search_term:-.}"
+    local query="$1"
+
+    if [ -z "$query" ]; then
+        query=$(gum input --placeholder "Enter search query")
+        if [ -z "$query" ]; then
+            echo "No query provided."
+            return 1
+        fi
+    fi
 
     local result=$(rg --line-number --no-heading --color=always --smart-case --hidden "$query" |
         fzf --ansi \

@@ -29,3 +29,5 @@
 - [] Update hyprland shadow
 
 - [] Fix audio devices priority
+
+- [] Check .config folder to check for files to save in dots
