@@ -4,28 +4,15 @@ BIN_DIR="$HOME/.local/bin"
 DESKTOP_DIR="$HOME/.local/share/applications"
 ICON_DIR="$DESKTOP_DIR/icons"
 
-get_all_appimages() {
-    find "$DESKTOP_DIR" -name '*.desktop' -print0 |
+if [ "$#" -eq 0 ]; then
+    # Find all AppImages by looking for desktop files with BIN_DIR in Exec line
+    appimages=$(find "$DESKTOP_DIR" -name '*.desktop' -print0 |
         while read -r -d '' file; do
             exec_line=$(grep "^Exec=" "$file" | cut -d= -f2)
             if echo "$exec_line" | grep -q "$BIN_DIR"; then
                 basename "${file%.desktop}"
             fi
-        done | sort
-}
-
-remove_appimage() {
-    local app="$1"
-
-    rm -f "$BIN_DIR/$app"
-    rm -f "$DESKTOP_DIR/$app.desktop"
-    rm -f "$ICON_DIR/$app.png"
-
-    echo "Removed $app"
-}
-
-if [ "$#" -eq 0 ]; then
-    appimages=$(get_all_appimages)
+        done | sort)
 
     if [ -z "$appimages" ]; then
         echo "No AppImages to remove."
@@ -39,11 +26,21 @@ if [ "$#" -eq 0 ]; then
         exit 1
     fi
 
+    # Remove selected AppImages
     echo "$selected" | while read -r app; do
-        [ -n "$app" ] && remove_appimage "$app"
+        if [ -n "$app" ]; then
+            rm -f "$BIN_DIR/$app"
+            rm -f "$DESKTOP_DIR/$app.desktop"
+            rm -f "$ICON_DIR/$app.png"
+            echo "Removed $app"
+        fi
     done
 else
+    # Remove specified AppImages
     for app in "$@"; do
-        remove_appimage "$app"
+        rm -f "$BIN_DIR/$app"
+        rm -f "$DESKTOP_DIR/$app.desktop"
+        rm -f "$ICON_DIR/$app.png"
+        echo "Removed $app"
     done
 fi

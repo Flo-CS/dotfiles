@@ -3,24 +3,14 @@
 ICON_DIR="$HOME/.local/share/applications/icons"
 DESKTOP_DIR="$HOME/.local/share/applications"
 
-get_all_tuis() {
-  find "$DESKTOP_DIR" -name '*.desktop' -print0 |
+if [ "$#" -eq 0 ]; then
+  # Find all TUIs by looking for desktop files with alacritty -e pattern
+  tuis=$(find "$DESKTOP_DIR" -name '*.desktop' -print0 |
     while read -r -d '' file; do
       if grep -q '^Exec=.*alacritty.*-e' "$file"; then
         basename "${file%.desktop}"
       fi
-    done | sort
-}
-
-remove_tui() {
-  local app="$1"
-  rm -f "$DESKTOP_DIR/$app.desktop"
-  rm -f "$ICON_DIR/$app.png"
-  echo "Removed $app"
-}
-
-if [ "$#" -eq 0 ]; then
-  tuis=$(get_all_tuis)
+    done | sort)
 
   if [ -z "$tuis" ]; then
     echo "No TUIs to remove."
@@ -34,11 +24,19 @@ if [ "$#" -eq 0 ]; then
     exit 1
   fi
 
+  # Remove selected TUIs
   echo "$selected" | while read -r app; do
-    [ -n "$app" ] && remove_tui "$app"
+    if [ -n "$app" ]; then
+      rm -f "$DESKTOP_DIR/$app.desktop"
+      rm -f "$ICON_DIR/$app.png"
+      echo "Removed $app"
+    fi
   done
 else
+  # Remove specified TUIs
   for app in "$@"; do
-    remove_tui "$app"
+    rm -f "$DESKTOP_DIR/$app.desktop"
+    rm -f "$ICON_DIR/$app.png"
+    echo "Removed $app"
   done
 fi
