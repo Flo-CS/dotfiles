@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cmd="$*"
+setsid alacritty --class Dots.Menu -e bash -i -c "dots-show-logo; $cmd; dots-show-done"

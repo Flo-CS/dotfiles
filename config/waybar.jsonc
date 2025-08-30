@@ -28,12 +28,12 @@
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "alacritty --class Dots.App -e btop"
+    "on-click": "dots-launch-tui-dots-big-app btop"
   },
   "memory": {
     "interval": 5,
     "format": "",
-    "on-click": "alacritty --class Dots.App -e btop"
+    "on-click": "dots-launch-tui-dots-big-app btop"
   },
   "backlight": {
     "format": "{icon}",
@@ -132,7 +132,7 @@
   },
   "pulseaudio": {
     "format": "{icon}",
-    "on-click": "alacritty --class Dots.Menu -e wiremix",
+    "on-click": "dots-launch-tui-dots-app wiremix",
     "tooltip-format": "Playing at {volume}%",
     "scroll-step": 5,
     "format-muted": "󰝟",
@@ -148,7 +148,7 @@
     "format-no-controller":"󰂲",
     "format-connected": "",
     "tooltip-format": "{num_connections} device(s): {device_alias}",
-    "on-click": "alacritty --class Dots.Menu -e bluetuith --no-warning",
+    "on-click": "dots-launch-tui-dots-app bluetuith --no-warning",
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -161,7 +161,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "alacritty --class Dots.Menu -e nmtui",
+    "on-click": "dots-launch-tui-dots-app nmtui",
   },
   "clock#time": {
     "format": "{:%A %d %B %Y %H:%M}",

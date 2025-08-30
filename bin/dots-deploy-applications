@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p $HOME/.local/share/applications
+cp $DOTS_DIR/assets/applications/*.desktop $HOME/.local/share/applications/

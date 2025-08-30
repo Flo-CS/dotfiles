@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+DESKTOP_DIR="$HOME/.local/share/applications"
+ICON_DIR="$DESKTOP_DIR/icons"
+mkdir -p "$DESKTOP_DIR" "$ICON_DIR"
+
+app_name=$(gum input --header "Name" --placeholder "e.g., Htop, Nmtui, etc.")
+app_exec=$(gum input --header "Launch command" --placeholder "e.g., htop, nmtui, etc.")
+app_should_use_bash=$(gum confirm "Does it need bash session ?")
+app_class=$(gum choose --header "Window style/class" Dots.App Dots.BigApp Dots.TiledApp --selected Dots.BigApp)
+icon_url=$(gum input --header "Icon URL" --placeholder "See https://dashboardicons.com (must use PNG!)")
+
+if [ -z "$app_name" ] || [ -z "$app_exec" ] || [ -z "$app_class" ]; then
+	echo "All fields are required."
+	exit 1
+fi
+
+desktop_file="$DESKTOP_DIR/$app_name.desktop"
+icon_path="$ICON_DIR/$app_name.png"
+
+if ! curl -sL -o "$icon_path" "$icon_url"; then
+	echo "Failed to download icon."
+fi
+
+hold_option=""
+bash_option=""
+bash_option_end=""
+if $app_should_use_bash; then
+	hold_option="--hold"
+	bash_option="bash -i -c \""
+	bash_option_end="\""
+fi
+
+cat >"$desktop_file" <<EOF
+[Desktop Entry]
+Version=1.0
+Name=$app_name
+Comment=$app_name
+Exec=alacritty --class $app_class $hold_option -e $bash_option$app_exec$bash_option_end
+Terminal=false
+Type=Application
+Icon=$icon_path
+StartupNotify=true
+EOF
+
+chmod +x "$desktop_file"
+
+echo "Application '$app_name' created successfully!"
+
+if [ -n "$DOTS_DIR" ] && gum confirm "Do you also want to copy it in your dotfiles?"; then
+	cp "$desktop_file" "$DOTS_DIR/assets/applications/"
+	cp "$icon_path" "$DOTS_DIR/assets/applications/icons/"
+fi

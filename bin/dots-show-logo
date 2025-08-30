@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-art=''
-printf "$art"
+echo ""
+cat $DOTS_DIR/assets/branding/logo.txt
+echo ""

@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+DESKTOP_DIR="$HOME/.local/share/applications"
+ICON_DIR="$DESKTOP_DIR/icons"
+mkdir -p "$DESKTOP_DIR" "$ICON_DIR"
+
+app_name=$(gum input --header "Name" --placeholder "e.g., YouTube, Gmail, etc.")
+app_url=$(gum input --header "URL" --placeholder "e.g. https://example.com")
+icon_url=$(gum input --header "Icon URL" --placeholder "See https://dashboardicons.com (must use PNG!)")
+
+if [ -z "$app_name" ] || [ -z "$app_url" ] then
+	echo "All fields are required."
+	exit 1
+fi
+
+desktop_file="$DESKTOP_DIR/$app_name.desktop"
+icon_path="$ICON_DIR/$app_name.png"
+
+if ! curl -sL -o "$icon_path" "$icon_url"; then
+	echo "Failed to download icon."
+fi
+
+cat >"$desktop_file" <<EOF
+[Desktop Entry]
+Version=1.0
+Name=$app_name
+Comment=$app_name
+Exec=dots-launch-webapp $app_url
+Terminal=false
+Type=Application
+Icon=$icon_path
+StartupNotify=true
+EOF
+
+chmod +x "$desktop_file"
+
+echo "Application '$app_name' created successfully!"
+
+if gum confirm "Do you also want to copy it in your dotfiles?"; then
+	cp "$desktop_file" "$DOTS_DIR/assets/applications/"
+	cp "$icon_path" "$DOTS_DIR/assets/applications/icons/"
+fi

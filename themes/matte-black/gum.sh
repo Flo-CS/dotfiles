@@ -32,6 +32,17 @@ export GUM_FILTER_PLACEHOLDER_FOREGROUND="#333333"
 export GUM_SPIN_SPINNER_FOREGROUND="#f59e0b"
 export GUM_SPIN_TITLE_FOREGROUND="#f59e0b"
 
+# File colors
+# FIXME: I don't think all variables here are set or correct
+export GUM_FILE_HEADER_FOREGROUND="#f59e0b"
+export GUM_FILE_CURSOR_FOREGROUND="#f59e0b"
+export GUM_FILE_FILE_FOREGROUND="#8a8a8d"
+export GUM_FILE_DIRECTORY_FOREGROUND="#f59e0b"
+export GUM_FILE_SYMLINK_FOREGROUND="#f59e0b"
+export GUM_FILE_FILE_SIZE_FOREGROUND="#333333"
+export GUM_FILE_PERMISSIONS_FOREGROUND="#333333"
+export GUM_FILE_SELECTED_FOREGROUND="#eaeaea"
+
 # # Style colors (general styling)
 # export FOREGROUND="#8a8a8d"
 # export BACKGROUND="#121212"

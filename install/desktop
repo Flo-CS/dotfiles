@@ -109,6 +109,10 @@ install_mako() {
     dots-pkg-install mako
 }
 
+install_python_wayland() {
+    dots-pkg-install python-pywayland
+}
+
 install_audio
 install_bluetooth
 install_clipboard

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cmd="$*"
+alacritty --class Dots.BigApp -e $cmd

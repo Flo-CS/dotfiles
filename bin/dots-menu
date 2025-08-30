@@ -7,18 +7,6 @@ dmenu() {
 	wofi --dmenu --prompt "$prompt" --insensitive
 }
 
-terminal_menu() {
-	alacritty --class Dots.Menu -e $@
-}
-
-terminal_app() {
-	alacritty --class Dots.App -e $@
-}
-
-waiting_terminal_menu() {
-	alacritty --class Dots.Menu -e bash -i -c "dots-show-logo; eval \"$@\"; dots-show-done;"
-}
-
 show_select_theme_menu() {
 	selected=$(dots-theme-list | dmenu "Select theme")
 
@@ -60,13 +48,15 @@ show_applications_menu() {
 
 show_deploy_menu() {
 	selected=$(printf '  Binaries
-  Configs' | dmenu "Deploy menu")
+  Configs
+󰣆  Applications' | dmenu "Deploy menu")
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
 		case "$selected" in
-		*"Binaries"*) waiting_terminal_menu dots-deploy-bin ;;
-		*"Configs"*) waiting_terminal_menu dots-deploy-config ;;
+		*"Binaries"*) dots-launch-tui-dots-menu dots-deploy-bin ;;
+		*"Configs"*) dots-launch-tui-dots-menu dots-deploy-config ;;
+		*"Applications"*) dots-launch-tui-dots-menu dots-deploy-applications ;;
 		esac
 	fi
 }
@@ -82,7 +72,7 @@ show_system_menu() {
 		case "$selected" in
 		*"Reboot"*) systemctl reboot ;;
 		*"Shutdown"*) systemctl poweroff ;;
-		*"Lock"*) dots-system-lock ;;
+		*"Lock"*) dots-cmd-lockscreen ;;
 		esac
 	fi
 }
@@ -104,23 +94,66 @@ show_screenshot_menu() {
 }
 
 show_power_profile_menu() {
-	selected=$(printf '󰂄  Power Saver
-󰂅  Balanced
-󰂆  Performance' | dmenu "Power profile menu")
+	selected=$(dots-power-profiles-list | dmenu "Power profile menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
-		case "$selected" in
-		*"Power Saver"*) powerprofilesctl set power-saver ;;
-		*"Balanced"*) powerprofilesctl set balanced ;;
-		*"Performance"*) powerprofilesctl set performance ;;
-		esac
+		powerprofilesctl set "$selected"
 		if [[ $? -eq 0 ]]; then
 			notify-send "Power profile set to $(powerprofilesctl get)" -u low
 		else
 			notify-send "Failed to set power profile" -u critical
 		fi
+	fi
+}
+
+show_toggle_menu() {
+	selected=$(printf '' | dmenu "Toggle menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"Idle inhibitor"*) dots-cmd-toggle-idle-inhibitor ;; # FIXME: not working for the moment
+		esac
+	fi
+}
+
+show_install_menu() {
+	selected=$(printf '󰏖  TUI
+󰏖  Webapp
+󰏖  Appimage
+󰏖  Package
+󰏖  AUR Package' | dmenu "Install menu")
+
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"TUI"*) dots-launch-tui-dots-menu dots-install-tui ;;
+		*"Webapp"*) dots-launch-tui-dots-menu dots-install-webapp ;;
+		*"Appimage"*) dots-launch-tui-dots-menu dots-install-appimage ;;
+		*"Package"*) dots-launch-tui-dots-menu dots-pkg-interactive-install ;;
+		*"AUR Package"*) dots-launch-tui-dots-menu dots-pkg-yay-interactive-install ;;
+		esac
+	fi
+}
+
+show_remove_menu() {
+	selected=$(printf '󰏘  TUI
+󰏘  Webapp
+󰏘  Appimage
+󰏘  Package' | dmenu "Remove menu")
+	if [[ -z "$selected" ]]; then
+		show_main_menu
+	else
+		case "$selected" in
+		*"TUI"*) dots-launch-tui-dots-menu dots-remove-tui ;;
+		*"Webapp"*) dots-launch-tui-dots-menu dots-remove-webapp ;;
+		*"Appimage"*) dots-launch-tui-dots-menu dots-remove-appimage ;;
+		*"Package"*) dots-launch-tui-dots-menu dots-pkg-interactive-remove ;;
+		esac
 	fi
 }
 
@@ -137,22 +170,31 @@ show_main_menu() {
 󰹑  Screenshot
 󰣆  Applications
 󰟌  Monitor
-󰩲  Power profile' | dmenu "Dots menu")
+󰩲  Power profile
+  Toggle
+󰁯  Snapshot system
+  Install
+  Remove' | dmenu "Dots menu")
 
 	case "$selected" in
 	*"Theme"*) show_select_theme_menu ;;
 	*"Refresh"*) show_refresh_menu ;;
 	*"Wallpaper"*) show_select_wallpaper_menu ;;
-	*"Update"*) waiting_terminal_menu ClassicFloating dots-update ;;
+	*"Update"*) dots-launch-tui-dots-menu dots-update ;;
 	*"Deploy"*) show_deploy_menu ;;
 	*"System"*) show_system_menu ;;
 	*"Screenshot"*) show_screenshot_menu ;;
-	*"Bluetooth"*) terminal_menu bluetuith --no-warning ;;
-	*"Network"*) terminal_menu nmtui ;;
-	*"Audio"*) terminal_menu wiremix ;;
+	*"Bluetooth"*) dots-launch-tui-dots-app bluetuith --no-warning ;;
+	*"Network"*) dots-launch-tui-dots-app nmtui ;;
+	*"Audio"*) dots-launch-tui-dots-app wiremix ;;
 	*"Applications"*) show_applications_menu ;;
-	*"Monitor"*) terminal_app btop ;;
+	*"Monitor"*) dots-launch-tui-dots-big-app btop ;;
 	*"Power profile"*) show_power_profile_menu ;;
+	*"Toggle"*) show_toggle_menu ;;
+	*"Snapshot system"*) dots-launch-tui-dots-menu dots-snapshot-system ;;
+	*"Install"*) show_install_menu ;;
+	*"Remove"*) show_remove_menu ;;
+	*) exit 0 ;;
 	esac
 }
 
