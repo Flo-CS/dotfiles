@@ -18,6 +18,7 @@ export TERMINAL=alacritty # Actually used for some TUI apps
 export EDITOR=/usr/bin/nvim
 export SYSTEMD_EDITOR=/usr/bin/nvim
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$DOTS_DIR/bin:$PATH"
 
 if uwsm check may-start; then
 	exec uwsm start hyprland.desktop

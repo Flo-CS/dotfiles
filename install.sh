@@ -8,8 +8,8 @@ show_section() {
 
 sudo pacman -S --noconfirm gum
 DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-show_section "Setting up binaries"
-$DOTS_DIR/bin/dots-deploy-bin
+show_section "Setting up system-wide binaries"
+$DOTS_DIR/install/init/bin
 
 dots-show-logo
 

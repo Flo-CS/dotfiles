@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
 echo ""
-cat $DOTS_DIR/assets/branding/logo.txt
+cat $DOTS_DIR/logo.txt
 echo ""

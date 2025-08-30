@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-files=$(ls $DOTS_DIR/bin)
+files=$(ls $DOTS_DIR/bin/core)
 for file in $files; do
 	echo "Copying $file to /usr/local/bin"
-	sudo cp -rf $DOTS_DIR/bin/$file /usr/local/bin
+	sudo cp -rf $DOTS_DIR/bin/core/$file /usr/local/bin
 	sudo chmod +x /usr/local/bin/$file
 done

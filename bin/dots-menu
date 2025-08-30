@@ -47,14 +47,12 @@ show_applications_menu() {
 }
 
 show_deploy_menu() {
-	selected=$(printf '  Binaries
-  Configs
+	selected=$(printf '  Configs
 󰣆  Applications' | dmenu "Deploy menu")
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
 		case "$selected" in
-		*"Binaries"*) dots-launch-tui-dots-menu dots-deploy-bin ;;
 		*"Configs"*) dots-launch-tui-dots-menu dots-deploy-config ;;
 		*"Applications"*) dots-launch-tui-dots-menu dots-deploy-applications ;;
 		esac
@@ -72,7 +70,7 @@ show_system_menu() {
 		case "$selected" in
 		*"Reboot"*) systemctl reboot ;;
 		*"Shutdown"*) systemctl poweroff ;;
-		*"Lock"*) dots-cmd-lockscreen ;;
+		*"Lock"*) dots-lock-screen ;;
 		esac
 	fi
 }
@@ -86,9 +84,9 @@ show_screenshot_menu() {
 		show_main_menu
 	else
 		case "$selected" in
-		*"Fullscreen"*) dots-cmd-screenshot output ;;
-		*"Area"*) dots-cmd-screenshot region ;;
-		*"Window"*) dots-cmd-screenshot window ;;
+		*"Fullscreen"*) dots-screenshot output ;;
+		*"Area"*) dots-screenshot region ;;
+		*"Window"*) dots-screenshot window ;;
 		esac
 	fi
 }
@@ -115,7 +113,7 @@ show_toggle_menu() {
 		show_main_menu
 	else
 		case "$selected" in
-		*"Idle inhibitor"*) dots-cmd-toggle-idle-inhibitor ;; # FIXME: not working for the moment
+		*"Idle inhibitor"*) dots-toggle-idle-inhibitor ;; # FIXME: not working for the moment
 		esac
 	fi
 }

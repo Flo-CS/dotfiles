@@ -35,7 +35,7 @@ install_flutter() {
     local installed_version=$(flutter --version | grep -oP 'Flutter \K[0-9.]+')
     local target_version="3.35.1"
 
-    if version-ge "$installed_version" "$target_version"; then
+    if dots-version-ge "$installed_version" "$target_version"; then
         echo "Flutter $installed_version is already installed, skipping installation"
     else
         curl --proto '=https' --tlsv1.2 -sSf https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_$target_version-stable.tar.xz -o /tmp/flutter.tar.xz
