@@ -22,8 +22,6 @@
 - [] Reorganize bashrc by splitting it
 - [] Add bash function to navigate more easily with fuzzy with zoxide
 
-- [] Update hyprland shadow
-
 - [] Fix audio devices priority
 
 - [] Check .config folder to check for files to save in dots

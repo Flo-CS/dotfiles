@@ -170,6 +170,7 @@ show_main_menu() {
 󰹑  Screenshot
 󰣆  Applications
 󰟌  Monitor
+  Info
 󰩲  Power profile
   Toggle
 󰁯  Snapshot system
@@ -189,6 +190,7 @@ show_main_menu() {
 	*"Audio"*) dots-launch-tui-dots-app wiremix ;;
 	*"Applications"*) show_applications_menu ;;
 	*"Monitor"*) dots-launch-tui-dots-big-app btop ;;
+	*"Info"*) dots-launch-tui-dots-menu fastfetch ;;
 	*"Power profile"*) show_power_profile_menu ;;
 	*"Toggle"*) show_toggle_menu ;;
 	*"Snapshot system"*) dots-launch-tui-dots-menu dots-snapshot-system ;;
