@@ -6,14 +6,12 @@ show_section() {
 	gum style --border double " $1 "
 }
 
-sudo pacman -S --noconfirm gum
 DOTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
-show_section "Setting up system-wide binaries"
 $DOTS_DIR/install/init/bin
-
 dots-show-logo
 
 show_section "Checking and setting up environment"
+sudo pacman -S --noconfirm gum
 source $DOTS_DIR/install/init/env
 $DOTS_DIR/install/init/theme
 $DOTS_DIR/install/init/wallpaper

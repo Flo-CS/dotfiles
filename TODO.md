@@ -6,6 +6,9 @@ URGENT !!!
 - [] Split mandatory from optional installations (example: Flutter is optional)
 - [] Add scripts to easily manage symlinks (and perhaps use symlinks farm manager to link config folder)
 - [] Make a better distinction between install process and config process (the ".dots" thing)
+- [] Rename dots core scripts to something like "secure-copy", "secure-symlink", etc...
+- [] Handle better logging
+- [] Improve the installer (for example dots logo is shown twice when doing update)
 
 
 - [] Change firefox theme with the dots theme

@@ -82,8 +82,8 @@ install_quickshell() {
         # TODO: Why sudo is required? How to install as user?
         cd ~/documents/quickshell &&
             git pull &&
-            cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
-            cmake --build build &&
+            sudo cmake -GNinja -B build -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCRASH_REPORTER=OFF &&
+            sudo cmake --build build &&
             sudo cmake --install build &&
             cd -
     fi
