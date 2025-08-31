@@ -10,7 +10,7 @@ URGENT !!!
 - [] Improve logging (error output, remove useless output except if verbose, etc...)
 - [] Improve the installer (for example dots logo is shown twice when doing update)
 - [] Remove dots-reminder
-- [] Fix quickshell and wofi weird display bug, watch hyprctl clients
+- [] Fix quickshell and wofi weird display bug (+ it seems to do the same with mako notif), watch hyprctl clients
 
 
 - [] Change firefox theme with the dots theme
