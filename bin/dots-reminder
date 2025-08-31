@@ -1,17 +1,62 @@
 #!/usr/bin/env bash
 
-# TODO: ugly script and pretty useless, to improve
+set -euo pipefail
 
-name=$(gum write --placeholder "Enter reminder name")
+validate_date() {
+    local date_input="$1"
+    if date -d "$date_input" >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+format_date_for_at() {
+    local date_input="$1"
+    date -d "$date_input" "+%Y-%m-%d %H:%M"
+}
+
+get_reminder_date() {
+    local date=""
+    while true; do
+        date=$(gum input --placeholder "Enter date (e.g., 'tomorrow 2pm', '+30 minutes', 'friday 9am')" --width 60)
+
+        if [[ -z "$date" ]]; then
+            echo "Date cannot be empty." >&2
+            continue
+        fi
+
+        if validate_date "$date"; then
+            break
+        else
+            echo "Invalid date format: '$date'" >&2
+        fi
+    done
+
+    echo "$date"
+}
+
+create_reminder() {
+    local name="$1"
+    local date_input="$2"
+    local formatted_date
+
+    formatted_date=$(format_date_for_at "$date_input")
+
+    if echo "notify-send -u normal \"Reminder: $name\"" | at "$formatted_date"; then
+        echo "✓ Reminder set: '$name' at $formatted_date"
+        return 0
+    else
+        echo "Failed to create reminder." >&2
+        return 1
+    fi
+}
+
+name=$(gum write --placeholder "Enter reminder name" --width 50)
 if [[ -z "$name" ]]; then
-	echo "Reminder name cannot be empty."
-	exit 1
+    echo "Reminder name cannot be empty." >&2
+    exit 1
 fi
 
-date=$(gum input --placeholder "Enter date in 'at' command format")
-while [[ -z "$date" ]]; do
-	echo "Date cannot be empty."
-	date=$(gum input --placeholder "Enter date in 'at' command format")
-done
-
-echo "notify-send -u normal \"$name\"" | at "$date"
+date_input=$(get_reminder_date)
+create_reminder "$name" "$date_input"
