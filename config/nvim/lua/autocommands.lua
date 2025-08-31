@@ -16,6 +16,16 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'BufReadPost' }, {
   end,
 })
 
+-- Set text wrap and line break for markdown files
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'markdown',
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+  end,
+})
+
 -- Add diagnostic display into the buffer
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
