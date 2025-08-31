@@ -1,0 +1,525 @@
+#!/bin/bash
+
+# Extremely comprehensive English test suite for dots-date-parse
+# Tests every conceivable English date format a human might use
+
+SCRIPT="/home/florian/.dotfiles/bin/core/dots-date-parse"
+PASS=0
+FAIL=0
+LANG="en"
+
+test_date() {
+    local input="$1"
+    local description="$2"
+    local format="${3:-}"
+    
+    local cmd="$SCRIPT -l $LANG"
+    if [[ -n "$format" ]]; then
+        cmd="$cmd -f $format"
+    fi
+    cmd="$cmd \"$input\""
+    
+    if eval "$cmd" >/dev/null 2>&1; then
+        echo "✓ $description: '$input'"
+        ((PASS++))
+    else
+        echo "✗ $description: '$input'"
+        ((FAIL++))
+    fi
+}
+
+test_validation() {
+    local input="$1"
+    local should_pass="$2"
+    local description="$3"
+    
+    if "$SCRIPT" -l "$LANG" -v "$input" >/dev/null 2>&1; then
+        if [[ "$should_pass" == "true" ]]; then
+            echo "✓ $description: '$input'"
+            ((PASS++))
+        else
+            echo "✗ $description (should fail): '$input'"
+            ((FAIL++))
+        fi
+    else
+        if [[ "$should_pass" == "false" ]]; then
+            echo "✓ $description (correctly failed): '$input'"
+            ((PASS++))
+        else
+            echo "✗ $description: '$input'"
+            ((FAIL++))
+        fi
+    fi
+}
+
+echo "=== COMPREHENSIVE ENGLISH TEST SUITE ==="
+echo "Testing: $(basename "$SCRIPT") --lang en"
+echo
+
+# 1. BASIC TIME FORMATS
+echo "1. BASIC TIME FORMATS"
+test_date "2pm" "2pm"
+test_date "2PM" "2PM (uppercase)"
+test_date "2 pm" "2 pm (with space)"
+test_date "2 PM" "2 PM (with space, uppercase)"
+test_date "14:00" "14:00 (24-hour)"
+test_date "14.00" "14.00 (European format)"
+test_date "2:30pm" "2:30pm"
+test_date "2:30PM" "2:30PM"
+test_date "14:30" "14:30"
+test_date "2:30:45pm" "2:30:45pm (with seconds)"
+test_date "14:30:45" "14:30:45 (with seconds)"
+test_date "02:30pm" "02:30pm (leading zero)"
+test_date "noon" "noon"
+test_date "NOON" "NOON (uppercase)"
+test_date "Noon" "Noon (capitalized)"
+test_date "midnight" "midnight"
+test_date "MIDNIGHT" "MIDNIGHT (uppercase)"
+test_date "Midnight" "Midnight (capitalized)"
+test_date "6am" "6am"
+test_date "6AM" "6AM"
+test_date "11pm" "11pm"
+test_date "11PM" "11PM"
+test_date "12:00am" "12:00am (midnight)"
+test_date "12:00pm" "12:00pm (noon)"
+test_date "12am" "12am"
+test_date "12pm" "12pm"
+test_date "1:00" "1:00 (ambiguous time)"
+test_date "23:59" "23:59 (last minute of day)"
+test_date "00:00" "00:00 (start of day)"
+test_date "0:00" "0:00 (start of day, no leading zero)"
+
+echo
+
+# 2. RELATIVE TIME - MINUTES
+echo "2. RELATIVE TIME - MINUTES"
+test_date "1 minute" "1 minute (singular)"
+test_date "2 minutes" "2 minutes (plural)"
+test_date "30 minutes" "30 minutes"
+test_date "+30 minutes" "+30 minutes"
+test_date "in 30 minutes" "in 30 minutes"
+test_date "30min" "30min (no space)"
+test_date "30mins" "30mins (plural abbrev)"
+test_date "30 min" "30 min (space)"
+test_date "30m" "30m (short)"
+test_date "5 min" "5 min"
+test_date "90 minutes" "90 minutes"
+test_date "120 minutes" "120 minutes"
+test_date "0 minutes" "0 minutes"
+test_date "1440 minutes" "1440 minutes (full day)"
+test_date "in 1 minute" "in 1 minute"
+test_date "in 5 minutes" "in 5 minutes"
+test_date "in fifteen minutes" "in fifteen minutes"
+test_date "15min" "15min"
+test_date "45min" "45min"
+test_date "60min" "60min"
+
+echo
+
+# 3. RELATIVE TIME - HOURS  
+echo "3. RELATIVE TIME - HOURS"
+test_date "1 hour" "1 hour (singular)"
+test_date "2 hours" "2 hours (plural)"
+test_date "in 2 hours" "in 2 hours"
+test_date "2h" "2h (abbrev)"
+test_date "2hr" "2hr (abbrev)"
+test_date "2hrs" "2hrs (plural abbrev)"
+test_date "24 hours" "24 hours"
+test_date "1.5 hours" "1.5 hours (decimal)"
+test_date "2.5 hours" "2.5 hours (decimal)"
+test_date "0.5 hours" "0.5 hours (half hour)"
+test_date "0.25 hours" "0.25 hours (quarter hour)"
+test_date "0.75 hours" "0.75 hours (three quarters)"
+test_date "3.25 hours" "3.25 hours"
+test_date "12 hours" "12 hours"
+test_date "48 hours" "48 hours (two days)"
+test_date "in 1 hour" "in 1 hour"
+test_date "in half an hour" "in half an hour"
+test_date "1h30m" "1h30m (compound)"
+test_date "2h45m" "2h45m (compound)"
+
+echo
+
+# 4. RELATIVE TIME - DAYS
+echo "4. RELATIVE TIME - DAYS" 
+test_date "1 day" "1 day (singular)"
+test_date "2 days" "2 days (plural)"
+test_date "in 2 days" "in 2 days"
+test_date "2d" "2d (abbrev)"
+test_date "2days" "2days (no space)"
+test_date "7 days" "7 days (week)"
+test_date "14 days" "14 days (fortnight)"
+test_date "30 days" "30 days (month)"
+test_date "365 days" "365 days (year)"
+test_date "in 1 day" "in 1 day"
+test_date "in 7 days" "in 7 days"
+test_date "in a day" "in a day"
+test_date "in a few days" "in a few days"
+test_date "0 days" "0 days"
+
+echo
+
+# 5. RELATIVE TIME - WEEKS/MONTHS/YEARS
+echo "5. RELATIVE TIME - WEEKS/MONTHS/YEARS"
+test_date "1 week" "1 week (singular)"
+test_date "2 weeks" "2 weeks (plural)"
+test_date "in 2 weeks" "in 2 weeks"
+test_date "2w" "2w (abbrev)"
+test_date "2weeks" "2weeks (no space)"
+test_date "52 weeks" "52 weeks (year)"
+test_date "1 month" "1 month (singular)"
+test_date "3 months" "3 months (plural)"
+test_date "12 months" "12 months (year)"
+test_date "1 year" "1 year (singular)"
+test_date "2 years" "2 years (plural)"
+test_date "10 years" "10 years"
+test_date "in 1 week" "in 1 week"
+test_date "in 1 month" "in 1 month"
+test_date "in 1 year" "in 1 year"
+test_date "in a week" "in a week"
+test_date "in a month" "in a month"
+test_date "in a year" "in a year"
+
+echo
+
+# 6. NAMED DAYS AND PERIODS
+echo "6. NAMED DAYS AND PERIODS"
+test_date "today" "today"
+test_date "TODAY" "TODAY (uppercase)"
+test_date "Today" "Today (capitalized)"
+test_date "tomorrow" "tomorrow"
+test_date "TOMORROW" "TOMORROW (uppercase)"
+test_date "Tomorrow" "Tomorrow (capitalized)"
+test_date "yesterday" "yesterday"
+test_date "YESTERDAY" "YESTERDAY (uppercase)"
+test_date "Yesterday" "Yesterday (capitalized)"
+test_date "monday" "monday"
+test_date "MONDAY" "MONDAY (uppercase)"
+test_date "Monday" "Monday (capitalized)"
+test_date "tuesday" "tuesday"
+test_date "wednesday" "wednesday"
+test_date "thursday" "thursday"
+test_date "friday" "friday"
+test_date "saturday" "saturday"
+test_date "sunday" "sunday"
+test_date "next monday" "next monday"
+test_date "next tuesday" "next tuesday"
+test_date "next wednesday" "next wednesday"
+test_date "next thursday" "next thursday"
+test_date "next friday" "next friday"
+test_date "next saturday" "next saturday"
+test_date "next sunday" "next sunday"
+test_date "last monday" "last monday"
+test_date "last tuesday" "last tuesday"
+test_date "last friday" "last friday"
+test_date "next week" "next week"
+test_date "last week" "last week"
+test_date "this week" "this week"
+test_date "next month" "next month"
+test_date "last month" "last month"
+test_date "this month" "this month"
+test_date "next year" "next year"
+test_date "last year" "last year"
+test_date "this year" "this year"
+
+echo
+
+# 7. ABBREVIATIONS AND SLANG
+echo "7. ABBREVIATIONS AND SLANG"
+test_date "tmrw" "tmrw (tomorrow)"
+test_date "TMRW" "TMRW (uppercase)"
+test_date "tmr" "tmr (tomorrow)"
+test_date "TMR" "TMR (uppercase)"
+test_date "2morrow" "2morrow (leetspeak)"
+test_date "2day" "2day (today leetspeak)"
+test_date "mon" "mon (Monday)"
+test_date "MON" "MON (uppercase)"
+test_date "tue" "tue (Tuesday)"
+test_date "wed" "wed (Wednesday)"
+test_date "thu" "thu (Thursday)"
+test_date "fri" "fri (Friday)"
+test_date "sat" "sat (Saturday)"
+test_date "sun" "sun (Sunday)"
+test_date "tues" "tues (Tuesday long)"
+test_date "thur" "thur (Thursday long)"
+test_date "thurs" "thurs (Thursday longer)"
+
+echo
+
+# 8. NATURAL LANGUAGE TIME EXPRESSIONS
+echo "8. NATURAL LANGUAGE TIME"
+test_date "quarter past 1" "quarter past 1"
+test_date "quarter past 2" "quarter past 2"
+test_date "quarter past 12" "quarter past 12"
+test_date "quarter to 1" "quarter to 1"
+test_date "quarter to 2" "quarter to 2"
+test_date "quarter to 12" "quarter to 12"
+test_date "half past 1" "half past 1"
+test_date "half past 2" "half past 2"
+test_date "half past 12" "half past 12"
+test_date "quarter past 3pm" "quarter past 3pm"
+test_date "quarter to 4pm" "quarter to 4pm"
+test_date "half past 2pm" "half past 2pm"
+test_date "quarter past noon" "quarter past noon"
+test_date "quarter to noon" "quarter to noon"
+test_date "half past noon" "half past noon"
+test_date "quarter past midnight" "quarter past midnight"
+test_date "half past midnight" "half past midnight"
+test_date "ten past 3" "ten past 3"
+test_date "twenty past 4" "twenty past 4"
+test_date "five to 6" "five to 6"
+test_date "ten to 7" "ten to 7"
+
+echo
+
+# 9. COMPOSITE EXPRESSIONS - DATE + TIME
+echo "9. COMPOSITE EXPRESSIONS - DATE + TIME"
+test_date "tomorrow 2pm" "tomorrow 2pm"
+test_date "tomorrow 14:00" "tomorrow 14:00"
+test_date "today 6pm" "today 6pm"
+test_date "today 18:00" "today 18:00"
+test_date "yesterday 9am" "yesterday 9am"
+test_date "monday 9am" "monday 9am"
+test_date "tuesday 2pm" "tuesday 2pm"
+test_date "friday 5:30pm" "friday 5:30pm"
+test_date "saturday 11am" "saturday 11am"
+test_date "sunday noon" "sunday noon"
+test_date "next friday 5:30pm" "next friday 5:30pm"
+test_date "next monday 9am" "next monday 9am"
+test_date "last friday 3pm" "last friday 3pm"
+test_date "in 2 days 3pm" "in 2 days 3pm"
+test_date "in 1 week 2pm" "in 1 week 2pm"
+test_date "tomorrow at 2pm" "tomorrow at 2pm (with 'at')"
+test_date "today at 6pm" "today at 6pm (with 'at')"
+test_date "monday at 9am" "monday at 9am (with 'at')"
+test_date "tomorrow at noon" "tomorrow at noon"
+test_date "next week at 3pm" "next week at 3pm"
+test_date "in 2 days at 6pm" "in 2 days at 6pm"
+
+echo
+
+# 10. COMPLEX COMPOSITE EXPRESSIONS
+echo "10. COMPLEX COMPOSITE EXPRESSIONS"
+test_date "monday in 2 weeks" "monday in 2 weeks"
+test_date "tuesday in 3 weeks" "tuesday in 3 weeks"
+test_date "friday in 1 week" "friday in 1 week"
+test_date "saturday in 2 months" "saturday in 2 months"
+test_date "sunday in 1 year" "sunday in 1 year"
+test_date "monday in 2 weeks at 9am" "monday in 2 weeks at 9am"
+test_date "friday in 3 weeks 5pm" "friday in 3 weeks 5pm"
+test_date "tuesday in 1 month 2pm" "tuesday in 1 month 2pm"
+test_date "next monday in 2 weeks" "next monday in 2 weeks"
+test_date "next friday in 1 month" "next friday in 1 month"
+test_date "wed in 2 weeks" "wed in 2 weeks (abbrev)"
+test_date "fri in 3 weeks at 6pm" "fri in 3 weeks at 6pm"
+
+echo
+
+# 11. HOUR FORMAT VARIATIONS
+echo "11. HOUR FORMAT VARIATIONS"
+test_date "1h" "1h format"
+test_date "6h" "6h format"
+test_date "09h" "09h format (leading zero)"
+test_date "18h" "18h format"
+test_date "23h" "23h format"
+test_date "00h" "00h format"
+test_date "24h" "24h format"
+test_date "1H" "1H format (uppercase)"
+test_date "18H" "18H format (uppercase)"
+test_date "in 2h" "in 2h"
+test_date "in 18h" "in 18h"
+test_date "+3h" "+3h format"
+
+echo
+
+# 12. MIXED ABBREVIATIONS AND FORMATS  
+echo "12. MIXED ABBREVIATIONS AND FORMATS"
+test_date "tmrw 2pm" "tmrw 2pm"
+test_date "tmr 3pm" "tmr 3pm"
+test_date "fri 5:30pm" "fri 5:30pm"
+test_date "mon 9am" "mon 9am"
+test_date "wed 2pm" "wed 2pm"
+test_date "sat noon" "sat noon"
+test_date "sun midnight" "sun midnight"
+test_date "next mon 9am" "next mon 9am"
+test_date "next fri 5pm" "next fri 5pm"
+test_date "last tue 10am" "last tue 10am"
+test_date "in 30min" "in 30min"
+test_date "in 2h" "in 2h"
+test_date "in 3d" "in 3d"
+test_date "in 1w" "in 1w"
+test_date "+30min" "+30min"
+test_date "+2h30m" "+2h30m"
+test_date "tmrw at 2pm" "tmrw at 2pm"
+test_date "fri at 5:30pm" "fri at 5:30pm"
+
+echo
+
+# 13. EDGE CASES AND BOUNDARY VALUES
+echo "13. EDGE CASES AND BOUNDARY VALUES"
+test_date "0 minutes" "0 minutes"
+test_date "0 hours" "0 hours"
+test_date "0 days" "0 days"
+test_date "1 minute" "1 minute (singular boundary)"
+test_date "59 minutes" "59 minutes"
+test_date "60 minutes" "60 minutes (hour boundary)"
+test_date "1439 minutes" "1439 minutes (day-1 minute)"
+test_date "1440 minutes" "1440 minutes (full day)"
+test_date "23 hours" "23 hours"
+test_date "24 hours" "24 hours (day boundary)"
+test_date "25 hours" "25 hours (over day)"
+test_date "48 hours" "48 hours (2 days)"
+test_date "168 hours" "168 hours (week)"
+test_date "0:00" "0:00 time"
+test_date "0:01" "0:01 time"
+test_date "23:59" "23:59 time"
+test_date "12:00" "12:00 time (noon/midnight ambiguous)"
+test_date "00:30" "00:30 time"
+test_date "12:30" "12:30 time"
+test_date "999 minutes" "999 minutes (large value)"
+test_date "9999 minutes" "9999 minutes (very large)"
+
+echo
+
+# 14. PREDEFINED OUTPUT FORMATS
+echo "14. PREDEFINED OUTPUT FORMATS"
+test_date "tomorrow 2pm" "AT format" "at"
+test_date "next friday 5pm" "AT format complex" "at"
+test_date "in 2 hours" "AT format relative" "at"
+test_date "tomorrow 2pm" "ISO format" "iso"
+test_date "next week" "ISO format week" "iso"
+test_date "in 30 minutes" "Unix timestamp" "unix"
+test_date "tomorrow noon" "Unix timestamp" "unix"
+test_date "friday 3pm" "RFC format" "rfc"
+test_date "next month" "RFC format" "rfc"
+test_date "tomorrow 2pm" "Custom strftime +%d/%m/%Y" "+%d/%m/%Y %H:%M"
+test_date "friday 5pm" "Custom strftime +%A" "+%A %H:%M"
+
+echo
+
+# 15. TIME PERIODS AND CONTEXTS
+echo "15. TIME PERIODS AND CONTEXTS"  
+test_date "this morning" "this morning"
+test_date "this afternoon" "this afternoon"
+test_date "this evening" "this evening"
+test_date "this night" "this night"
+test_date "tomorrow morning" "tomorrow morning"
+test_date "tomorrow afternoon" "tomorrow afternoon"
+test_date "tomorrow evening" "tomorrow evening" 
+test_date "tomorrow night" "tomorrow night"
+test_date "yesterday morning" "yesterday morning"
+test_date "yesterday afternoon" "yesterday afternoon"
+test_date "yesterday evening" "yesterday evening"
+test_date "last night" "last night"
+test_date "tonight" "tonight"
+test_date "early morning" "early morning"
+test_date "late night" "late night"
+test_date "dawn" "dawn"
+test_date "dusk" "dusk"
+test_date "sunrise" "sunrise"
+test_date "sunset" "sunset"
+
+echo
+
+# 16. COMPOUND AND COMPLEX TIMES
+echo "16. COMPOUND AND COMPLEX TIMES"
+test_date "1 hour 30 minutes" "1 hour 30 minutes"
+test_date "2 hours 45 minutes" "2 hours 45 minutes"
+test_date "1 day 2 hours" "1 day 2 hours"
+test_date "1 week 3 days" "1 week 3 days"
+test_date "2 weeks 1 day" "2 weeks 1 day"
+test_date "1 month 2 weeks" "1 month 2 weeks"
+test_date "in 1 hour 30 minutes" "in 1 hour 30 minutes"
+test_date "in 2 days 3 hours" "in 2 days 3 hours"
+test_date "+1h30m" "+1h30m compound"
+test_date "+2d3h" "+2d3h compound"
+test_date "90min" "90min (over hour)"
+test_date "150min" "150min (2.5 hours)"
+
+echo
+
+# 17. VALIDATION TESTS (SHOULD FAIL)
+echo "17. VALIDATION TESTS (SHOULD FAIL)"
+test_validation "" "false" "Empty string"
+test_validation "invalid_date" "false" "Invalid date string"
+test_validation "25:00" "false" "Invalid hour (25)"
+test_validation "24:01" "false" "Invalid time (24:01)"
+test_validation "13pm" "false" "Invalid 12-hour format (13pm)"
+test_validation "0pm" "false" "Invalid 12-hour format (0pm)"
+test_validation "25pm" "false" "Invalid 12-hour format (25pm)"
+test_validation "30 february" "false" "Invalid date (30 feb)"
+test_validation "32 january" "false" "Invalid date (32 jan)"
+test_validation "xyz" "false" "Random string"
+test_validation "????" "false" "Special characters"
+test_validation "-1 minutes" "false" "Negative time"
+test_validation "1.5.5 hours" "false" "Multiple decimals"
+test_validation "abc hours" "false" "Non-numeric hours"
+test_validation "1 xyz" "false" "Invalid time unit"
+test_validation "25h" "false" "Invalid hour format (25h)"
+test_validation "-5 days" "false" "Negative days"
+test_validation "1 foo" "false" "Invalid unit"
+
+echo
+
+# 18. VALIDATION TESTS (SHOULD PASS)
+echo "18. VALIDATION TESTS (SHOULD PASS)"
+test_validation "tomorrow" "true" "Tomorrow validation"
+test_validation "2pm" "true" "2pm validation"
+test_validation "in 30 minutes" "true" "In 30 minutes validation"
+test_validation "monday in 2 weeks" "true" "Complex expression validation"
+test_validation "noon" "true" "Noon validation"
+test_validation "midnight" "true" "Midnight validation"
+test_validation "next friday" "true" "Next friday validation"
+test_validation "1.5 hours" "true" "Decimal hours validation"
+test_validation "tmrw 2pm" "true" "Abbreviation combo validation"
+test_validation "quarter past 3" "true" "Natural time validation"
+test_validation "friday in 2 weeks at 5pm" "true" "Complex combo validation"
+test_validation "0 minutes" "true" "Zero minutes validation"
+test_validation "24 hours" "true" "24 hours validation"
+test_validation "365 days" "true" "365 days validation"
+test_validation "52 weeks" "true" "52 weeks validation"
+
+echo
+
+# 19. STRESS TESTS AND EXTREMES
+echo "19. STRESS TESTS AND EXTREMES"
+test_date "999999 minutes" "Extreme minutes"
+test_date "8760 hours" "Hours in a year"
+test_date "10000 days" "Extreme days"
+test_date "520 weeks" "Extreme weeks (10 years)"
+test_date "120 months" "Extreme months (10 years)"
+test_date "100 years" "Century"
+test_date "0.001 hours" "Tiny decimal hours"
+test_date "23.999 hours" "Almost 24 hours"
+test_date "6.5 days" "Decimal days"
+test_date "52.5 weeks" "Decimal weeks"
+test_date "in 99999 minutes" "Extreme relative time"
+
+echo
+
+# 20. CASE SENSITIVITY AND FORMATTING
+echo "20. CASE SENSITIVITY AND FORMATTING"
+test_date "Tomorrow At 2PM" "Mixed case 1"
+test_date "FRIDAY IN 2 WEEKS" "All uppercase"
+test_date "next monday at 9am" "All lowercase"
+test_date "Next Friday At 5:30PM" "Title case"
+test_date "tOmOrRoW 2pM" "Alternating case"
+test_date "TMRW 2PM" "Abbrev uppercase"
+test_date "Mon 9AM" "Day abbrev uppercase"
+test_date "IN 30 MINUTES" "Relative uppercase"
+test_date "Quarter Past Three PM" "Natural time mixed case"
+
+echo
+echo "=== FINAL ENGLISH TEST RESULTS ==="
+echo "PASSED: $PASS"
+echo "FAILED: $FAIL"
+echo "TOTAL:  $((PASS + FAIL))"
+echo "SUCCESS RATE: $(echo "scale=2; $PASS * 100 / ($PASS + $FAIL)" | bc -l)%"
+
+if [[ $FAIL -eq 0 ]]; then
+    echo "🎉 ALL ENGLISH TESTS PASSED!"
+    exit 0
+else
+    echo "❌ $FAIL ENGLISH TESTS FAILED"
+    exit 1
+fi

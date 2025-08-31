@@ -1,0 +1,532 @@
+#!/bin/bash
+
+# Extremely comprehensive French test suite for dots-date-parse
+# Tests every conceivable French date format a human might use
+
+SCRIPT="/home/florian/.dotfiles/bin/core/dots-date-parse"
+PASS=0
+FAIL=0
+LANG="fr"
+
+test_date() {
+    local input="$1"
+    local description="$2"
+    local format="${3:-}"
+    
+    local cmd="$SCRIPT -l $LANG"
+    if [[ -n "$format" ]]; then
+        cmd="$cmd -f $format"
+    fi
+    cmd="$cmd \"$input\""
+    
+    if eval "$cmd" >/dev/null 2>&1; then
+        echo "✓ $description: '$input'"
+        ((PASS++))
+    else
+        echo "✗ $description: '$input'"
+        ((FAIL++))
+    fi
+}
+
+test_validation() {
+    local input="$1"
+    local should_pass="$2"
+    local description="$3"
+    
+    if "$SCRIPT" -l "$LANG" -v "$input" >/dev/null 2>&1; then
+        if [[ "$should_pass" == "true" ]]; then
+            echo "✓ $description: '$input'"
+            ((PASS++))
+        else
+            echo "✗ $description (should fail): '$input'"
+            ((FAIL++))
+        fi
+    else
+        if [[ "$should_pass" == "false" ]]; then
+            echo "✓ $description (correctly failed): '$input'"
+            ((PASS++))
+        else
+            echo "✗ $description: '$input'"
+            ((FAIL++))
+        fi
+    fi
+}
+
+echo "=== COMPREHENSIVE FRENCH TEST SUITE ==="
+echo "Testing: $(basename "$SCRIPT") --lang fr"
+echo
+
+# 1. FORMATS D'HEURE DE BASE
+echo "1. FORMATS D'HEURE DE BASE"
+test_date "14h" "14h"
+test_date "14H" "14H (majuscule)"
+test_date "2h" "2h"
+test_date "14h30" "14h30"
+test_date "14h00" "14h00"
+test_date "2h30" "2h30"
+test_date "9h15" "9h15"
+test_date "18h45" "18h45"
+test_date "23h59" "23h59"
+test_date "0h" "0h"
+test_date "0h00" "0h00"
+test_date "12h" "12h"
+test_date "midi" "midi"
+test_date "MIDI" "MIDI (majuscule)"
+test_date "Midi" "Midi (capitalisé)"
+test_date "minuit" "minuit"
+test_date "MINUIT" "MINUIT (majuscule)"
+test_date "Minuit" "Minuit (capitalisé)"
+test_date "14:00" "14:00 (format international)"
+test_date "14:30" "14:30 (format international)"
+test_date "2:30" "2:30 (format international)"
+
+echo
+
+# 2. TEMPS RELATIF - MINUTES
+echo "2. TEMPS RELATIF - MINUTES"
+test_date "1 minute" "1 minute (singulier)"
+test_date "2 minutes" "2 minutes (pluriel)"
+test_date "30 minutes" "30 minutes"
+test_date "dans 30 minutes" "dans 30 minutes"
+test_date "dans 1 minute" "dans 1 minute"
+test_date "dans 5 minutes" "dans 5 minutes"
+test_date "30min" "30min (sans espace)"
+test_date "30mins" "30mins (pluriel abbrev)"
+test_date "30 min" "30 min (avec espace)"
+test_date "30m" "30m (court)"
+test_date "5 min" "5 min"
+test_date "90 minutes" "90 minutes"
+test_date "120 minutes" "120 minutes"
+test_date "0 minutes" "0 minutes"
+test_date "dans quinze minutes" "dans quinze minutes"
+test_date "dans une minute" "dans une minute"
+test_date "il y a 5 minutes" "il y a 5 minutes (passé)"
+test_date "il y a 30 minutes" "il y a 30 minutes (passé)"
+test_date "il y a une heure" "il y a une heure (passé)"
+test_date "15min" "15min"
+test_date "45min" "45min"
+test_date "60min" "60min"
+
+echo
+
+# 3. TEMPS RELATIF - HEURES
+echo "3. TEMPS RELATIF - HEURES"
+test_date "1 heure" "1 heure (singulier)"
+test_date "2 heures" "2 heures (pluriel)"
+test_date "dans 2 heures" "dans 2 heures"
+test_date "dans 1 heure" "dans 1 heure"
+test_date "2h" "2h (abbrev)"
+test_date "2hrs" "2hrs (pluriel abbrev)"
+test_date "24 heures" "24 heures"
+test_date "1.5 heures" "1.5 heures (décimal)"
+test_date "2.5 heures" "2.5 heures (décimal)"
+test_date "0.5 heures" "0.5 heures (demi-heure)"
+test_date "0.25 heures" "0.25 heures (quart d'heure)"
+test_date "0.75 heures" "0.75 heures (trois quarts)"
+test_date "3.25 heures" "3.25 heures"
+test_date "12 heures" "12 heures"
+test_date "48 heures" "48 heures (deux jours)"
+test_date "dans une heure" "dans une heure"
+test_date "dans quelques heures" "dans quelques heures"
+test_date "il y a 2 heures" "il y a 2 heures (passé)"
+test_date "il y a 24 heures" "il y a 24 heures (passé)"
+
+echo
+
+# 4. TEMPS RELATIF - JOURS
+echo "4. TEMPS RELATIF - JOURS"
+test_date "1 jour" "1 jour (singulier)"
+test_date "2 jours" "2 jours (pluriel)"
+test_date "dans 2 jours" "dans 2 jours"
+test_date "dans 1 jour" "dans 1 jour"
+test_date "2j" "2j (abbrev)"
+test_date "2jours" "2jours (sans espace)"
+test_date "7 jours" "7 jours (semaine)"
+test_date "14 jours" "14 jours (quinzaine)"
+test_date "30 jours" "30 jours (mois)"
+test_date "365 jours" "365 jours (année)"
+test_date "dans un jour" "dans un jour"
+test_date "dans quelques jours" "dans quelques jours"
+test_date "il y a 1 jour" "il y a 1 jour (passé)"
+test_date "il y a 7 jours" "il y a 7 jours (passé)"
+test_date "0 jours" "0 jours"
+
+echo
+
+# 5. TEMPS RELATIF - SEMAINES/MOIS/ANNÉES
+echo "5. TEMPS RELATIF - SEMAINES/MOIS/ANNÉES"
+test_date "1 semaine" "1 semaine (singulier)"
+test_date "2 semaines" "2 semaines (pluriel)"
+test_date "dans 2 semaines" "dans 2 semaines"
+test_date "dans 1 semaine" "dans 1 semaine"
+test_date "2sem" "2sem (abbrev)"
+test_date "2semaines" "2semaines (sans espace)"
+test_date "52 semaines" "52 semaines (année)"
+test_date "1 mois" "1 mois (singulier)"
+test_date "3 mois" "3 mois (pluriel)"
+test_date "12 mois" "12 mois (année)"
+test_date "1 année" "1 année (singulier)"
+test_date "1 an" "1 an (singulier)"
+test_date "2 années" "2 années (pluriel)"
+test_date "2 ans" "2 ans (pluriel)"
+test_date "10 ans" "10 ans"
+test_date "dans 1 semaine" "dans 1 semaine"
+test_date "dans 1 mois" "dans 1 mois"
+test_date "dans 1 an" "dans 1 an"
+test_date "dans une semaine" "dans une semaine"
+test_date "dans un mois" "dans un mois"
+test_date "dans une année" "dans une année"
+test_date "il y a 1 semaine" "il y a 1 semaine (passé)"
+test_date "il y a 1 mois" "il y a 1 mois (passé)"
+test_date "il y a 1 an" "il y a 1 an (passé)"
+
+echo
+
+# 6. JOURS NOMMÉS ET PÉRIODES
+echo "6. JOURS NOMMÉS ET PÉRIODES"
+test_date "aujourd'hui" "aujourd'hui"
+test_date "AUJOURD'HUI" "AUJOURD'HUI (majuscule)"
+test_date "Aujourd'hui" "Aujourd'hui (capitalisé)"
+test_date "aujourdhui" "aujourdhui (sans apostrophe)"
+test_date "auj" "auj (abbrev)"
+test_date "AUJ" "AUJ (majuscule)"
+test_date "demain" "demain"
+test_date "DEMAIN" "DEMAIN (majuscule)"
+test_date "Demain" "Demain (capitalisé)"
+test_date "dem" "dem (abbrev)"
+test_date "DEM" "DEM (majuscule)"
+test_date "hier" "hier"
+test_date "HIER" "HIER (majuscule)"
+test_date "Hier" "Hier (capitalisé)"
+test_date "lundi" "lundi"
+test_date "LUNDI" "LUNDI (majuscule)"
+test_date "Lundi" "Lundi (capitalisé)"
+test_date "mardi" "mardi"
+test_date "mercredi" "mercredi"
+test_date "jeudi" "jeudi"
+test_date "vendredi" "vendredi"
+test_date "samedi" "samedi"
+test_date "dimanche" "dimanche"
+test_date "lundi prochain" "lundi prochain"
+test_date "mardi prochain" "mardi prochain"
+test_date "mercredi prochain" "mercredi prochain"
+test_date "jeudi prochain" "jeudi prochain"
+test_date "vendredi prochain" "vendredi prochain"
+test_date "samedi prochain" "samedi prochain"
+test_date "dimanche prochain" "dimanche prochain"
+test_date "lundi dernier" "lundi dernier"
+test_date "mardi dernier" "mardi dernier"
+test_date "vendredi dernier" "vendredi dernier"
+test_date "semaine prochaine" "semaine prochaine"
+test_date "la semaine prochaine" "la semaine prochaine"
+test_date "semaine dernière" "semaine dernière"
+test_date "la semaine dernière" "la semaine dernière"
+test_date "cette semaine" "cette semaine"
+test_date "mois prochain" "mois prochain"
+test_date "le mois prochain" "le mois prochain"
+test_date "mois dernier" "mois dernier"
+test_date "le mois dernier" "le mois dernier"
+test_date "ce mois" "ce mois"
+test_date "année prochaine" "année prochaine"
+test_date "l'année prochaine" "l'année prochaine"
+test_date "année dernière" "année dernière"
+test_date "l'année dernière" "l'année dernière"
+test_date "cette année" "cette année"
+
+echo
+
+# 7. ABRÉVIATIONS ET ARGOT
+echo "7. ABRÉVIATIONS ET ARGOT"
+test_date "lun" "lun (lundi)"
+test_date "LUN" "LUN (majuscule)"
+test_date "mar" "mar (mardi)"
+test_date "mer" "mer (mercredi)"
+test_date "jeu" "jeu (jeudi)"
+test_date "ven" "ven (vendredi)"
+test_date "sam" "sam (samedi)"
+test_date "dim" "dim (dimanche)"
+test_date "lundi" "lundi (complet)"
+test_date "mardi" "mardi (complet)"
+test_date "mercr" "mercr (mercredi abbrev)"
+test_date "jeudi" "jeudi (complet)"
+test_date "vendr" "vendr (vendredi abbrev)"
+test_date "samedi" "samedi (complet)"
+test_date "diman" "diman (dimanche abbrev)"
+
+echo
+
+# 8. EXPRESSIONS TEMPORELLES NATURELLES
+echo "8. EXPRESSIONS TEMPORELLES NATURELLES"
+test_date "quart d'heure" "quart d'heure"
+test_date "un quart d'heure" "un quart d'heure"
+test_date "demi-heure" "demi-heure"
+test_date "une demi-heure" "une demi-heure"
+test_date "trois quarts d'heure" "trois quarts d'heure"
+test_date "dans un quart d'heure" "dans un quart d'heure"
+test_date "dans une demi-heure" "dans une demi-heure"
+test_date "il y a un quart d'heure" "il y a un quart d'heure"
+test_date "il y a une demi-heure" "il y a une demi-heure"
+test_date "14h et quart" "14h et quart"
+test_date "14h et demie" "14h et demie"
+test_date "14h moins le quart" "14h moins le quart"
+test_date "midi et quart" "midi et quart"
+test_date "midi et demi" "midi et demi"
+test_date "midi moins le quart" "midi moins le quart"
+test_date "minuit et quart" "minuit et quart"
+test_date "minuit et demi" "minuit et demi"
+
+echo
+
+# 9. EXPRESSIONS COMPOSÉES - DATE + HEURE
+echo "9. EXPRESSIONS COMPOSÉES - DATE + HEURE"
+test_date "demain 14h" "demain 14h"
+test_date "demain 14h30" "demain 14h30"
+test_date "aujourd'hui 18h" "aujourd'hui 18h"
+test_date "hier 9h" "hier 9h"
+test_date "lundi 9h" "lundi 9h"
+test_date "mardi 14h" "mardi 14h"
+test_date "vendredi 17h30" "vendredi 17h30"
+test_date "samedi 11h" "samedi 11h"
+test_date "dimanche midi" "dimanche midi"
+test_date "lundi prochain 9h" "lundi prochain 9h"
+test_date "vendredi prochain 17h30" "vendredi prochain 17h30"
+test_date "mardi dernier 15h" "mardi dernier 15h"
+test_date "dans 2 jours 15h" "dans 2 jours 15h"
+test_date "dans 1 semaine 14h" "dans 1 semaine 14h"
+test_date "demain à 14h" "demain à 14h (avec 'à')"
+test_date "aujourd'hui à 18h" "aujourd'hui à 18h (avec 'à')"
+test_date "lundi à 9h" "lundi à 9h (avec 'à')"
+test_date "demain à midi" "demain à midi"
+test_date "semaine prochaine à 15h" "semaine prochaine à 15h"
+test_date "dans 2 jours à 18h" "dans 2 jours à 18h"
+
+echo
+
+# 10. EXPRESSIONS COMPOSÉES COMPLEXES
+echo "10. EXPRESSIONS COMPOSÉES COMPLEXES"
+test_date "lundi dans 2 semaines" "lundi dans 2 semaines"
+test_date "mardi dans 3 semaines" "mardi dans 3 semaines"
+test_date "vendredi dans 1 semaine" "vendredi dans 1 semaine"
+test_date "samedi dans 2 mois" "samedi dans 2 mois"
+test_date "dimanche dans 1 an" "dimanche dans 1 an"
+test_date "lundi dans 2 semaines à 9h" "lundi dans 2 semaines à 9h"
+test_date "vendredi dans 3 semaines 17h" "vendredi dans 3 semaines 17h"
+test_date "mardi dans 1 mois 14h" "mardi dans 1 mois 14h"
+test_date "lundi prochain dans 2 semaines" "lundi prochain dans 2 semaines"
+test_date "vendredi prochain dans 1 mois" "vendredi prochain dans 1 mois"
+test_date "mer dans 2 semaines" "mer dans 2 semaines (abbrev)"
+test_date "ven dans 3 semaines à 18h" "ven dans 3 semaines à 18h"
+
+echo
+
+# 11. VARIATIONS DE FORMAT D'HEURE
+echo "11. VARIATIONS DE FORMAT D'HEURE"
+test_date "1h" "1h format"
+test_date "6h" "6h format"
+test_date "09h" "09h format (zéro devant)"
+test_date "18h" "18h format"
+test_date "23h" "23h format"
+test_date "00h" "00h format"
+test_date "24h" "24h format"
+test_date "1H" "1H format (majuscule)"
+test_date "18H" "18H format (majuscule)"
+test_date "dans 2h" "dans 2h"
+test_date "dans 18h" "dans 18h"
+test_date "il y a 3h" "il y a 3h"
+
+echo
+
+# 12. MÉLANGES D'ABRÉVIATIONS ET FORMATS
+echo "12. MÉLANGES D'ABRÉVIATIONS ET FORMATS"
+test_date "dem 14h" "dem 14h"
+test_date "auj 15h" "auj 15h"
+test_date "ven 17h30" "ven 17h30"
+test_date "lun 9h" "lun 9h"
+test_date "mer 14h" "mer 14h"
+test_date "sam midi" "sam midi"
+test_date "dim minuit" "dim minuit"
+test_date "lun prochain 9h" "lun prochain 9h"
+test_date "ven prochain 17h" "ven prochain 17h"
+test_date "mar dernier 10h" "mar dernier 10h"
+test_date "dans 30min" "dans 30min"
+test_date "dans 2h" "dans 2h"
+test_date "dans 3j" "dans 3j"
+test_date "dans 1sem" "dans 1sem"
+test_date "il y a 30min" "il y a 30min"
+test_date "il y a 2h" "il y a 2h"
+test_date "dem à 14h" "dem à 14h"
+test_date "ven à 17h30" "ven à 17h30"
+
+echo
+
+# 13. CAS LIMITES ET VALEURS FRONTIÈRES
+echo "13. CAS LIMITES ET VALEURS FRONTIÈRES"
+test_date "0 minutes" "0 minutes"
+test_date "0 heures" "0 heures"
+test_date "0 jours" "0 jours"
+test_date "1 minute" "1 minute (frontière singulier)"
+test_date "59 minutes" "59 minutes"
+test_date "60 minutes" "60 minutes (frontière heure)"
+test_date "1439 minutes" "1439 minutes (jour-1 minute)"
+test_date "1440 minutes" "1440 minutes (jour complet)"
+test_date "23 heures" "23 heures"
+test_date "24 heures" "24 heures (frontière jour)"
+test_date "25 heures" "25 heures (au-delà jour)"
+test_date "48 heures" "48 heures (2 jours)"
+test_date "168 heures" "168 heures (semaine)"
+test_date "0h00" "0h00 heure"
+test_date "0h01" "0h01 heure"
+test_date "23h59" "23h59 heure"
+test_date "12h00" "12h00 heure"
+test_date "00h30" "00h30 heure"
+test_date "12h30" "12h30 heure"
+test_date "999 minutes" "999 minutes (grande valeur)"
+test_date "9999 minutes" "9999 minutes (très grande)"
+
+echo
+
+# 14. FORMATS DE SORTIE PRÉDÉFINIS
+echo "14. FORMATS DE SORTIE PRÉDÉFINIS"
+test_date "demain 14h" "Format AT" "at"
+test_date "vendredi prochain 17h" "Format AT complexe" "at"
+test_date "dans 2 heures" "Format AT relatif" "at"
+test_date "demain 14h" "Format ISO" "iso"
+test_date "semaine prochaine" "Format ISO semaine" "iso"
+test_date "dans 30 minutes" "Timestamp Unix" "unix"
+test_date "demain midi" "Timestamp Unix" "unix"
+test_date "vendredi 15h" "Format RFC" "rfc"
+test_date "mois prochain" "Format RFC" "rfc"
+test_date "demain 14h" "strftime personnalisé +%d/%m/%Y" "+%d/%m/%Y %H:%M"
+test_date "vendredi 17h" "strftime personnalisé +%A" "+%A %H:%M"
+
+echo
+
+# 15. PÉRIODES ET CONTEXTES TEMPORELS
+echo "15. PÉRIODES ET CONTEXTES TEMPORELS"
+test_date "ce matin" "ce matin"
+test_date "cet après-midi" "cet après-midi"
+test_date "ce soir" "ce soir"
+test_date "cette nuit" "cette nuit"
+test_date "demain matin" "demain matin"
+test_date "demain après-midi" "demain après-midi"
+test_date "demain soir" "demain soir"
+test_date "demain nuit" "demain nuit"
+test_date "hier matin" "hier matin"
+test_date "hier après-midi" "hier après-midi"
+test_date "hier soir" "hier soir"
+test_date "la nuit dernière" "la nuit dernière"
+test_date "cette nuit" "cette nuit"
+test_date "tôt le matin" "tôt le matin"
+test_date "tard le soir" "tard le soir"
+test_date "à l'aube" "à l'aube"
+test_date "au coucher du soleil" "au coucher du soleil"
+test_date "au lever du soleil" "au lever du soleil"
+
+echo
+
+# 16. TEMPS COMPOSÉS ET COMPLEXES
+echo "16. TEMPS COMPOSÉS ET COMPLEXES"
+test_date "1 heure 30 minutes" "1 heure 30 minutes"
+test_date "2 heures 45 minutes" "2 heures 45 minutes"
+test_date "1 jour 2 heures" "1 jour 2 heures"
+test_date "1 semaine 3 jours" "1 semaine 3 jours"
+test_date "2 semaines 1 jour" "2 semaines 1 jour"
+test_date "1 mois 2 semaines" "1 mois 2 semaines"
+test_date "dans 1 heure 30 minutes" "dans 1 heure 30 minutes"
+test_date "dans 2 jours 3 heures" "dans 2 jours 3 heures"
+test_date "il y a 1 heure 30 minutes" "il y a 1 heure 30 minutes"
+test_date "il y a 2 jours 3 heures" "il y a 2 jours 3 heures"
+test_date "1h30m" "1h30m composé"
+test_date "2j3h" "2j3h composé"
+test_date "90min" "90min (au-delà heure)"
+test_date "150min" "150min (2.5 heures)"
+
+echo
+
+# 17. TESTS DE VALIDATION (DEVRAIENT ÉCHOUER)
+echo "17. TESTS DE VALIDATION (DEVRAIENT ÉCHOUER)"
+test_validation "" "false" "Chaîne vide"
+test_validation "date_invalide" "false" "Chaîne de date invalide"
+test_validation "25h00" "false" "Heure invalide (25h)"
+test_validation "24h01" "false" "Heure invalide (24h01)"
+test_validation "30 février" "false" "Date invalide (30 fév)"
+test_validation "32 janvier" "false" "Date invalide (32 jan)"
+test_validation "xyz" "false" "Chaîne aléatoire"
+test_validation "????" "false" "Caractères spéciaux"
+test_validation "-1 minutes" "false" "Temps négatif"
+test_validation "-5 jours" "false" "Jours négatifs"
+test_validation "1.5.5 heures" "false" "Décimales multiples"
+test_validation "abc heures" "false" "Heures non-numériques"
+test_validation "1 foo" "false" "Unité invalide"
+test_validation "25h" "false" "Format d'heure invalide (25h)"
+test_validation "1 bidule" "false" "Unité invalide"
+test_validation "mercredi 25h" "false" "Heure invalide avec jour"
+
+echo
+
+# 18. TESTS DE VALIDATION (DEVRAIENT PASSER)
+echo "18. TESTS DE VALIDATION (DEVRAIENT PASSER)"
+test_validation "demain" "true" "Validation demain"
+test_validation "14h" "true" "Validation 14h"
+test_validation "dans 30 minutes" "true" "Validation dans 30 minutes"
+test_validation "lundi dans 2 semaines" "true" "Validation expression complexe"
+test_validation "midi" "true" "Validation midi"
+test_validation "minuit" "true" "Validation minuit"
+test_validation "vendredi prochain" "true" "Validation vendredi prochain"
+test_validation "1.5 heures" "true" "Validation heures décimales"
+test_validation "dem 14h" "true" "Validation combo abbréviations"
+test_validation "quart d'heure" "true" "Validation temps naturel"
+test_validation "vendredi dans 2 semaines à 17h" "true" "Validation combo complexe"
+test_validation "0 minutes" "true" "Validation zéro minutes"
+test_validation "24 heures" "true" "Validation 24 heures"
+test_validation "365 jours" "true" "Validation 365 jours"
+test_validation "52 semaines" "true" "Validation 52 semaines"
+test_validation "aujourd'hui" "true" "Validation aujourd'hui"
+test_validation "il y a 30 minutes" "true" "Validation temps passé"
+
+echo
+
+# 19. TESTS DE STRESS ET EXTRÊMES
+echo "19. TESTS DE STRESS ET EXTRÊMES"
+test_date "999999 minutes" "Minutes extrêmes"
+test_date "8760 heures" "Heures dans une année"
+test_date "10000 jours" "Jours extrêmes"
+test_date "520 semaines" "Semaines extrêmes (10 ans)"
+test_date "120 mois" "Mois extrêmes (10 ans)"
+test_date "100 ans" "Siècle"
+test_date "0.001 heures" "Heures décimales minuscules"
+test_date "23.999 heures" "Presque 24 heures"
+test_date "6.5 jours" "Jours décimaux"
+test_date "52.5 semaines" "Semaines décimales"
+test_date "dans 99999 minutes" "Temps relatif extrême"
+test_date "il y a 99999 minutes" "Temps passé extrême"
+
+echo
+
+# 20. SENSIBILITÉ À LA CASSE ET FORMATAGE
+echo "20. SENSIBILITÉ À LA CASSE ET FORMATAGE"
+test_date "Demain À 14H" "Casse mixte 1"
+test_date "VENDREDI DANS 2 SEMAINES" "Tout majuscules"
+test_date "lundi prochain à 9h" "Tout minuscules"
+test_date "Vendredi Prochain À 17H30" "Casse titre"
+test_date "dEmAiN 14H" "Casse alternée"
+test_date "DEM 14H" "Abbrev majuscules"
+test_date "LUN 9H" "Jour abbrev majuscules"
+test_date "DANS 30 MINUTES" "Relatif majuscules"
+test_date "QuArT D'hEuRe" "Temps naturel casse mixte"
+test_date "AUJ 15H" "Aujourd'hui abbrev majuscules"
+
+echo
+echo "=== RÉSULTATS FINAUX DES TESTS FRANÇAIS ==="
+echo "RÉUSSIS: $PASS"
+echo "ÉCHECS: $FAIL"
+echo "TOTAL: $((PASS + FAIL))"
+echo "TAUX DE RÉUSSITE: $(echo "scale=2; $PASS * 100 / ($PASS + $FAIL)" | bc -l)%"
+
+if [[ $FAIL -eq 0 ]]; then
+    echo "🎉 TOUS LES TESTS FRANÇAIS RÉUSSIS!"
+    exit 0
+else
+    echo "❌ $FAIL TESTS FRANÇAIS ÉCHOUÉS"
+    exit 1
+fi

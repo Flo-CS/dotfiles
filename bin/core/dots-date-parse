@@ -1,0 +1,804 @@
+#!/usr/bin/env python3
+
+"""
+dots-date-parse: A comprehensive date parsing utility supporting English and French
+
+This script parses natural language date/time expressions and converts them to various formats.
+Designed to be state-of-the-art, comprehensible, and maintainable.
+
+Usage:
+    dots-date-parse [options] <date_expression>
+    dots-date-parse --validate <date_expression>
+    dots-date-parse --help
+
+Options:
+    -l, --lang LANG     Language for parsing (en|fr) [default: en]
+    -f, --format FORMAT Output format (at|iso|unix|rfc|+strftime) [default: at]
+    -v, --validate      Validate date expression without parsing
+    -h, --help          Show this help message
+
+Examples:
+    dots-date-parse "tomorrow 2pm"
+    dots-date-parse -l fr "demain 14h"
+    dots-date-parse -f iso "next friday"
+    dots-date-parse --validate "in 30 minutes"
+"""
+
+import sys
+import re
+import argparse
+from datetime import datetime, timedelta
+from typing import Optional, Dict, List, Tuple, Union
+import calendar
+import locale
+
+
+class DateParseError(Exception):
+    """Raised when date parsing fails"""
+    pass
+
+
+class DateParser:
+    """
+    A comprehensive date parser supporting English and French natural language expressions.
+    
+    This class is designed with maintainability in mind:
+    - Clear separation of concerns between parsing, validation, and formatting
+    - Comprehensive pattern matching with readable regular expressions
+    - Extensible design for adding new languages or patterns
+    - Robust error handling and validation
+    """
+    
+    def __init__(self, language: str = 'en'):
+        """Initialize the parser with specified language."""
+        self.language = language.lower()
+        self.now = datetime.now()
+        
+        # Initialize language-specific patterns and data
+        self._init_language_data()
+        
+    def _init_language_data(self):
+        """Initialize language-specific patterns, keywords, and mappings."""
+        if self.language == 'fr':
+            self._init_french_data()
+        else:
+            self._init_english_data()
+    
+    def _init_english_data(self):
+        """Initialize English language patterns and mappings."""
+        # Day name mappings
+        self.days = {
+            'monday': 0, 'mon': 0,
+            'tuesday': 1, 'tue': 1, 'tues': 1,
+            'wednesday': 2, 'wed': 2,
+            'thursday': 3, 'thu': 3, 'thur': 3, 'thurs': 3,
+            'friday': 4, 'fri': 4,
+            'saturday': 5, 'sat': 5,
+            'sunday': 6, 'sun': 6,
+        }
+        
+        # Time unit mappings
+        self.time_units = {
+            'minute': 'minutes', 'minutes': 'minutes', 'min': 'minutes', 'mins': 'minutes', 'm': 'minutes',
+            'hour': 'hours', 'hours': 'hours', 'hr': 'hours', 'hrs': 'hours', 'h': 'hours',
+            'day': 'days', 'days': 'days', 'd': 'days',
+            'week': 'weeks', 'weeks': 'weeks', 'w': 'weeks',
+            'month': 'months', 'months': 'months',
+            'year': 'years', 'years': 'years',
+        }
+        
+        # Special time keywords
+        self.special_times = {
+            'noon': 12, 'midnight': 0,
+            'dawn': 6, 'sunrise': 6, 'dusk': 18, 'sunset': 18,
+        }
+        
+        # Time periods
+        self.time_periods = {
+            'morning': 9, 'afternoon': 14, 'evening': 18, 'night': 21,
+            'tonight': 21,
+        }
+        
+        # Relative day keywords
+        self.relative_days = {
+            'today': 0, '2day': 0,
+            'tomorrow': 1, 'tmrw': 1, 'tmr': 1, '2morrow': 1,
+            'yesterday': -1,
+        }
+        
+        # Patterns for different expression types
+        self.patterns = {
+            # Absolute time patterns
+            'time_24h': re.compile(r'\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b'),
+            'time_24h_dot': re.compile(r'\b(\d{1,2})\.(\d{2})\b'),
+            'time_12h': re.compile(r'\b(\d{1,2})(?::(\d{2})(?::(\d{2}))?)?\s*(am|pm)\b', re.IGNORECASE),
+            'time_hour_only': re.compile(r'\b(\d{1,2})\s*(am|pm)\b', re.IGNORECASE),
+            'time_h_format': re.compile(r'\b(\d{1,2})h\b', re.IGNORECASE),
+            
+            # Natural time expressions
+            'quarter_past': re.compile(r'\bquarter\s+past\s+(\d{1,2}|noon|midnight)\b', re.IGNORECASE),
+            'quarter_to': re.compile(r'\bquarter\s+to\s+(\d{1,2}|noon|midnight)\b', re.IGNORECASE),
+            'half_past': re.compile(r'\bhalf\s+past\s+(\d{1,2}|noon|midnight)\b', re.IGNORECASE),
+            'minutes_past': re.compile(r'\b(\d{1,2})\s+past\s+(\d{1,2})\b', re.IGNORECASE),
+            'minutes_to': re.compile(r'\b(\d{1,2})\s+to\s+(\d{1,2})\b', re.IGNORECASE),
+            
+            # Relative time patterns
+            'relative_simple': re.compile(r'\b(?:in\s+)?(\d+(?:\.\d+)?)\s*([a-zA-Z]+)\b', re.IGNORECASE),
+            'relative_compound': re.compile(r'\b(?:in\s+)?(\d+)\s*h\s*(\d+)\s*m\b', re.IGNORECASE),
+            'relative_in': re.compile(r'\bin\s+(.*)', re.IGNORECASE),
+            
+            # Day patterns
+            'day_name': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            'next_day': re.compile(r'\bnext\s+(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            'last_day': re.compile(r'\blast\s+(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            
+            # Special keywords
+            'special_times': re.compile(r'\b(' + '|'.join(self.special_times.keys()) + r')\b', re.IGNORECASE),
+            'time_periods': re.compile(r'\b(?:(this|tomorrow|yesterday)\s+)?(' + '|'.join(self.time_periods.keys()) + r')\b', re.IGNORECASE),
+            'relative_days': re.compile(r'\b(' + '|'.join(self.relative_days.keys()) + r')\b', re.IGNORECASE),
+            
+            # Complex patterns
+            'day_in_weeks': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\s+in\s+(\d+)\s+weeks?\b', re.IGNORECASE),
+            'day_at_time': re.compile(r'\b(.+?)\s+(?:at\s+)?(\d{1,2}(?::\d{2})?(?:am|pm)?|\d{1,2}h(?:\d{2})?|noon|midnight)\b', re.IGNORECASE),
+        }
+    
+    def _init_french_data(self):
+        """Initialize French language patterns and mappings."""
+        # Day name mappings
+        self.days = {
+            'lundi': 0, 'lun': 0,
+            'mardi': 1, 'mar': 1,
+            'mercredi': 2, 'mer': 2, 'mercr': 2,
+            'jeudi': 3, 'jeu': 3,
+            'vendredi': 4, 'ven': 4, 'vendr': 4,
+            'samedi': 5, 'sam': 5,
+            'dimanche': 6, 'dim': 6, 'diman': 6,
+        }
+        
+        # Time unit mappings
+        self.time_units = {
+            'minute': 'minutes', 'minutes': 'minutes', 'min': 'minutes', 'mins': 'minutes', 'm': 'minutes',
+            'heure': 'hours', 'heures': 'hours', 'h': 'hours', 'hrs': 'hours',
+            'jour': 'days', 'jours': 'days', 'j': 'days',
+            'semaine': 'weeks', 'semaines': 'weeks', 'sem': 'weeks',
+            'mois': 'months',
+            'an': 'years', 'ans': 'years', 'année': 'years', 'années': 'years',
+        }
+        
+        # Special time keywords
+        self.special_times = {
+            'midi': 12, 'minuit': 0,
+        }
+        
+        # Time periods
+        self.time_periods = {
+            'matin': 9, 'après-midi': 14, 'soir': 18, 'nuit': 21,
+        }
+        
+        # Relative day keywords
+        self.relative_days = {
+            "aujourd'hui": 0, 'aujourdhui': 0, 'auj': 0,
+            'demain': 1, 'dem': 1,
+            'hier': -1,
+        }
+        
+        # French-specific patterns
+        self.patterns = {
+            # Time formats
+            'time_h_format': re.compile(r'\b(\d{1,2})h(?:(\d{2}))?\b', re.IGNORECASE),
+            'time_24h': re.compile(r'\b(\d{1,2}):(\d{2})(?::(\d{2}))?\b'),
+            
+            # Natural time expressions
+            'quarter_hour': re.compile(r'\b(?:un\s+)?quart\s+d[\'`]heure\b', re.IGNORECASE),
+            'half_hour': re.compile(r'\b(?:une\s+)?demi[_\-]heure\b', re.IGNORECASE),
+            'three_quarters': re.compile(r'\btrois\s+quarts\s+d[\'`]heure\b', re.IGNORECASE),
+            'hour_quarter': re.compile(r'\b(\d{1,2})h\s+et\s+quart\b', re.IGNORECASE),
+            'hour_half': re.compile(r'\b(\d{1,2})h\s+et\s+demie?\b', re.IGNORECASE),
+            'hour_minus_quarter': re.compile(r'\b(\d{1,2})h\s+moins\s+le\s+quart\b', re.IGNORECASE),
+            'noon_quarter': re.compile(r'\bmidi\s+et\s+quart\b', re.IGNORECASE),
+            'noon_half': re.compile(r'\bmidi\s+et\s+demie?\b', re.IGNORECASE),
+            'midnight_quarter': re.compile(r'\bminuit\s+et\s+quart\b', re.IGNORECASE),
+            'midnight_half': re.compile(r'\bminuit\s+et\s+demie?\b', re.IGNORECASE),
+            
+            # Relative time with "dans" (in) and "il y a" (ago)
+            'dans_time': re.compile(r'\bdans\s+(.*)', re.IGNORECASE),
+            'il_y_a_time': re.compile(r'\bil\s+y\s+a\s+(.*)', re.IGNORECASE),
+            'relative_simple': re.compile(r'\b(\d+(?:\.\d+)?)\s*([a-zA-Zàâäçéèêëïîôöùûüÿ]+)\b', re.IGNORECASE),
+            'relative_compound': re.compile(r'\b(\d+)\s*h\s*(\d+)\s*m\b', re.IGNORECASE),
+            
+            # Day patterns
+            'day_name': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            'day_prochain': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\s+prochain\b', re.IGNORECASE),
+            'day_dernier': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\s+dernier\b', re.IGNORECASE),
+            'prochain_day': re.compile(r'\bprochain\s+(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            'dernier_day': re.compile(r'\bdernier\s+(' + '|'.join(self.days.keys()) + r')\b', re.IGNORECASE),
+            
+            # Week/month/year modifiers
+            'semaine_prochaine': re.compile(r'\b(?:la\s+)?semaine\s+prochaine\b', re.IGNORECASE),
+            'semaine_derniere': re.compile(r'\b(?:la\s+)?semaine\s+derni[èe]re\b', re.IGNORECASE),
+            'mois_prochain': re.compile(r'\b(?:le\s+)?mois\s+prochain\b', re.IGNORECASE),
+            'mois_dernier': re.compile(r'\b(?:le\s+)?mois\s+dernier\b', re.IGNORECASE),
+            
+            # Special keywords
+            'special_times': re.compile(r'\b(' + '|'.join(self.special_times.keys()) + r')\b', re.IGNORECASE),
+            'time_periods': re.compile(r'\b(?:(ce|cet|cette|demain|hier)\s+)?(' + '|'.join(self.time_periods.keys()) + r')\b', re.IGNORECASE),
+            'relative_days': re.compile(r'\b(' + '|'.join(self.relative_days.keys()) + r')\b', re.IGNORECASE),
+            
+            # Complex patterns
+            'day_dans_weeks': re.compile(r'\b(' + '|'.join(self.days.keys()) + r')\s+dans\s+(\d+)\s+semaines?\b', re.IGNORECASE),
+            'day_a_time': re.compile(r'\b(.+?)\s+à\s+(\d{1,2}h(?:\d{2})?|\d{1,2}:\d{2}|midi|minuit)\b', re.IGNORECASE),
+        }
+    
+    def parse(self, date_str: str) -> datetime:
+        """
+        Parse a natural language date expression into a datetime object.
+        
+        Args:
+            date_str: The date expression to parse
+            
+        Returns:
+            datetime: The parsed datetime
+            
+        Raises:
+            DateParseError: If parsing fails
+        """
+        if not date_str or not date_str.strip():
+            raise DateParseError("Empty date string")
+        
+        # Normalize the input
+        normalized = self._normalize_input(date_str.strip().lower())
+        
+        try:
+            # Try different parsing strategies in order of complexity
+            result = (
+                self._parse_absolute_time(normalized) or
+                self._parse_relative_time(normalized) or
+                self._parse_named_days(normalized) or
+                self._parse_complex_expressions(normalized)
+            )
+            
+            if result:
+                return result
+            
+        except Exception as e:
+            raise DateParseError(f"Failed to parse '{date_str}': {str(e)}")
+        
+        raise DateParseError(f"Unable to parse date expression: '{date_str}'")
+    
+    def validate(self, date_str: str) -> bool:
+        """
+        Validate a date expression without parsing it.
+        
+        Args:
+            date_str: The date expression to validate
+            
+        Returns:
+            bool: True if the expression is valid
+        """
+        try:
+            # First check for obviously invalid patterns
+            if self._contains_invalid_patterns(date_str):
+                return False
+            
+            self.parse(date_str)
+            return True
+        except DateParseError:
+            return False
+    
+    def _contains_invalid_patterns(self, text: str) -> bool:
+        """Check for obviously invalid patterns."""
+        text = text.lower().strip()
+        
+        # Check for invalid hour formats
+        hour_patterns = [
+            re.compile(r'\b(2[4-9]|[3-9]\d)\s*[hH]\b'),  # Hours > 23 in h/H format
+            re.compile(r'\b([2-9]\d|1[3-9])\s*(am|pm)\b', re.IGNORECASE),  # Invalid 12-hour format
+            re.compile(r'\b(2[4-9]|[3-5]\d):'),  # Hours > 23 in 24-hour format
+            re.compile(r':\d{0,1}[6-9]\d'),  # Minutes/seconds > 59
+        ]
+        
+        for pattern in hour_patterns:
+            if pattern.search(text):
+                return True
+        
+        # Check for negative time values
+        if re.search(r'-\d+\s*(minutes?|hours?|days?|weeks?|months?|years?)', text):
+            return True
+        
+        return False
+    
+    def _normalize_input(self, text: str) -> str:
+        """Normalize input text for consistent parsing."""
+        # Remove extra whitespace
+        text = ' '.join(text.split())
+        
+        # Handle common typos and variations
+        if self.language == 'en':
+            text = text.replace('2morrow', 'tomorrow')
+            text = text.replace('2day', 'today')
+            text = text.replace('tmrw', 'tomorrow')
+            text = text.replace('tmr', 'tomorrow')
+        
+        return text
+    
+    def _parse_absolute_time(self, text: str) -> Optional[datetime]:
+        """Parse absolute time expressions."""
+        result_date = self.now.replace(hour=0, minute=0, second=0, microsecond=0)
+        time_found = False
+        
+        # Try different time formats
+        for pattern_name, pattern in self.patterns.items():
+            if pattern_name.startswith('time_'):
+                match = pattern.search(text)
+                if match:
+                    time_found = True
+                    if pattern_name == 'time_24h':
+                        hour, minute = int(match.group(1)), int(match.group(2))
+                        second = int(match.group(3)) if match.group(3) else 0
+                        if hour > 23 or minute > 59 or second > 59:
+                            continue
+                        result_date = result_date.replace(hour=hour, minute=minute, second=second)
+                    elif pattern_name == 'time_24h_dot':
+                        hour, minute = int(match.group(1)), int(match.group(2))
+                        if hour > 23 or minute > 59:
+                            continue
+                        result_date = result_date.replace(hour=hour, minute=minute)
+                    elif pattern_name == 'time_12h':
+                        hour = int(match.group(1))
+                        minute = int(match.group(2)) if match.group(2) else 0
+                        second = int(match.group(3)) if match.group(3) else 0
+                        am_pm = match.group(4).lower()
+                        
+                        if hour < 1 or hour > 12:
+                            continue
+                        if minute > 59 or second > 59:
+                            continue
+                        
+                        if am_pm == 'pm' and hour != 12:
+                            hour += 12
+                        elif am_pm == 'am' and hour == 12:
+                            hour = 0
+                        
+                        result_date = result_date.replace(hour=hour, minute=minute, second=second)
+                    elif pattern_name == 'time_h_format':
+                        hour = int(match.group(1))
+                        if self.language == 'fr':
+                            minute = int(match.group(2)) if match.group(2) else 0
+                            if hour > 23 or minute > 59:  # French should also not accept hours > 23
+                                continue
+                            result_date = result_date.replace(hour=hour, minute=minute)
+                        else:
+                            if hour > 23:  # English should not accept hours > 23
+                                continue
+                            result_date = result_date.replace(hour=hour)
+                    break
+        
+        # Check for special times
+        for special_time, hour in self.special_times.items():
+            if special_time in text:
+                result_date = result_date.replace(hour=hour, minute=0)
+                time_found = True
+                break
+        
+        # Natural time expressions
+        if self.language == 'en':
+            time_found = self._parse_english_natural_time(text, result_date) or time_found
+        else:
+            time_found = self._parse_french_natural_time(text, result_date) or time_found
+        
+        return result_date if time_found else None
+    
+    def _parse_english_natural_time(self, text: str, base_date: datetime) -> bool:
+        """Parse English natural time expressions."""
+        # Quarter past/to, half past
+        match = self.patterns['quarter_past'].search(text)
+        if match:
+            hour_ref = match.group(1)
+            if hour_ref == 'noon':
+                hour = 12
+            elif hour_ref == 'midnight':
+                hour = 0
+            else:
+                hour = int(hour_ref)
+            base_date = base_date.replace(hour=hour, minute=15)
+            return True
+        
+        match = self.patterns['quarter_to'].search(text)
+        if match:
+            hour_ref = match.group(1)
+            if hour_ref == 'noon':
+                hour = 11
+            elif hour_ref == 'midnight':
+                hour = 23
+            else:
+                hour = int(hour_ref) - 1
+            base_date = base_date.replace(hour=hour % 24, minute=45)
+            return True
+        
+        match = self.patterns['half_past'].search(text)
+        if match:
+            hour_ref = match.group(1)
+            if hour_ref == 'noon':
+                hour = 12
+            elif hour_ref == 'midnight':
+                hour = 0
+            else:
+                hour = int(hour_ref)
+            base_date = base_date.replace(hour=hour, minute=30)
+            return True
+        
+        return False
+    
+    def _parse_french_natural_time(self, text: str, base_date: datetime) -> bool:
+        """Parse French natural time expressions."""
+        # Quarter and half hour expressions
+        if self.patterns['quarter_hour'].search(text):
+            base_date = base_date.replace(minute=15)
+            return True
+        
+        if self.patterns['half_hour'].search(text):
+            base_date = base_date.replace(minute=30)
+            return True
+        
+        if self.patterns['three_quarters'].search(text):
+            base_date = base_date.replace(minute=45)
+            return True
+        
+        # Hour + quarter/half patterns
+        match = self.patterns['hour_quarter'].search(text)
+        if match:
+            hour = int(match.group(1))
+            base_date = base_date.replace(hour=hour, minute=15)
+            return True
+        
+        match = self.patterns['hour_half'].search(text)
+        if match:
+            hour = int(match.group(1))
+            base_date = base_date.replace(hour=hour, minute=30)
+            return True
+        
+        match = self.patterns['hour_minus_quarter'].search(text)
+        if match:
+            hour = int(match.group(1))
+            base_date = base_date.replace(hour=hour-1 if hour > 0 else 23, minute=45)
+            return True
+        
+        # Special noon/midnight patterns
+        if self.patterns['noon_quarter'].search(text):
+            base_date = base_date.replace(hour=12, minute=15)
+            return True
+        
+        if self.patterns['noon_half'].search(text):
+            base_date = base_date.replace(hour=12, minute=30)
+            return True
+        
+        return False
+    
+    def _parse_relative_time(self, text: str) -> Optional[datetime]:
+        """Parse relative time expressions."""
+        result = self.now
+        is_past = False
+        
+        # Handle "il y a" (ago) for French
+        if self.language == 'fr':
+            match = self.patterns['il_y_a_time'].search(text)
+            if match:
+                is_past = True
+                text = match.group(1)
+        
+        # Handle "dans" (in) for French or "in" for English
+        if self.language == 'fr':
+            match = self.patterns['dans_time'].search(text)
+            if match:
+                text = match.group(1)
+        elif self.language == 'en':
+            match = self.patterns['relative_in'].search(text)
+            if match:
+                text = match.group(1)
+        
+        # Parse compound expressions like "1h30m" or "2d3h"
+        match = self.patterns['relative_compound'].search(text)
+        if match:
+            hours = int(match.group(1))
+            minutes = int(match.group(2))
+            delta = timedelta(hours=hours, minutes=minutes)
+            return (result - delta) if is_past else (result + delta)
+        
+        # Parse simple relative expressions
+        match = self.patterns['relative_simple'].search(text)
+        if match:
+            amount = float(match.group(1))
+            unit_text = match.group(2).lower()
+            
+            # Validate hour values in h/H format before treating as relative
+            if unit_text in ['h', 'H'] and amount > 23:
+                return None
+            
+            # Map unit to standard form
+            unit = self.time_units.get(unit_text)
+            if not unit:
+                return None
+            
+            # Calculate timedelta
+            if unit == 'minutes':
+                delta = timedelta(minutes=amount)
+            elif unit == 'hours':
+                delta = timedelta(hours=amount)
+            elif unit == 'days':
+                delta = timedelta(days=amount)
+            elif unit == 'weeks':
+                delta = timedelta(weeks=amount)
+            elif unit == 'months':
+                delta = timedelta(days=amount * 30.44)  # Average month length
+            elif unit == 'years':
+                delta = timedelta(days=amount * 365.25)  # Average year length
+            else:
+                return None
+            
+            return (result - delta) if is_past else (result + delta)
+        
+        return None
+    
+    def _parse_named_days(self, text: str) -> Optional[datetime]:
+        """Parse named day expressions."""
+        result = self.now.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        # Check relative day keywords first
+        for day_name, offset in self.relative_days.items():
+            if day_name in text:
+                result = result + timedelta(days=offset)
+                
+                # Check for time periods
+                for period, hour in self.time_periods.items():
+                    if period in text:
+                        result = result.replace(hour=hour)
+                        break
+                
+                return result
+        
+        # Parse weekday names with modifiers
+        current_weekday = self.now.weekday()
+        
+        if self.language == 'en':
+            # Handle "next" and "last" modifiers
+            match = self.patterns['next_day'].search(text)
+            if match:
+                day_name = match.group(1).lower()
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    days_ahead = (target_day - current_weekday + 7) % 7
+                    if days_ahead == 0:  # If it's the same day, go to next week
+                        days_ahead = 7
+                    result = result + timedelta(days=days_ahead)
+                    return result
+            
+            match = self.patterns['last_day'].search(text)
+            if match:
+                day_name = match.group(1).lower()
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    days_back = (current_weekday - target_day + 7) % 7
+                    if days_back == 0:  # If it's the same day, go to last week
+                        days_back = 7
+                    result = result - timedelta(days=days_back)
+                    return result
+        
+        else:  # French
+            # Handle "prochain" and "dernier" modifiers
+            match = self.patterns['day_prochain'].search(text) or self.patterns['prochain_day'].search(text)
+            if match:
+                day_name = match.group(1).lower()
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    days_ahead = (target_day - current_weekday + 7) % 7
+                    if days_ahead == 0:
+                        days_ahead = 7
+                    result = result + timedelta(days=days_ahead)
+                    return result
+            
+            match = self.patterns['day_dernier'].search(text) or self.patterns['dernier_day'].search(text)
+            if match:
+                day_name = match.group(1).lower()
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    days_back = (current_weekday - target_day + 7) % 7
+                    if days_back == 0:
+                        days_back = 7
+                    result = result - timedelta(days=days_back)
+                    return result
+        
+        # Simple day name (next occurrence)
+        match = self.patterns['day_name'].search(text)
+        if match:
+            day_name = match.group(1).lower()
+            target_day = self.days.get(day_name)
+            if target_day is not None:
+                days_ahead = (target_day - current_weekday) % 7
+                if days_ahead == 0 and self.now.hour >= 12:  # After noon, assume next week
+                    days_ahead = 7
+                result = result + timedelta(days=days_ahead)
+                return result
+        
+        return None
+    
+    def _parse_complex_expressions(self, text: str) -> Optional[datetime]:
+        """Parse complex expressions combining multiple elements."""
+        result = None
+        
+        # Try parsing date components first
+        date_part = self._parse_named_days(text) or self._parse_relative_time(text)
+        if not date_part:
+            return None
+        
+        result = date_part
+        
+        # Extract time component
+        if self.language == 'en':
+            match = self.patterns['day_at_time'].search(text)
+            if match:
+                time_str = match.group(2)
+                time_result = self._parse_time_component(time_str)
+                if time_result:
+                    result = result.replace(
+                        hour=time_result.hour,
+                        minute=time_result.minute,
+                        second=time_result.second
+                    )
+        else:  # French
+            match = self.patterns['day_a_time'].search(text)
+            if match:
+                time_str = match.group(2)
+                time_result = self._parse_time_component(time_str)
+                if time_result:
+                    result = result.replace(
+                        hour=time_result.hour,
+                        minute=time_result.minute,
+                        second=time_result.second
+                    )
+        
+        # Handle complex patterns like "monday in 2 weeks"
+        if self.language == 'en':
+            match = self.patterns.get('day_in_weeks', re.compile('')).search(text)
+            if match:
+                day_name = match.group(1).lower()
+                weeks = int(match.group(2))
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    # Find the target day in the specified number of weeks
+                    base_date = self.now + timedelta(weeks=weeks)
+                    days_to_target = (target_day - base_date.weekday()) % 7
+                    result = base_date + timedelta(days=days_to_target)
+                    result = result.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        elif self.language == 'fr':
+            match = self.patterns.get('day_dans_weeks', re.compile('')).search(text)
+            if match:
+                day_name = match.group(1).lower()
+                weeks = int(match.group(2))
+                target_day = self.days.get(day_name)
+                if target_day is not None:
+                    base_date = self.now + timedelta(weeks=weeks)
+                    days_to_target = (target_day - base_date.weekday()) % 7
+                    result = base_date + timedelta(days=days_to_target)
+                    result = result.replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        return result
+    
+    def _parse_time_component(self, time_str: str) -> Optional[datetime]:
+        """Parse just the time component of a string."""
+        base = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        
+        # Try different time formats
+        time_patterns = {
+            'h_format': re.compile(r'(\d{1,2})h(?:(\d{2}))?', re.IGNORECASE),
+            '12h': re.compile(r'(\d{1,2})(?::(\d{2}))?\s*(am|pm)', re.IGNORECASE),
+            '24h': re.compile(r'(\d{1,2}):(\d{2})'),
+        }
+        
+        for pattern_name, pattern in time_patterns.items():
+            match = pattern.search(time_str)
+            if match:
+                if pattern_name == 'h_format':
+                    hour = int(match.group(1))
+                    minute = int(match.group(2)) if match.group(2) else 0
+                    if hour <= 23 and minute <= 59:
+                        return base.replace(hour=hour, minute=minute)
+                elif pattern_name == '12h':
+                    hour = int(match.group(1))
+                    minute = int(match.group(2)) if match.group(2) else 0
+                    am_pm = match.group(3).lower()
+                    if 1 <= hour <= 12 and minute <= 59:
+                        if am_pm == 'pm' and hour != 12:
+                            hour += 12
+                        elif am_pm == 'am' and hour == 12:
+                            hour = 0
+                        return base.replace(hour=hour, minute=minute)
+                elif pattern_name == '24h':
+                    hour, minute = int(match.group(1)), int(match.group(2))
+                    if hour <= 23 and minute <= 59:
+                        return base.replace(hour=hour, minute=minute)
+        
+        # Check special times
+        for special_time, hour in self.special_times.items():
+            if special_time in time_str.lower():
+                return base.replace(hour=hour)
+        
+        return None
+    
+    def format_output(self, dt: datetime, format_type: str) -> str:
+        """
+        Format datetime object to specified output format.
+        
+        Args:
+            dt: The datetime to format
+            format_type: The output format type
+            
+        Returns:
+            str: Formatted date/time string
+        """
+        if format_type == 'at':
+            # Format for 'at' command: "HH:MM MM/DD/YY"
+            return dt.strftime("%H:%M %m/%d/%y")
+        elif format_type == 'iso':
+            return dt.isoformat()
+        elif format_type == 'unix':
+            return str(int(dt.timestamp()))
+        elif format_type == 'rfc':
+            return dt.strftime("%a, %d %b %Y %H:%M:%S %z")
+        elif format_type.startswith('+'):
+            # Custom strftime format
+            return dt.strftime(format_type[1:])
+        else:
+            # Default to 'at' format
+            return dt.strftime("%H:%M %m/%d/%y")
+
+
+def main():
+    """Main entry point for the command-line interface."""
+    parser = argparse.ArgumentParser(
+        description="Parse natural language date/time expressions",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__.split('Usage:')[1] if 'Usage:' in __doc__ else ''
+    )
+    
+    parser.add_argument('date_expression', nargs='?', help='Date expression to parse')
+    parser.add_argument('-l', '--lang', choices=['en', 'fr'], default='en',
+                       help='Language for parsing (default: en)')
+    parser.add_argument('-f', '--format', default='at',
+                       help='Output format: at|iso|unix|rfc|+strftime (default: at)')
+    parser.add_argument('-v', '--validate', action='store_true',
+                       help='Validate expression without parsing')
+    
+    args = parser.parse_args()
+    
+    if not args.date_expression:
+        parser.print_help()
+        sys.exit(1)
+    
+    # Initialize parser
+    date_parser = DateParser(args.lang)
+    
+    try:
+        if args.validate:
+            # Validation mode
+            if date_parser.validate(args.date_expression):
+                sys.exit(0)
+            else:
+                sys.exit(1)
+        else:
+            # Parse and format
+            parsed_date = date_parser.parse(args.date_expression)
+            formatted_output = date_parser.format_output(parsed_date, args.format)
+            print(formatted_output)
+            sys.exit(0)
+    
+    except DateParseError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Unexpected error: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()
