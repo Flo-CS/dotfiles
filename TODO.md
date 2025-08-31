@@ -9,6 +9,7 @@ URGENT !!!
 - [] Rename dots core scripts to something like "secure-copy", "secure-symlink", etc...
 - [] Improve logging (error output, remove useless output except if verbose, etc...)
 - [] Improve the installer (for example dots logo is shown twice when doing update)
+- [] Remove dots-reminder
 
 
 - [] Change firefox theme with the dots theme

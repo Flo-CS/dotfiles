@@ -29,7 +29,7 @@ create_reminder() {
 
     formatted_date=$(dots-date-parse -f at "$date_input")
 
-    if echo "notify-send -u normal \"Reminder: $name\"" | at "$formatted_date"; then
+    if echo "notify-send -u critical \"Reminder: $name\"" | at "$formatted_date"; then
         echo "✓ Reminder set: '$name' at $formatted_date"
         return 0
     else
