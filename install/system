@@ -54,5 +54,10 @@ install_grub() {
 
 }
 
+install_privileged() {
+    sudo -E dots-file-copy install/config/sudoers /etc/sudoers.d/sudoers-default
+}
+
 install_backup
 install_grub
+install_privileged

@@ -132,8 +132,8 @@ show_install_menu() {
 		*"TUI"*) dots-launch-tui-dots-menu dots-install-tui ;;
 		*"Webapp"*) dots-launch-tui-dots-menu dots-install-webapp ;;
 		*"Appimage"*) dots-launch-tui-dots-menu dots-install-appimage ;;
-		*"Package"*) dots-launch-tui-dots-menu dots-pkg-interactive-install ;;
 		*"AUR Package"*) dots-launch-tui-dots-menu dots-pkg-yay-interactive-install ;;
+		*"Package"*) dots-launch-tui-dots-menu dots-pkg-interactive-install ;;
 		esac
 	fi
 }

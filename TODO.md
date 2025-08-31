@@ -1,8 +1,11 @@
 # TODO
 
 URGENT !!!
-- [] Change env vars loading
-
+- [] Change env vars loading + how to update desktop env var without restarting ?
+- [] Split system things from user things
+- [] Split mandatory from optional installations (example: Flutter is optional)
+- [] Add scripts to easily manage symlinks (and perhaps use symlinks farm manager to link config folder)
+- [] Make a better distinction between install process and config process (the ".dots" thing)
 
 
 - [] Change firefox theme with the dots theme

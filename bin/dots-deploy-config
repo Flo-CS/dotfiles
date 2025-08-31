@@ -71,10 +71,6 @@ configure_terminal() {
 	dots-file-link config/starship.toml ~/.config/starship.toml
 }
 
-configure_privileged() {
-	sudo -E dots-file-copy config/sudoers /etc/sudoers.d/sudoers-default
-}
-
 configure_xdg() {
 	dots-file-link config/user-dirs.dirs ~/.config/user-dirs.dirs
 }
@@ -96,7 +92,6 @@ configure_waybar
 configure_wofi
 configure_neovim
 configure_terminal
-configure_privileged
 configure_xdg
 configure_mako
 
