@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# TODO: ugly script and pretty useless, to improve
+
+name=$(gum write --placeholder "Enter reminder name")
+if [[ -z "$name" ]]; then
+	echo "Reminder name cannot be empty."
+	exit 1
+fi
+
+date=$(gum input --placeholder "Enter date in 'at' command format")
+while [[ -z "$date" ]]; do
+	echo "Date cannot be empty."
+	date=$(gum input --placeholder "Enter date in 'at' command format")
+done
+
+echo "notify-send -u normal \"$name\"" | at "$date"
