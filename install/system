@@ -20,7 +20,7 @@ install_backup() {
     sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
 
     # WARNING: only work on EndeavourOS because it uses dracut
-    sudo -E dots-file-insert-with-marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
+    sudo -E dots-file-robust-insert-with-marker /etc/default/grub-btrfs/config "custom" "GRUB_BTRFS_SNAPSHOT_KERNEL_PARAMETERS=\"rd.live.overlay.overlayfs=1\""
 
     sudo systemctl enable --now grub-btrfsd
 }
@@ -40,7 +40,7 @@ install_grub() {
         fi
 
         echo "Windows Boot Manager UUID: $windows_boot_partition_uuid"
-        sudo -E dots-file-insert-with-marker /etc/grub.d/40_custom "windows" "
+        sudo -E dots-file-robust-insert-with-marker /etc/grub.d/40_custom "windows" "
     menuentry 'Windows Boot Manager' --class windows --class os {
         search --fs-uuid --no-floppy --set=root $windows_boot_partition_uuid
         chainloader /EFI/Microsoft/Boot/bootmgfw.efi
@@ -55,7 +55,7 @@ install_grub() {
 }
 
 install_privileged() {
-    sudo -E dots-file-copy install/config/sudoers /etc/sudoers.d/sudoers-default
+    sudo -E dots-file-robust-copy install/config/sudoers /etc/sudoers.d/sudoers-default
 }
 
 install_backup

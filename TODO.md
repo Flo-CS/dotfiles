@@ -6,10 +6,8 @@ URGENT !!!
 - [] Split mandatory from optional installations (example: Flutter is optional)
 - [] Add scripts to easily manage symlinks (and perhaps use symlinks farm manager to link config folder)
 - [] Make a better distinction between install process and config process (the ".dots" thing)
-- [] Rename dots core scripts to something like "secure-copy", "secure-symlink", etc...
 - [] Improve logging (error output, remove useless output except if verbose, etc...)
 - [] Improve the installer (for example dots logo is shown twice when doing update)
-- [] Remove dots-reminder
 - [] Fix quickshell and wofi weird display bug (+ it seems to do the same with mako notif), watch hyprctl clients
 
 

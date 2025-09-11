@@ -155,18 +155,6 @@ show_remove_menu() {
 	fi
 }
 
-show_time_menu() {
-	selected=$(printf '󰢌  Reminder' | dmenu "Time menu")
-
-	if [[ -z "$selected" ]]; then
-		show_main_menu
-	else
-		case "$selected" in
-		*"Reminder"*) dots-launch-tui-dots-menu dots-reminder ;;
-		esac
-	fi
-}
-
 show_main_menu() {
 	selected=$(printf '  Theme
 󱍷  Refresh
