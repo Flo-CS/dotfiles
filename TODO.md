@@ -9,6 +9,8 @@ URGENT !!!
 - [] Improve logging (error output, remove useless output except if verbose, etc...)
 - [] Improve the installer (for example dots logo is shown twice when doing update)
 - [] Fix quickshell and wofi weird display bug (+ it seems to do the same with mako notif), watch hyprctl clients
+- Only put borders on choosen floating windows
+
 
 
 - [] Change firefox theme with the dots theme => impossible
