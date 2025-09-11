@@ -11,7 +11,7 @@ URGENT !!!
 - [] Fix quickshell and wofi weird display bug (+ it seems to do the same with mako notif), watch hyprctl clients
 
 
-- [] Change firefox theme with the dots theme
+- [] Change firefox theme with the dots theme => impossible
 - [] Add script to install font
 - [] Remove extra hyprland animations
 - [] Reorganize hyprland config files
