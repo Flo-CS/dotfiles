@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+template_file="$1"
+output_file="${template_file%.j2}"
+
+j2 "$template_file" >"$output_file" && echo "rendered template $template_file to $output_file"

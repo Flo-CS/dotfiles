@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-dots-refresh-desktop
-dots-refresh-terminal

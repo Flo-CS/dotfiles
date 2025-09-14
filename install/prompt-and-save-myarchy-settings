@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+SETTINGS_FILE=$MYARCHY_DIR/.settings
+
+unset MYARCHY_INSTANCE_ID
+unset MYARCHY_DIR
+
+if [[ -f $SETTINGS_FILE ]]; then
+	source $SETTINGS_FILE
+else
+	echo "Initializing $SETTINGS_FILE ..."
+	touch $SETTINGS_FILE
+	echo #!/usr/bin/env bash > $SETTINGS_FILE
+fi
+
+if [[ -z ${MYARCHY_DIR+x} ]]; then
+	MYARCHY_DIR=$(gum input --header "Enter your myarchy directory location (where you cloned it)")
+	echo "export MYARCHY_DIR=$MYARCHY_DIR" >>$SETTINGS_FILE
+fi
+
+if [[ -z ${MYARCHY_INSTANCE_ID+x} ]]; then
+	MYARCHY_INSTANCE_ID=$(gum input --header "Enter your myarchy instance ID used to identify specific local configurations (e.g. 'desktop', 'laptop')")
+	echo "export MYARCHY_INSTANCE_ID=$MYARCHY_INSTANCE_ID" >>$SETTINGS_FILE
+fi
+
+source $SETTINGS_FILE

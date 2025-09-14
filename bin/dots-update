@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-git -C "$DOTS_DIR" pull || gum confirm "Pull failed. Continue installation?" || exit 1
-$DOTS_DIR/install.sh

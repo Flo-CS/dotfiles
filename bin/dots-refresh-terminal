@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-dots-file-template config/starship.toml.j2 &>/dev/null
-
-touch ~/.config/alacritty/alacritty.toml # Trigger alacritty config reload

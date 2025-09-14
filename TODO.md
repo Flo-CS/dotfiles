@@ -5,11 +5,11 @@ URGENT !!!
 - [] Split system things from user things
 - [] Split mandatory from optional installations (example: Flutter is optional)
 - [] Add scripts to easily manage symlinks (and perhaps use symlinks farm manager to link config folder)
-- [] Make a better distinction between install process and config process (the ".dots" thing)
 - [] Improve logging (error output, remove useless output except if verbose, etc...)
 - [] Improve the installer (for example dots logo is shown twice when doing update)
 - [] Fix quickshell and wofi weird display bug (+ it seems to do the same with mako notif), watch hyprctl clients
 - Only put borders on choosen floating windows
+- use xdg dir instead of hard path
 
 
 
@@ -29,5 +29,6 @@ URGENT !!!
 - [] Add bash function to navigate more easily with fuzzy with zoxide
 - [] Fix audio devices priority
 - [] Check .config folder to check for files to save in dots
+- [] Add script to easily add config to the dotsfiles
 - [] Add screensaver that is shown above the lock screen
 - [] Add easy vpn switch

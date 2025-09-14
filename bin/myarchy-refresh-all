@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+myarchy-refresh-desktop
+myarchy-refresh-terminal

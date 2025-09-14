@@ -1,6 +1,0 @@
-source=~/.dotfiles/config/hypr/hyprland.conf
-
-input {
-    sensitivity = -0.5 # -1.0 - 1.0, 0 means no modification.
-}
-

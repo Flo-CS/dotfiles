@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-echo ""
-cat $DOTS_DIR/logo.txt
-echo ""

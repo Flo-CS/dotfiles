@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-if [[ ! -d "$DOTS_DIR/themes/current" ]]; then
-	echo "Setting default theme"
-	dots-theme-set $(dots-theme-list | head -n 1)
-fi
