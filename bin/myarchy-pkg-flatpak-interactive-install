@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+echo "/!\ Using user scope"
+
+source=flathub
+
+pkg_to_install=$(
+  flatpak remote-ls --user $source --app --columns=application,name |
+    fzf --multi \
+      --with-nth=2.. \
+      --preview 'flatpak info {1}' \
+      --preview-window 'down:65%:wrap' \
+      --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up' \
+      --bind 'alt-k:preview-up,alt-j:preview-down' \
+      --color 'pointer:green,marker:green'
+)
+
+if [[ -n "$pkg_to_install" ]]; then
+  echo "$pkg_to_install" | awk '{print $1}' | tr '\n' ' ' | xargs flatpak install -y $source
+fi
