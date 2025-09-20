@@ -1,5 +1,6 @@
+#!/bin/bash/env bash
+
 source ~/.local/share/myarchy/files/config/.bash_profile
 
 . "$HOME/.atuin/bin/env"
 . "$HOME/.cargo/env"
-. /usr/share/nvm/init-nvm.sh

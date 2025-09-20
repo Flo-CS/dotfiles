@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-echo "installing packages: $@"
-sudo pacman -S --noconfirm --needed "$@"
