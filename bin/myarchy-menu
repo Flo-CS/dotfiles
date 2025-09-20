@@ -125,7 +125,8 @@ show_install_menu() {
 󰏖  Appimage
 󰏖  Package
 󰏖  AUR Package
-󰏖  Flatpak' | dmenu "Install menu")
+󰏖  Flatpak user
+󰏖  Flatpak system' | dmenu "Install menu")
 
 	if [[ -z "$selected" ]]; then
 		show_main_menu
@@ -136,7 +137,8 @@ show_install_menu() {
 		*"Appimage"*) myarchy-launch-tui-menu myarchy-install-appimage ;;
 		*"AUR Package"*) myarchy-launch-tui-menu myarchy-pkg-yay-interactive-install ;;
 		*"Package"*) myarchy-launch-tui-menu myarchy-pkg-interactive-install ;;
-		*"Flatpak"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-install ;;
+		*"Flatpak user"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-install user ;;
+		*"Flatpak system"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-install system ;;
 		esac
 	fi
 }
@@ -146,7 +148,8 @@ show_remove_menu() {
 󰏘  Webapp
 󰏘  Appimage
 󰏘  Package
-󰏘  Flatpak' | dmenu "Remove menu")
+󰏘  Flatpak user
+󰏘  Flatpak system' | dmenu "Remove menu")
 	if [[ -z "$selected" ]]; then
 		show_main_menu
 	else
@@ -155,7 +158,8 @@ show_remove_menu() {
 		*"Webapp"*) myarchy-launch-tui-menu myarchy-remove-webapp ;;
 		*"Appimage"*) myarchy-launch-tui-menu myarchy-remove-appimage ;;
 		*"Package"*) myarchy-launch-tui-menu myarchy-pkg-interactive-remove ;;
-		*"Flatpak"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-remove ;;
+		*"Flatpak user"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-remove user ;;
+		*"Flatpak system"*) myarchy-launch-tui-menu myarchy-pkg-flatpak-interactive-remove system ;;
 		esac
 	fi
 }
