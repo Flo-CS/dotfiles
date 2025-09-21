@@ -40,8 +40,7 @@ myarchy-deploy-file-by-link files/config/atuin.toml ~/.config/atuin/config.toml
 myarchy-deploy-file-by-link files/config/alacritty.toml ~/.config/alacritty/alacritty.toml
 myarchy-deploy-file-by-link files/themes/current/alacritty.toml ~/.config/alacritty/current-theme.toml
 
-myarchy-render-template files/config/starship.toml.j2
-myarchy-deploy-file-by-link files/config/starship.toml ~/.config/starship.toml
+myarchy-deploy-template-by-link files/config/starship.toml.j2 ~/.config/starship.toml
 
 myarchy-deploy-file-by-link files/config/user-dirs.dirs ~/.config/user-dirs.dirs
 
