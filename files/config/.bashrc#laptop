@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-source ~/.local/share/myarchy/files/config/.bashrc
+source ~/.local/share/myarchy/files/config/bash/myarchy-env.sh
+source ~/.local/share/myarchy/files/config/bash/env.sh
+source ~/.local/share/myarchy/files/config/bash/functions.sh
+source ~/.local/share/myarchy/files/config/bash/aliases.sh
 
 if command -v starship &>/dev/null; then
 	eval "$(starship init bash)"

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-source ~/.local/share/myarchy/files/config/.bash_profile
+source ~/.local/share/myarchy/files/config/bash/myarchy-env.sh
+source ~/.local/share/myarchy/files/config/bash/myarchy-profile.sh
+source ~/.local/share/myarchy/files/config/bash/env.sh
 
 . "$HOME/.atuin/bin/env"
 . "$HOME/.cargo/env"
