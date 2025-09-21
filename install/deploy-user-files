@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-myarchy-theme-set-default
-myarchy-wallpaper-set-default
+myarchy-theme-init
+myarchy-wallpaper-init
 myarchy-deploy-config
 myarchy-deploy-applications
