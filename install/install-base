@@ -43,17 +43,45 @@ install_nvm() {
     nvm install --lts || echo "nvm install failed, maybe nvm is not properly configured" >&2
 }
 
+install_hyprland_plugins() {
+    declare -A REPOS=(
+        ["hyprland-plugins"]="https://github.com/hyprwm/hyprland-plugins"
+    )
+
+    REQUIRED_PLUGINS=$(echo 'hyprexpo' | sort -u)
+    REQUIRED_REPOS=$(echo "${!REPOS[@]}" | tr ' ' '\n' | sort -u)
+
+    hyprpm reload || echo "failed to reload hyprpm"
+
+    enabled_plugins=$(myarchy-hyprpm-list | jq '[.[] | select(.enabled == true)]' | jq -r '.[] | "\(.plugin)"' | sort -u)
+    installed_repos=$(myarchy-hyprpm-list | jq -r '.[] | "\(.repo)"' | sort -u)
+
+    plugins_to_enable=$(comm -13 <(echo "$enabled_plugins") <(echo "$REQUIRED_PLUGINS"))
+    repos_to_install=$(comm -13 <(echo "$installed_repos") <(echo "$REQUIRED_REPOS"))
+
+    for repo in $repos_to_install; do
+        local url="${REPOS[$repo]}"
+        hyprpm add "$url" || echo "failed to add repo $repo with $url"
+    done
+
+    if [[ -n "$repos_to_install" ]] || [[ -n "$plugins_to_enable" ]]; then
+        hyprpm update || echo "failed to update hyprpm"
+    fi
+
+    for plugin in $plugins_to_enable; do
+        hyprpm enable "$plugin" || echo "failed to enable plugin $plugin"
+    done
+}
+
 install_hyprlandia() {
     install_packages hyprland hyprpaper hyprcursor hyprlock hypridle hyprland-qtutils hyprland-qt-support hyprpolkitagent
     install_packages xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
     install_packages qt6-wayland qt5-wayland
 
-    install_packages cmake meson cpio git gcc
-    hyprpm add https://github.com/hyprwm/hyprland-plugins || echo "hyprpm add failed"
-    hyprpm update || echo "hyprpm update failed"
-    hyprpm enable hyprexpo || echo "hyprpm enable hyprexpo failed"
-
     install_packages uwsm libnewt
+
+    install_packages cmake meson cpio gcc
+    install_hyprland_plugins
 
     install_packages python-pywayland
 }
