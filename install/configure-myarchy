@@ -18,4 +18,4 @@ write_env_var "MYARCHY_DIR" "$MYARCHY_DIR" $MYARCHY_SETTINGS_FILE
 MYARCHY_INSTANCE_ID=${MYARCHY_INSTANCE_ID:-$(gum input --header "Enter your myarchy instance ID used to identify specific local configurations (e.g. 'desktop', 'laptop')")}
 write_env_var "MYARCHY_INSTANCE_ID" "$MYARCHY_INSTANCE_ID" $MYARCHY_SETTINGS_FILE
 
-set -a && $MYARCHY_SETTINGS_FILE && set +a
+set -a && source $MYARCHY_SETTINGS_FILE && set +a

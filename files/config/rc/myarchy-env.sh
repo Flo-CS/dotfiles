@@ -1,4 +1,4 @@
-set -a && $XDG_CONFIG_HOME/myarchy/settings.env && set +a
+set -a && source ~/.config/myarchy/settings.env && set +a
 
 export PATH="$MYARCHY_DIR/bin:$PATH"
 
