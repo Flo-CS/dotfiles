@@ -5,7 +5,7 @@ key_collapse=Shift-Tab
 key_back=Escape
 key_accept=Return
 
-matching=fuzzy
+matching=contains
 mode=drun
 allow_images=true
 image_size=16
