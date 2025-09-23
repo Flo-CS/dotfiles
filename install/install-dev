@@ -2,6 +2,10 @@
 
 source $MYARCHY_DIR/install/lib.sh
 
+install_direnv() {
+    install_packages direnv
+}
+
 install_docker() {
     install_packages docker docker-compose
     install_yay_packages lazydocker
@@ -40,6 +44,8 @@ install_flutter() {
 install_python() {
     install_packages python-pip
 }
+
+install_direnv
 
 AVAILABLE_FEATURES=(
     "docker"
