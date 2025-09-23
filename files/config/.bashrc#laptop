@@ -20,3 +20,5 @@ eval "$(atuin init bash)"
 . "$HOME/.cargo/env"
 
 . /usr/share/nvm/init-nvm.sh
+
+eval "$(direnv hook bash)"
