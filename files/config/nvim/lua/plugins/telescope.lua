@@ -27,6 +27,11 @@ return {
           path_display = { shorten = 5 },
         },
         pickers = {
+          live_grep = {
+            additional_args = function(opts)
+              return { '--hidden', '-g', '!**/.git/*,node_modules/**' }
+            end,
+          },
           find_files = {
             find_command = {
               'rg',
